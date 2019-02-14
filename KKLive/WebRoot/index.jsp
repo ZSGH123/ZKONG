@@ -10,7 +10,7 @@
   </head>
   
   <body>
-    <form name="loginone" method="post" action="LoginAction" enctype="application/x-www-form-urlencoded" target="_blank">
+    <form name="loginone" method="post" action="userloginAction" enctype="application/x-www-form-urlencoded" target="_blank">
 			<table border="1" width="300" cellspacing="0" style="font-size: 12px;font-style: normal; color: burlywood; border-color: burlywood;">
 			<caption align="center"><font color="burlywood"><b>用户注册</b></font></caption>
 			<tr>
@@ -29,5 +29,6 @@
 			</tr>
 			</table>	
 		</form>
+		<a href="userregisterAction">注册</a>
   </body>
 </html>

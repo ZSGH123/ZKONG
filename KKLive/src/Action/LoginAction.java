@@ -35,6 +35,17 @@ public class LoginAction extends ActionSupport implements ModelDriven<User>,Requ
 		this.user=new User();
 	}
 	
+	
+	public String login(){
+		System.out.println("登陆"+user.getUname()+";"+user.getUpass());
+		return "success";
+	}
+	
+	public String register(){
+		System.out.println("注册"+user.getUname()+";"+user.getUpass());
+		return "register";
+	}
+	
 	public String execute(){
 		//1.解析请求包数据，自动请求
 		
