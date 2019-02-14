@@ -24,12 +24,14 @@
             <result name="success">/show.jsp</result>
         </action>
          -->
+        <!--
         <action name="user*Action" class="Action.LoginAction" method="{1}">
-            <!--result：输出组件，用于转发、重定向、直接输出
+            result：输出组件，用于转发、重定向、直接输出
                 name：名称，一个action下可以有多个result，彼此不能重名  默认值转发，元素内设置转发的页面
-            -->
+          
             <result name="success">/show.jsp</result>
             <result name="register">/{1}.jsp</result>
         </action>
+          -->
     </package>
 </struts>

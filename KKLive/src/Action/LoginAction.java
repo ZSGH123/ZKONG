@@ -2,6 +2,8 @@ package Action;
 
 import java.util.Map;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.RequestAware;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -35,7 +37,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<User>,Requ
 		this.user=new User();
 	}
 	
-	
+	@Action(value="userloginAction",results={@Result(name="success",location="/show.jsp")})
 	public String login(){
 		System.out.println("µÇÂ½"+user.getUname()+";"+user.getUpass());
 		return "success";
