@@ -4,12 +4,36 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
+    
+    <constant name="struts.configuration.xml.reload" value="true"></constant>
+    <constant name="struts.devMode" value="true"></constant>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
+    <constant name="struts.i18n.encoding" value="utf-8"></constant>
+
+     <package name="index" extends="struts-default">
+          <default-action-ref name="default"></default-action-ref>
+          <global-results>
+               <result name="error">/error.jsp</result>
+               <result name="exception">/exception.jsp</result>
+          </global-results>
+          <global-exception-mappings>
+            <exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
+          </global-exception-mappings>
+          <action name="default">
+              <result >/error.jsp</result>
+          </action> 
+     </package>
+     
+     <!-- 引入外部xml文件 -->
+     <include file="user.xml"></include>
+     <include file="product.xml"></include>
+
     <!--
         package：包，用于对Action进行封装
         name：包名，根元素下可以有多个包，彼此不能重名
         extends：继承，用于指定继承的包，相当于将继承包下的配置信息复制到当前包
         namespace：命名空间，用于规定Action的访问路径，必须“/”开头    -->
-    <package name="Action" namespace="/" extends="struts-default">
+    <package name="usera" namespace="/" extends="struts-default">
         <!--action：业务控制器，用于注册业务控制器组件
             name：action名称，用于规定Action的访问路径
             class：业务控制器组件，用于指定业务控制器对应的类
@@ -25,6 +49,10 @@
         </action>
          -->
         <!--
+        <default-action-ref name="default"></default-action-ref>
+          <action name="default">
+              <result >/error.jsp</result>
+          </action> 
         <action name="user*Action" class="Action.LoginAction" method="{1}">
             result：输出组件，用于转发、重定向、直接输出
                 name：名称，一个action下可以有多个result，彼此不能重名  默认值转发，元素内设置转发的页面
@@ -32,6 +60,6 @@
             <result name="success">/show.jsp</result>
             <result name="register">/{1}.jsp</result>
         </action>
-          -->
+          -->  
     </package>
 </struts>
