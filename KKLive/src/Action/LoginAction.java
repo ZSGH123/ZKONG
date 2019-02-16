@@ -39,11 +39,8 @@ public class LoginAction extends ActionSupport implements ModelDriven<User>,Requ
 	
 	@Action(value="userloginAction",results={@Result(name="success",location="/show.jsp")})
 	public String login(){
-		int a=100;
-		int b=0;
-		System.out.println(a/b);
 		System.out.println("µÇÂ½"+user.getUname()+";"+user.getUpass());
-		return "success";
+		return "show";
 	}
 	
 	public String register(){

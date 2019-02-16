@@ -11,6 +11,19 @@
     <constant name="struts.i18n.encoding" value="utf-8"></constant>
 
      <package name="index" extends="struts-default">
+     <interceptors>
+             <!-- 定义拦截器 -->
+             <interceptor name="testInterceptor" class="interceptor.TestInterceptor"></interceptor>
+            <!-- 定义一个拦截器栈 -->
+            <interceptor-stack name="mydefault">
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="testInterceptor" />
+            </interceptor-stack>
+         </interceptors>
+
+         <!-- 定义默认拦截器 -->
+         <default-interceptor-ref name="mydefault" />
+     
           <default-action-ref name="default"></default-action-ref>
           <global-results>
                <result name="error">/error.jsp</result>
@@ -19,6 +32,7 @@
           <global-exception-mappings>
             <exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
           </global-exception-mappings>
+
           <action name="default">
               <result >/error.jsp</result>
           </action> 

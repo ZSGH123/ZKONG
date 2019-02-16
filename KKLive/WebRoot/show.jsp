@@ -9,7 +9,7 @@
   </head>
   
   <body>
-    请求作用域：姓名：${ruser.uname}
+    请求作用域：姓名：${ruser.uname} <s:property value="uname"/>
     </br>
     会话作用域：密码：${suser.uname}
     </br>
