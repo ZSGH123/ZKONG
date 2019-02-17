@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%@taglib prefix="s" uri="/struts-tags"%>
 <html>
   <head>
     
@@ -29,6 +28,16 @@
 			</tr>
 			</table>	
 		</form>
+		<s:form action="producttestAction">
+		      <s:textfield name="user.uname" key="username"></s:textfield>
+		      <s:textfield name="strings[0]" key="username"></s:textfield>
+		      <s:textfield name="strings[1]"></s:textfield>
+		      <s:textfield name="lists[0]"></s:textfield>
+		      <s:textfield name="lists[1]"></s:textfield>
+		      <s:textfield name="map['a']"></s:textfield>
+		      <s:textfield name="map['b']"></s:textfield>
+		      <s:submit name="submit" value="提交"></s:submit>
+		</s:form>
 		<a href="userregisterAction">注册</a>
   </body>
 </html>

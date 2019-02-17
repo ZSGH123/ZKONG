@@ -26,5 +26,8 @@
 　　        创建Map LinkedHashMap　<s:property value="#{'mm':'MM','nn':'NN'}.get('mm')" /> 
                   <s:property value="#{'mm':'MM','nn':'NN'}.['mm']" />
                <s:property value="#{'mm':'MM','nn':'NN'}" />
+    </br>
+           创建用户对象 
+       <s:property value="new entity.User()" />        
   </body>
 </html>

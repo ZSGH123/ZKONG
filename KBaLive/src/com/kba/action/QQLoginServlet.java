@@ -120,7 +120,7 @@ public class QQLoginServlet extends KBaBaseServlet {
 				if (userInfoBean.getRet() == 0) {
 					qqInfo.setUserQQName(userInfoBean.getNickname());
 					request.setAttribute("sex", userInfoBean.getGender());
-					qqInfo.setUserQQIcon(userInfoBean.getAvatar().getAvatarURL30());
+					qqInfo.setUserQQIcon(userInfoBean.getAvatar().getAvatarURL100());
 				} else {
 					System.out.println("很抱歉，我们没能正确获取到您的信息，原因是： " + userInfoBean.getMsg());
 				}

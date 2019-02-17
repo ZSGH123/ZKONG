@@ -9,7 +9,8 @@
     <constant name="struts.devMode" value="true"></constant>
     <constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
     <constant name="struts.i18n.encoding" value="utf-8"></constant>
-
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+    <constant name="struts.custom.i18n.resources" value="message_zh_CN"></constant>
      <package name="index" extends="struts-default">
      <interceptors>
              <!-- 定义拦截器 -->
