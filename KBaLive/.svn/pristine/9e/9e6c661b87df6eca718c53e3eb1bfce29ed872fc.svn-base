@@ -1,0 +1,13 @@
+$(function(){
+	$("#shouyetop").click(
+		function(){
+			location.href="index.jsp";
+		}	
+	);
+	
+	
+	
+	
+});
+
+

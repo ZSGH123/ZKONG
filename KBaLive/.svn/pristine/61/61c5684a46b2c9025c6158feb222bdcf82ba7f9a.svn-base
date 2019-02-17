@@ -1,0 +1,44 @@
+package com.kba.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.entity.LiveRoom;
+
+/**
+ * 直播房间dao接口
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public interface ILiveRoomDao extends IBaseDao<LiveRoom> {
+	/**
+	 * 通过主播id查找直播间
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public LiveRoom querySingleByAnchorId(LiveRoom entity) throws SQLException;
+	/**
+	 * 通过主播内容id查找直播间，并通过直播间分数排序
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoom> queryByLiveContentID(LiveRoom entity) throws SQLException;
+	/**
+	 * 通过主播内容id查找直播间
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoom> queryByLiveRoomTitle(LiveRoom entity) throws SQLException;
+	
+	/**
+	 * 查询通过分数排序后的所有直播间
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoom> queryAllSorded(LiveRoom entity) throws SQLException;
+}

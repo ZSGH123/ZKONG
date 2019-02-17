@@ -1,0 +1,332 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.ILiveRoomDetailDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.AnchorInfo;
+import com.kba.entity.LiveContent;
+import com.kba.entity.LiveRoom;
+import com.kba.entity.LiveType;
+import com.kba.entity.PushList;
+import com.kba.entity.PushType;
+import com.kba.entity.UserInfo;
+import com.kba.vo.LiveRoomDetailInfo;
+/**
+ * 直播房间详细信息dao实现
+ * @author 钟强
+ * 创建时间：2019-01-23
+ * 修改时间：
+ */
+public class LiveRoomDetatilDao extends AbstractBaseDao
+		implements ILiveRoomDetailDao, ResultSetHandler<List<LiveRoomDetailInfo>> {
+	private static LiveRoomDetatilDao liveRoomDetatilDao;
+	
+	private LiveRoomDetatilDao(){
+		
+	}
+	
+	public synchronized static LiveRoomDetatilDao getInstance(){
+		if(liveRoomDetatilDao==null){
+			liveRoomDetatilDao=new LiveRoomDetatilDao();
+		}
+		return liveRoomDetatilDao;
+	}
+    /**
+     * 查询所有直播间的详细信息
+     */
+	@Override
+	public List<LiveRoomDetailInfo> queryAllLiveRoomDetailInfo() throws SQLException {
+		List<LiveRoomDetailInfo> liveRoomDetailInfos=null;
+		String sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO, ISqlCommand.SELECT_LIVEROOMDETAIL_BY_VIEW);
+		System.out.println(sql);
+		try {
+			liveRoomDetailInfos=this.queryRunner.query(sql, this);
+		} catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.info("查询异常");
+		}
+		return liveRoomDetailInfos;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> handle(ResultSet rs) throws SQLException {
+		List<LiveRoomDetailInfo> liveRoomDetailInfos=new Vector<LiveRoomDetailInfo>();
+		LiveRoomDetailInfo liveRoomDetailInfo=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			liveRoomDetailInfo=new LiveRoomDetailInfo();
+			LiveRoom liveRoom=new LiveRoom();
+			liveRoom.setLiveRoomId(rs.getString("LIVE_ROOM_ID"));
+			liveRoom.setAnchorId(rs.getString("ANCHOR_ID"));
+			liveRoom.setLivePushAddress(rs.getString("LIVE_PUSH_ADDRESS"));
+			liveRoom.setLiveContentId(rs.getString("LIVE_CONTENT_ID"));
+			liveRoom.setLivePushCode(rs.getString("LIVE_PUSH_CODE"));
+			liveRoom.setLiveRoomAnnouncement(rs.getString("LIVE_ROOM_ANNOUNCEMENT"));
+			liveRoom.setLiveRoomTilie(rs.getString("LIVE_ROOM_TITLE"));
+			liveRoom.setLiveRoomScore(rs.getInt("LIVE_ROOM_SCORE"));
+			liveRoom.setSyncToWeibo(rs.getString("SYNC_TO_WEIBO"));
+			liveRoom.setLiveRoomRemark(rs.getString("LIVE_ROOM_REMARK"));
+			liveRoomDetailInfo.setLiveRoom(liveRoom);
+			AnchorInfo anchorInfo=new AnchorInfo();
+			anchorInfo.setAnchorId(rs.getString("ANCHOR_ID"));
+			anchorInfo.setUserId(rs.getString("USER_ID"));
+			anchorInfo.setLiveRoomId(rs.getString("LIVE_ROOM_ID"));
+			anchorInfo.setRegisteredAnchorTime(rs.getTimestamp("REGISTERED_ANCHOR_TIME"));
+			anchorInfo.setAnchorInfoRemark(rs.getString("ANCHOR_INFO_REMARK"));
+			liveRoomDetailInfo.setAnchorInfo(anchorInfo);
+			UserInfo user=new UserInfo();
+			user.setUserId(rs.getString("USER_ID"));
+			user.setUserPhoneNumber(rs.getString("user_phonenumber"));
+			user.setUserName(rs.getString("user_name"));
+			user.setUserRealName(rs.getString("user_realname"));
+			user.setUserSex(rs.getString("user_sex"));
+			user.setUserIcon(rs.getString("user_icon"));
+			user.setUserAliPay(rs.getString("user_alipay"));
+			user.setUserBankCard(rs.getString("user_bank_card"));
+			liveRoomDetailInfo.setUserInfo(user);
+			LiveContent liveContent=new LiveContent();
+			liveContent.setLiveContentId(rs.getString("LIVE_CONTENT_ID"));
+			liveContent.setLiveContentName(rs.getString("LIVE_CONTENT_NAME"));
+			liveContent.setLiveTypeId(rs.getString("LIVE_TYPE_ID"));
+			liveContent.setLiveContentRemark(rs.getString("LIVE_CONTENT_REMARK"));
+			liveContent.setLiveContentImgURL(rs.getString("LIVE_CONTENT_IMGURL"));
+			liveRoomDetailInfo.setLiveContent(liveContent);
+			LiveType liveType=new LiveType();
+			liveType.setLiveTypeId(rs.getString("LIVE_TYPE_ID"));
+			liveType.setLiveTypeName(rs.getString("LIVE_TYPE_NAME"));
+			liveRoomDetailInfo.setLiveType(liveType);
+			PushList pushList=new PushList();
+			pushList.setPushListId(rs.getString("PUSH_LIST_ID"));
+			pushList.setLiveRoomId(rs.getString("PUSHROOMID"));
+			pushList.setPushTypeId(rs.getString("PUSH_TYPE_ID"));
+			pushList.setPushStartTime(rs.getTimestamp("PUSH_START_TIME"));
+			pushList.setPushEndTime(rs.getTimestamp("PUSH_END_TIME"));
+			liveRoomDetailInfo.setPushList(pushList);
+			liveRoomDetailInfos.add(liveRoomDetailInfo);
+		}
+		return liveRoomDetailInfos;
+	}
+	
+	public static void main(String[] strs){
+		try {
+			List<LiveRoomDetailInfo> liveRoomDetailInfos=LiveRoomDetatilDao.getInstance().queryAllLiveRoomDetailInfo();
+			for (LiveRoomDetailInfo liveRoomDetailInfo : liveRoomDetailInfos) {
+				System.out.println(liveRoomDetailInfo);
+			}
+			System.out.println("zhibo"+LiveRoomDetatilDao.getInstance().selectAllByLiveTypeID(liveRoomDetailInfos.get(0).getLiveType()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByPushTypeId(PushType entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectAllByPushTypeId");
+		
+		params=new Object[]{entity.getPushTypeId()};
+		
+		try {
+			List<LiveRoomDetailInfo> liveRooms=this.queryRunner.query(sql, this, params);
+			return liveRooms;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByLiveCotentName(LiveContent entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectAllByLiveCotentName");
+		
+		params=new Object[]{entity.getLiveContentName()};
+		
+		try {
+			List<LiveRoomDetailInfo> liveRooms=this.queryRunner.query(sql, this, params);
+			return liveRooms;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByLiveTypeName(LiveType entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectAllByLiveTypeName");
+		
+		params=new Object[]{entity.getLiveTypeName()};
+		
+		try {
+			List<LiveRoomDetailInfo> liveRooms=this.queryRunner.query(sql, this, params);
+			return liveRooms;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByLiveTypeID(LiveType entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectAllByLiveTypeID");
+		
+		params=new Object[]{entity.getLiveTypeId()};
+		
+		try {
+			List<LiveRoomDetailInfo> liveRooms=this.queryRunner.query(sql, this, params);
+			return liveRooms;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public LiveRoomDetailInfo selectByLiveRoomId(LiveRoom entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectByLiveRoomId");
+		
+		params=new Object[]{entity.getLiveRoomId()};
+		
+		try {
+			List<LiveRoomDetailInfo> pushLists=this.queryRunner.query(sql, this, params);
+			return pushLists != null && pushLists.size() > 0 ? pushLists.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public LiveRoomDetailInfo selectByAnchorId(AnchorInfo entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectByAnchorId");
+		
+		params=new Object[]{entity.getAnchorId()};
+		
+		try {
+			List<LiveRoomDetailInfo> pushLists=this.queryRunner.query(sql, this, params);
+			return pushLists != null && pushLists.size() > 0 ? pushLists.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public LiveRoomDetailInfo selectByUserName(UserInfo entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectByUserName");
+		
+		params=new Object[]{entity.getUserName()};
+		
+		try {
+			List<LiveRoomDetailInfo> pushLists=this.queryRunner.query(sql, this, params);
+			return pushLists != null && pushLists.size() > 0 ? pushLists.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByAnnouncment(LiveRoom entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectAllByAnnouncment");
+		
+		params=new Object[]{entity.getLiveRoomAnnouncement()};
+		
+		try {
+			List<LiveRoomDetailInfo> liveRooms=this.queryRunner.query(sql, this, params);
+			return liveRooms;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByTitle(LiveRoom entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.LIVEROOMDETAILINFO,"selectAllByTitle");
+		
+		params=new Object[]{entity.getLiveRoomTilie()};
+		
+		try {
+			List<LiveRoomDetailInfo> liveRooms=this.queryRunner.query(sql, this, params);
+			return liveRooms;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+
+
+}

@@ -1,0 +1,9 @@
+package com.kba.service;
+/**
+ * 首页业务层
+ * @author 钟强
+ *
+ */
+public interface IIndexService {
+
+}

@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IGagInfoDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.GagInfo;
+
+/**
+ * 禁言信息dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class GagInfoDao extends AbstractBaseDao implements IGagInfoDao,ResultSetHandler<List<GagInfo>>{
+
+	@Override
+	public List<GagInfo> queryAll(GagInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GagInfo querySingle(GagInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(GagInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(GagInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(GagInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<GagInfo> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

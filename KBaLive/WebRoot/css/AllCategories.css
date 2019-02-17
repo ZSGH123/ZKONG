@@ -1,0 +1,54 @@
+#allCategories{
+	margin-top:66px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+#allCategories_left{
+	height: 300px;
+}
+
+#allCategories_right{
+	height: 400px;
+}
+
+#allCategories_right_top{
+	height: 70px;
+	padding: 0px 0px 0px 10px;
+}
+
+#allCategories_right_top_title{
+	width: 130px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#allCategories_right_top_img{
+	padding-left: 5px;
+	margin-top: 30px;
+}
+#allCategories_right_top input{
+	font-size: 14px;
+	border-radius: 20px;
+}
+
+#allCategories_right_top input:hover{
+	background-color: orange;
+    color: white;	
+}
+
+#allCategories_right_bottom_game{
+	height: 265px;
+	width: 155px;
+	margin-left: 30px;
+	padding: 0px;
+}
+
+#allCategories_right_bottom_game:hover{
+	box-shadow: 5px 5px 2px #888888;
+}
+
+#allCategories_right_bottom_text{
+	font: 14px;
+	text-align: center;
+}

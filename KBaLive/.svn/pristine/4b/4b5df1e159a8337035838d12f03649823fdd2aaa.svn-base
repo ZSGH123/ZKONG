@@ -1,0 +1,54 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IInvestRecordDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.InvestRecord;
+/**
+ * 充值记录dao
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public class InvestRecordDao extends AbstractBaseDao implements IInvestRecordDao, ResultSetHandler<List<InvestRecord>> {
+
+
+	@Override
+	public List<InvestRecord> queryAll(InvestRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public InvestRecord querySingle(InvestRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(InvestRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(InvestRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(InvestRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<InvestRecord> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

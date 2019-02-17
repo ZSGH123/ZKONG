@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="videoType">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	select * from video_type
+	</sql>
+    
+	<sql id="selectById">
+	select * from video_type where video_type_id= ?		
+	</sql>
+
+	<sql id="insert">
+	insert into video_type values(VIDEOTYPEID.nextval,?,?)		
+	</sql>
+
+	<sql id="update">
+	 update video_type set video_type_name = ?, video_type_remark = ? where video_type_id = ?		
+	</sql>
+
+	<sql id="delete">
+		delete from video_type where video_type_id= ?
+	</sql>
+
+</sqlStatements>

@@ -1,0 +1,64 @@
+
+/*
+		小分类
+		*/
+
+function sendRequest(cid) {
+	//1、URL
+	var url = "productAction?command=getProductByCate";
+	//2、数据
+	var data = cid;
+	//3、get 
+	url += "&epcChildId=" + data;
+//    var ajax=new Ajax(url, "get", null,parseJson);
+//    ajax.sendRequest();
+	$.ajax({
+		url:url,
+	    cache:false,
+	    success:function(html){
+	    	 parseJson(html);
+	    }
+	});
+}
+
+/**
+ * 数据当成json
+ */
+function parseJson(data) {
+	var showContent = document.getElementById("showContent");
+	var content = "";
+	var products = data["products"];
+	for (var i = 0; i < products.length; i++) {
+		var product = products[i];
+		var fileName = product.epFileName;
+		var epName = product.epName;
+		var epPrice = product.epPrice;
+		content += "<li><dl><dt><a href='product-view.html' target='_blank'>";
+		content += "<img src='images/product/" + fileName + "' /></a></dt>";
+		content += "<dd class='title'><a href='product-view.html' target='_blank'>" + epName + "</a></dd>";
+		content += "<dd class='price'>￥" + epPrice + "</dd>";
+		content += "</dl></li>";
+	}
+	showContent.innerHTML = content;
+}
+
+/**
+ * xml
+ */
+function parseXml(data) {
+	var showContent = document.getElementById("showContent");
+	var content = "";
+	var products = data.getElementsByTagName("product");
+	for (var i = 0; i < products.length; i++) {
+		var product = products[i];
+		var fileName = product.getElementsByTagName("epFileName")[0].firstChild.nodeValue;
+		var epName = product.getElementsByTagName("epName")[0].firstChild.nodeValue;
+		var epPrice = product.getElementsByTagName("epPrice")[0].firstChild.nodeValue;
+		content += "<li><dl><dt><a href='product-view.html' target='_blank'>";
+		content += "<img src='images/product/" + fileName + "' /></a></dt>";
+		content += "<dd class='title'><a href='product-view.html' target='_blank'>" + epName + "</a></dd>";
+		content += "<dd class='price'>￥" + epPrice + "</dd>";
+		content += "</dl></li>";
+	}
+	showContent.innerHTML = content;
+}

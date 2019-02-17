@@ -1,0 +1,214 @@
+package com.kba.service.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.ILiveContentDao;
+import com.kba.dao.ILiveRoomDetailDao;
+import com.kba.dao.ILiveTypeDao;
+import com.kba.dao.IPushTypeDao;
+import com.kba.dao.impl.LiveContentDao;
+import com.kba.dao.impl.LiveRoomDetatilDao;
+import com.kba.dao.impl.LiveTypeDao;
+import com.kba.dao.impl.PushTypeDao;
+import com.kba.entity.LiveContent;
+import com.kba.entity.LiveType;
+import com.kba.entity.PushType;
+import com.kba.service.IIndexService;
+import com.kba.util.KBaException;
+import com.kba.vo.LiveRoomDetailInfo;
+import com.kba.vo.LiveRoomsInfo;
+/**
+ * 首页服务层
+ * @author 钟强
+ * 
+ */
+public class IndexService implements IIndexService {
+   
+	private ILiveContentDao liveContentDao;
+	
+	private ILiveTypeDao liveTypeDao;
+	
+	private IPushTypeDao pushTypeDao;
+	
+	private ILiveRoomDetailDao liveRoomDetailDao;
+	
+	public IndexService(){
+		liveContentDao=LiveContentDao.getInstance();
+		liveTypeDao=LiveTypeDao.getInstance();
+		pushTypeDao=PushTypeDao.getInstance();
+		liveRoomDetailDao=LiveRoomDetatilDao.getInstance();
+	}
+	
+	/**
+	 * 根据直播类型查询相应直播内容
+	 */
+	@Override
+	public List<LiveContent> selectByLiveType(LiveContent liveContent) throws KBaException {
+		List<LiveContent> liveContents=null;
+		try {
+			liveContents=liveContentDao.querySingleByLiveTypeId(liveContent);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveContents;
+	}
+	
+    /**
+     * 查询所有直播类型
+     */
+	@Override
+	public List<LiveType> selectAllLiveType(LiveType liveType) throws KBaException {
+		List<LiveType> liveTypes=null;
+		try {
+			liveTypes=liveTypeDao.queryAll(liveType);	
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveTypes;
+	}
+    
+	 /**
+     * 查询所有直播内容
+     */
+	@Override
+	public List<LiveContent> selectAllLiveContent(LiveContent liveContent) throws KBaException {
+		List<LiveContent> liveContents=null;
+		try {
+			liveContents=liveContentDao.queryAll(liveContent);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveContents;
+	}
+	 /**
+     * 查询所有推送类型
+     */
+	@Override
+	public List<PushType> queryAllPushType(PushType entity) throws KBaException {
+		List<PushType> pushTypes=null;
+		try {
+			pushTypes=pushTypeDao.queryAll(entity);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return pushTypes;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> queryAllLiveRoomDetailInfo() throws KBaException {
+		
+		List<LiveRoomDetailInfo> liveRoomDetailInfos=null;
+		try {
+			liveRoomDetailInfos=liveRoomDetailDao.queryAllLiveRoomDetailInfo();
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveRoomDetailInfos;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByPushTypeId(PushType entity) throws KBaException {
+		List<LiveRoomDetailInfo> liveRoomDetailInfos=null;
+		try {
+			liveRoomDetailInfos=liveRoomDetailDao.selectAllByPushTypeId(entity);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveRoomDetailInfos;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByLiveCotentName(LiveContent entity) throws KBaException {
+		List<LiveRoomDetailInfo> liveRoomDetailInfos=null;
+		try {
+			liveRoomDetailInfos=liveRoomDetailDao.selectAllByLiveCotentName(entity);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveRoomDetailInfos;
+	}
+
+	@Override
+	public List<LiveRoomDetailInfo> selectAllByLiveTypeName(LiveType entity) throws KBaException {
+		List<LiveRoomDetailInfo> liveRoomDetailInfos=null;
+		try {
+			liveRoomDetailInfos=liveRoomDetailDao.selectAllByLiveTypeName(entity);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveRoomDetailInfos;
+	}
+
+	@Override
+	public LiveRoomsInfo selectLiveRoomsInfoByPushType(PushType pushType) throws KBaException {
+		List<LiveRoomDetailInfo> pushliveRoomDetailInfos=null;//保存所有正在推送列表中的所有房间信息
+		List<LiveRoomDetailInfo> liveRoomDetailInfos=null;//保存所有与该推送内容相关的所有房间信息
+		List<LiveRoomDetailInfo> liveRoomDetailInfosByContent=null;
+		List<LiveRoomDetailInfo> extraliveRoomDetailInfos=null;
+		LiveRoomsInfo liveRoomsInfo=new LiveRoomsInfo();
+		//1.查询正在推送的所有房间
+		pushliveRoomDetailInfos=selectLiveRoomDetailInfoByNum(this.selectAllByPushTypeId(pushType),4);
+		//保存发钱推送的直播间
+	    liveRoomsInfo.setPushType(pushType);
+	    liveRoomsInfo.setPushliveRoomDetailInfos(pushliveRoomDetailInfos);
+		if(pushliveRoomDetailInfos.size()<4){//位置不满
+			//2.查询与该推送内容相关的所有房间
+			liveRoomDetailInfosByContent=this.selectAllByLiveCotentName(spwan(pushType));
+			//3.删除正在推送的房间
+			liveRoomDetailInfos=this.delLiveRoomDetailInfo(liveRoomDetailInfosByContent);
+			//4.找出剩余的需推送的房间,按照直播分数高低
+			liveRoomDetailInfos=this.selectLiveRoomDetailInfoByNum(liveRoomDetailInfos,4-pushliveRoomDetailInfos.size());
+			//5.保存不是花钱推送的直播间
+			liveRoomsInfo.setLiveRoomDetailInfos(liveRoomDetailInfos);
+		}
+		if(pushliveRoomDetailInfos.size()+liveRoomDetailInfos.size()>=4){//位置满了
+			//剔除已经在推送的房间
+			extraliveRoomDetailInfos=this.delLiveRoomDetailInfo(liveRoomDetailInfosByContent);
+			extraliveRoomDetailInfos=this.selectLiveRoomDetailInfoByNum(extraliveRoomDetailInfos,4-pushliveRoomDetailInfos.size(),4);
+			liveRoomsInfo.setExtraliveRoomDetailInfos(extraliveRoomDetailInfos);
+		}
+		return liveRoomsInfo;
+	}
+	
+	private LiveContent spwan(PushType pushType){
+		LiveContent liveContent=new LiveContent();
+		liveContent.setLiveContentName(pushType.getPushName());
+		return liveContent;
+	}
+	
+	/**
+	 *查询指定数量的直播详细信息
+	 */
+	public List<LiveRoomDetailInfo> selectLiveRoomDetailInfoByNum(List<LiveRoomDetailInfo> list,int num){
+		return selectLiveRoomDetailInfoByNum(list, 0,num);
+	}
+	
+	/**
+	 *查询从指定位置开始，指定数量的直播详细信息
+	 */
+	public List<LiveRoomDetailInfo> selectLiveRoomDetailInfoByNum(List<LiveRoomDetailInfo> list,int start,int num) {
+		if(start<0||list==null) return null;
+		int length=list.size();
+		if(start>length) return null;
+		if(num<=0) return null;
+		if(start+num>list.size()){
+			return list.subList(start, length);
+		}else {
+			return list.subList(start, num);
+		}
+	}
+	/**
+	 *剔除正在推送的直播详细信息
+	 */
+	public List<LiveRoomDetailInfo> delLiveRoomDetailInfo(List<LiveRoomDetailInfo> list){
+		List<LiveRoomDetailInfo> listRoomDetailInfos=new Vector<LiveRoomDetailInfo>();
+		for (LiveRoomDetailInfo liveRoomDetailInfo : list) {
+			if(liveRoomDetailInfo.getPushList().getLiveRoomId()==null){
+				listRoomDetailInfos.add(liveRoomDetailInfo);
+			}
+		}
+		return listRoomDetailInfos;
+	}
+}

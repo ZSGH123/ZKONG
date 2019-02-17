@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：单杰
+创建时间：2019-01-15 
+修改时间：
+ -->
+<sqlStatements namespace="userGiftRecord">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+		SELECT * FORM USER_GIFT_RECORD
+	</sql>
+
+	<sql id="selectById">
+		SELECT * FORM USER_GIFT_RECORD WHERE USER_ID=?
+	</sql>
+
+	<sql id="insert">
+		INSERT INTO USER_GIFT_RECORD VALUES(USERGIFTID.nextval,?,?,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		UPDATE USER_GIFT_RECORD SET USER_GIFT_ID=?,LIVE_ROOM_ID=?,USER_ID=?,GIFT_TYPE_ID=?,GIFT_NUMBER=?,GIFT_TIME=?,ANCHOR_USER_ID=? WHERE USER_GIFT_ID=?
+	</sql>
+
+	<sql id="delete">
+		DELETE FROM USER_GIFT_RECORD WHERE USER_GIFT_ID=?
+	</sql>
+
+</sqlStatements>

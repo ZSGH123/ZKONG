@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>实名认证-个人中心-看吧</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/userpage.css"/>
+		<script type="text/javascript" src="js/jquery.uploadify-3.1.min.js"></script>
+		<script type="text/javascript" src="js/swfobject.js"></script>
+		<script type="text/javascript" src="js/authentication.js"></script>
+	
+	
+	</head>
+	<body style="background-color:#FFFFFF ;">
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		<div class="container">
+			<div class="col-md-12">
+				<h1>个人中心</h1>
+			</div>
+			<div class="col-md-2">
+			<ul class="nav nav-pills nav-stacked" role="tablist">
+  				<li  class="active"><a href="user-page.html">	
+  					<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+  						我的资料
+  					</a></li>
+  				<li><a href="my-messages.html">
+  					<i class="fa fa-envelope-o" aria-hidden="true"></i>
+  						我的消息
+  						<span class="badge">3</span>
+  					</a></li>
+  				<li><a href="my-book.html">
+  					<i class="fa fa-heart-o" aria-hidden="true"></i>
+  						我的订阅
+  					</a></li>
+  				<li><a href="my-level.html">
+  					<i class="fa fa-bookmark" aria-hidden="true"></i>
+  						我的等级
+  				</a></li>
+  				<li><a href="my-property.html">
+  						<i class="fa fa-credit-card" aria-hidden="true"></i>
+  						我的钱包
+  				</a></li>
+  				<li><a href="my-consume.html">
+	  					<i class="fa fa-jpy" aria-hidden="true"></i>
+  						 消费记录
+  				</a></li>
+  				<li><a href="my-exchange.html">
+  					<i class="fa fa-exchange" aria-hidden="true"></i>
+  						收益兑换
+  				</a></li>
+  				<li><a href="room-manage.html">
+  						<i class="fa fa-university" aria-hidden="true"></i>
+  						房间管理
+  				</a></li>
+				<li class="active"><a class="u_video" href="">
+						<i class="u_nav_icon"></i>
+						我要直播
+				</a></li>
+ 			</ul>
+			</div> 
+			<div class="col-md-10">
+			<div class="row">
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+						<h3 class="panel-title">实名认证</h3>
+					</div>
+					<div class="panel-body">
+						<form role="form" method="post" id="sureform" name="sureform">
+							<div class="form-group">
+								<label for="realName">真实姓名</label> <input type="text"
+									class="form-control" id="realName" name="realName"
+									placeholder="请输入您的真实姓名">
+							</div>
+							<div class="form-group">
+								<label for="email">邮箱地址</label> <input type="email"
+									class="form-control" id="email" name="email"
+									placeholder="请输入您的邮箱">
+							</div>
+							<div class="form-group">
+								<label for="familyAddress">家庭住址</label> <input type="text"
+									class="form-control" id="familyAddress" name="familyAddress"
+									placeholder="请输入您的家庭住址">
+							</div>
+							<div class="form-group">
+								<label for="idCard">身份证</label> <input type="text"
+									class="form-control" id="idCard" name="idCard"
+									placeholder="请输入您的身份证">
+							</div>
+							<div class="form-group">
+								<label for="idCardfile">电子身份证复印件</label>
+								<div class="input-group">
+									<input type="file" class="form-control" id="idCardfile"
+										name="idCardfile" multiple="true"> 
+										<span class="input-group-btn">
+										<button type="button" class="btn btn-success btn-sm"
+											name="upload" id="uploadbtn">上传</button>
+									</span>
+								</div>
+								<div id="fileQueue"></div>
+								<div id="showprogress">
+								     <div class='progress' style="height:10px; margin-bottom: 0px;display:none;" id="prog">
+											<div id="realprog" class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' style="width: 0%;font-size: 1px; line-height: 10px;">
+												上传进度:0%
+											</div>
+									</div>
+								</div>
+								<p class="help-block">请上传你的电子身份证复印件</p>
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-lg btn-block btn-warning"
+								name="submit" id="tijiao">提交</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+			
+			</div>
+		</div>
+		
+	</body>
+</html>

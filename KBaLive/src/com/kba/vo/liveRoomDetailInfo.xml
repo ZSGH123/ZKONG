@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：钟强
+创建时间：2019-01-21 
+修改时间：
+ -->
+<sqlStatements namespace="liveRoomDetailInfo">
+
+   	<sql id="selectAllByView">
+	  SELECT * FROM LIVEROOMINFOVIEW ORDER BY LIVE_ROOM_SCORE DESC
+	</sql>
+	
+	<sql id="selectAllByPushTypeId">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  PUSH_TYPE_ID= ? AND SYSDATE BETWEEN push_start_time AND push_end_time ORDER BY LIVE_ROOM_SCORE DESC
+     </sql>
+     
+     <sql id="selectAllByLiveCotentName">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  LIVE_CONTENT_NAME= ? ORDER BY LIVE_ROOM_SCORE DESC 
+     </sql>
+     <sql id="selectAllByLiveCotentId">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  LIVE_CONTENT_ID= ? ORDER BY LIVE_ROOM_SCORE DESC 
+     </sql>
+     <sql id="selectAllByLiveTypeName">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  LIVE_TYPE_NAME= ? ORDER BY LIVE_ROOM_SCORE DESC
+     </sql>
+     <sql id="selectAllByLiveTypeID">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  LIVE_TYPE_ID= ? ORDER BY LIVE_ROOM_SCORE DESC
+     </sql>
+     <sql id="selectByLiveRoomId">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  LIVE_ROOM_ID= ?
+     </sql>
+      <sql id="selectByAnchorId">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  ANCHOR_ID= ?
+     </sql>
+      <sql id="selectAllByAnnouncment">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  LIVE_ROOM_ANNOUNCEMENT= ?
+     </sql>
+      <sql id="selectAllByTitle">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  LIVE_ROOM_TITLE= ?
+     </sql>
+     <sql id="selectByUserName">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  USER_NAME= ?
+     </sql>
+     <sql id="selectALLPushRoom">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  PUSHROOMID IS NOT NULL ORDER BY LIVE_ROOM_SCORE DESC
+     </sql>
+      <sql id="selectALLMoHu">
+     SELECT * FROM LIVEROOMINFOVIEW WHERE  LIVE_CONTENT_NAME like ? 
+                                           OR   LIVE_TYPE_NAME like ?
+                                           OR LIVE_ROOM_ID like ?
+                                           OR  ANCHOR_ID like ?
+                                           OR  LIVE_ROOM_ANNOUNCEMENT like ?
+                                           OR  LIVE_ROOM_TITLE like ?
+                                           OR  USER_NAME like ? ORDER BY LIVE_ROOM_SCORE DESC 
+     </sql>
+</sqlStatements>

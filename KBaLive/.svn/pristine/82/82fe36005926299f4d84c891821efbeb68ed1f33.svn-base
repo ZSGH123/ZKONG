@@ -1,0 +1,54 @@
+package com.kba.service.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.ILiveContentDao;
+import com.kba.dao.ILiveTypeDao;
+import com.kba.dao.impl.LiveContentDao;
+import com.kba.dao.impl.LiveTypeDao;
+import com.kba.entity.LiveContent;
+import com.kba.entity.LiveType;
+import com.kba.service.IIndexService;
+import com.kba.util.KBaException;
+/**
+ * 首页服务层
+ * @author 钟强
+ *
+ */
+public class IndexService implements IIndexService {
+   
+	private ILiveContentDao liveContentDao;
+	
+	private ILiveTypeDao liveTypeDao;
+	
+	public IndexService(){
+		liveContentDao=LiveContentDao.getInstance();
+		liveTypeDao=LiveTypeDao.getInstance();
+	}
+	/**
+	 * 根据直播类型查询相应直播内容
+	 */
+	@Override
+	public List<LiveContent> selectByLiveType(LiveContent liveContent) throws KBaException {
+		try {
+		   return liveContentDao.querySingleByLiveTypeId(liveContent);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+    /**
+     * 查询所有直播类型
+     */
+	@Override
+	public List<LiveType> selectAllLiveType(LiveType liveType) throws KBaException {
+		List<LiveType> liveTypes=null;
+		try {
+			liveTypes=liveTypeDao.queryAll(liveType);	
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveTypes;
+	}
+
+}

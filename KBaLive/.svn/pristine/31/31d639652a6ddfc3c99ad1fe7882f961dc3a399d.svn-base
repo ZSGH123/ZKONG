@@ -1,0 +1,18 @@
+.user-gerenzhuye-title {
+    width: 100%;
+    margin-bottom: 5px;
+    background: #f5f5f5;
+}
+.user-gerenzhuye-icon {
+   	float: left;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 0 5px 0 20px;
+    vertical-align: middle;
+    background-position: 0 0;
+    background-image: url(../img/用户.png);
+}
+.user-gerenzhuye-title h4{
+	float: left;
+}

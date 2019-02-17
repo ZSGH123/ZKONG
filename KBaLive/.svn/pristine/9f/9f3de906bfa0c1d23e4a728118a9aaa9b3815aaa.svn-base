@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：单杰
+创建时间：2019-01-15 
+修改时间：
+ -->
+<sqlStatements namespace="uploadVideoInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+		SELECT * FROM UPLOAD_VIDEO_INFO
+	</sql>
+
+	<sql id="selectById">
+		SELECT * FROM UPLOAD_VIDEO_INFO WHERE UPLOAD_VIDEO_ID=?
+	</sql>
+
+	<sql id="insert">
+		INSERT INTO UPLOAD_VIDEO_INFO VALUES(UPLOADVIDEOID.nextval,?,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		UPDATE UPLOAD_VIDEO_INFO SET UPLOAD_VIDEO_ID=?,UPLOAD_VIDEO_NAME=?,USER_ID=?,UPLOAD_VIDEO_ADDRESS=?,UPLOAD_VIDEO_ICON=?,UPLOAD_VIDEO_TIME=?,VIDEO_TYPE_ID=? WHERE UPLOAD_VIDEO_ID=?
+	</sql>
+
+	<sql id="delete">
+		DELETE FROM UPLOAD_VIDEO_INFO WHERE UPLOAD_VIDEO_ID=?
+	</sql>
+
+</sqlStatements>

@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IUserPropertyDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.UserProperty;
+
+/**
+ * 用户钱包dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class UserPropertyDao extends AbstractBaseDao implements IUserPropertyDao,ResultSetHandler<List<UserProperty>>{
+
+	@Override
+	public List<UserProperty> queryAll(UserProperty entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserProperty querySingle(UserProperty entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(UserProperty entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(UserProperty entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(UserProperty entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<UserProperty> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

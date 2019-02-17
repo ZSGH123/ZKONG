@@ -1,0 +1,49 @@
+package com.kba.entity;
+/**
+ * k币类型表
+ * @author 钟强
+ * 创建时间：2019-01-13
+ * 修改时间：
+ */
+public class KType {
+//	K币类型编号	k_type_id
+//	k币类型名称	k_type_name
+//	k币充值比率	k_exchange_rate
+//	k币提现比率	k_withdraw_rate
+
+	private String kTypeId;//	K币类型编号
+	private String kTypeName;//	k币类型名称
+	private double kExchangeRate;//	k币充值比率
+	private double kWithdrawRate;//	k币提现比率	
+	@Override
+	public String toString() {
+		return "k币类型 [K币类型编号=" + kTypeId + ", k币类型名称=" + kTypeName + ", k币充值比率=" + kExchangeRate
+				+ ", k币提现比率=" + kWithdrawRate + "]";
+	}
+	public String getkTypeId() {
+		return kTypeId;
+	}
+	public void setkTypeId(String kTypeId) {
+		this.kTypeId = kTypeId;
+	}
+	public String getkTypeName() {
+		return kTypeName;
+	}
+	public void setkTypeName(String kTypeName) {
+		this.kTypeName = kTypeName;
+	}
+	public double getkExchangeRate() {
+		return kExchangeRate;
+	}
+	public void setkExchangeRate(double kExchangeRate) {
+		this.kExchangeRate = kExchangeRate;
+	}
+	public double getkWithdrawRate() {
+		return kWithdrawRate;
+	}
+	public void setkWithdrawRate(double kWithdrawRate) {
+		this.kWithdrawRate = kWithdrawRate;
+	}
+	
+	
+}

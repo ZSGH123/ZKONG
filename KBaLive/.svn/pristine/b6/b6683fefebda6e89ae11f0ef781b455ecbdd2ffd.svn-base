@@ -1,0 +1,13 @@
+package com.kba.dao;
+
+import com.kba.entity.LiveRoom;
+
+/**
+ * 直播房间dao接口
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public interface ILiveRoomDao extends IBaseDao<LiveRoom> {
+
+}

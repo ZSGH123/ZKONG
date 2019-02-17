@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<sqlStatements namespace="anchorLevel">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	     select * from anchor_level
+	</sql>
+
+	<sql id="selectById">
+		select * from anchor_level where anchor_level_id=?
+	</sql>
+
+	<sql id="insert">
+		insert into anchor_info values(ANCHORLEVELID.nextval,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		update anchor_level set anchor_level_name= ?,live_mintotal_time= ?,
+		live_maxtotal_time= ?,anchor_level_remark= ? where anchor_level_id=?
+	</sql>
+
+	<sql id="delete">
+		delete from anchor_level where anchor_level_id=?
+	</sql>
+
+</sqlStatements>

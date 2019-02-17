@@ -1,0 +1,37 @@
+package com.kba.service;
+
+import java.util.List;
+
+import com.kba.entity.LiveContent;
+import com.kba.entity.LiveType;
+import com.kba.util.KBaException;
+
+/**
+ * 首页业务层
+ * @author 钟强
+ *
+ */
+public interface IIndexService {
+	/**
+	 * 查询直播内容-根据分类111
+	 * @param user
+	 * @return
+	 * @throws MyException
+	 */
+	public List<LiveContent> selectByLiveType(LiveContent liveContent) throws KBaException;
+	/**
+	 * 查询所有直播类型
+	 * @param user
+	 * @return
+	 * @throws MyException
+	 */
+	public List<LiveType> selectAllLiveType(LiveType liveType)throws KBaException;
+	/**
+	 * 查询所有直播内容
+	 * @param user
+	 * @return
+	 * @throws MyException
+	 */
+	public List<LiveContent> selectAllLiveContent(LiveContent liveContent) throws KBaException ;
+	
+}

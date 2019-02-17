@@ -1,0 +1,57 @@
+$(function(){
+	$("#loginManager").click(function(){
+		if($("#name").val().length==0){
+			confirm("用户名不能为空");
+		}else{
+			$.ajax({
+                url:"managerInfoAction.do?command=checkManagerByName",
+                type:"post",
+                dataType:"text",
+                async:true,
+                data:{
+                     backStageManagerName:$("#name").val()
+                },
+                success:function(result){
+                     if(result!="管理员已存在"){
+                    	 confirm("用户不存在");      
+                     }else{
+                    	 if($("#password").val().length==0){
+                    		 confirm("用户密码不能为空");
+                    	 }else{
+             					$.ajax({
+             						url:"managerInfoAction.do?command=checkManagerByPassword",
+             						type:"post",
+             						dataType:"text",
+             						async:true,
+             						data:{
+             							backStageManagerName:$("#name").val()
+             						},
+             						success:function(result){
+             							if(result!=$("#password").val()){
+             								confirm("密码输入错误");      
+             							}else{
+             								$.post("managerInfoAction.do?command=login",{backStageManagerName:$("#name").val(),backStageManagerPassword:$("#password").val()},function(result){
+             									if(!result){
+             										confirm("登录失败");
+             									}else{
+             										$(location).prop('href', 'backStageIndexAction.do');
+             									}
+             								});
+             								}
+             							},
+             						error:function(XMLHttpRequest,textStatus,errorThrown){
+             							console.log("登录失败");
+             						}
+             					});
+                    	 }
+                }
+                },
+                error:function(XMLHttpRequest,textStatus,errorThrown){
+                    console.log("登录失败");
+                }
+            });
+		}
+	});
+});
+
+

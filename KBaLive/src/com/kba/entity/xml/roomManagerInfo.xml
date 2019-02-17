@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：单杰
+创建时间：2019-01-15 
+修改时间：
+ -->
+<sqlStatements namespace="roomManagerInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+		SELECT * FROM ROOM_MANAGER_INFO
+	</sql>
+
+	<sql id="selectById">
+		SELECT * FROM ROOM_MANAGER_INFO WHERE ROOM_MANAGER_ID=?
+	</sql>
+
+	<sql id="insert">
+		INSERT INTO ROOM_MANAGER_INFO VALUES(ROOMMANAGERID.nextval,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		UPDATE ROOM_MANAGER_INFO set ROOM_MANAGER_ID=?,USER_ID=?,LIVE_ROOM_ID=?,ROOM_MANAGER_WORK_TIME=?,ROOM_MANAGER_REMARK=? where ROOM_MANAGER_ID=?
+	</sql>
+
+	<sql id="delete">
+		DELETE FROM ROOM_MANAGER_INFO WHERE ROOM_MANAGER_ID=?
+	</sql>
+
+</sqlStatements>

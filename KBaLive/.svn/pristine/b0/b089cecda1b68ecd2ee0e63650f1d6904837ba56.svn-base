@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IPushMessageRecordDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.PushMessageRecord;
+
+/**
+ * 推送消息记录dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class PushMessageRecordDao extends AbstractBaseDao implements IPushMessageRecordDao,ResultSetHandler<List<PushMessageRecord>>{
+
+	@Override
+	public List<PushMessageRecord> queryAll(PushMessageRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PushMessageRecord querySingle(PushMessageRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(PushMessageRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(PushMessageRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(PushMessageRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<PushMessageRecord> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

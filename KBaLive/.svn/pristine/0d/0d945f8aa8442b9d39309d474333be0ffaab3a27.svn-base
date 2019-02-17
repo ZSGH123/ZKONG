@@ -1,0 +1,176 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kba.entity.LiveContent;
+import com.kba.entity.LiveRoom;
+import com.kba.entity.LiveType;
+import com.kba.entity.PushType;
+import com.kba.service.IIndexService;
+import com.kba.service.ILiveRoomService;
+import com.kba.service.impl.IndexService;
+import com.kba.service.impl.LiveRoomService;
+import com.kba.util.KBaException;
+import com.kba.vo.LiveRoomsInfo;
+
+/**
+ * 网站首页：响应整个程序的首页请求 作者：赵科 时间：2019-1-15
+ */
+public class IndexServlet extends KBaBaseServlet {
+
+	private static final long serialVersionUID = 1L;
+
+	private IIndexService indexService;
+	private ILiveRoomService liveRoomService;
+
+	public IndexServlet() {
+		indexService = new IndexService();
+		liveRoomService = new LiveRoomService();
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+	}
+
+	/**
+	 * 前台首页
+	 */
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			this.initLeftAllLiveType(req,resp,indexService);
+			// 1.初始化直播分类
+			this.initLiveContent(req, resp);
+			// 2.初始化直播房间显示
+			this.initLiveRoom(req, resp);
+			// 3.初始化所有推送直播房间显示
+			this.initPushRoomShow(req, resp);
+			req.getRequestDispatcher("index.jsp").forward(req, resp);	
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}
+	}
+
+	/**
+	 * 初始化所有推送直播房间显示
+	 * 
+	 * @param req
+	 * @param resp
+	 * @throws KBaException
+	 */
+	private void initPushRoomShow(HttpServletRequest req, HttpServletResponse resp) throws KBaException {
+		HttpSession session = this.getSession();
+		List<LiveRoomsInfo> liveRoomsInfos = new Vector<LiveRoomsInfo>();
+		List<PushType> pushTypes = null;
+		pushTypes = indexService.queryAllPushType(null);
+		for (PushType pushType : pushTypes) {
+			LiveRoomsInfo liveRoomsInfo = new LiveRoomsInfo();
+			liveRoomsInfo = indexService.selectLiveRoomsInfoByPushType(pushType);
+			// System.out.println(pushType.getPushName()+":["+liveRoomsInfo+"]");
+			liveRoomsInfos.add(liveRoomsInfo);
+		}
+		session.setAttribute("liveRoomsInfos", liveRoomsInfos);
+	}
+
+	/**
+	 * 初始化直播房间显示
+	 * 
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws KBaException
+	 */
+	private void initLiveRoom(HttpServletRequest req, HttpServletResponse resp) throws KBaException {
+		HttpSession session = this.getSession();
+		List<LiveRoom> liveRooms = null;
+		liveRooms = liveRoomService.selectAllLiveRoomSorted(null);
+		session.setAttribute("liveRoomsTop", liveRooms);
+
+	}
+
+	/**
+	 * 初始化直播内容
+	 * 
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws KBaException
+	 */
+	public void initLiveContent(HttpServletRequest req, HttpServletResponse resp) throws KBaException {
+		HttpSession session = this.getSession();
+		List<LiveType> liveTypes = null;
+		List<LiveContent> liveContents = null;
+		List<LiveContent> liveContentsDb = null;
+		List<LiveRoom> liveRooms = null;
+
+		liveTypes = indexService.selectAllLiveType(null);
+		getSession().setAttribute("bg", liveTypes.get(0).getLiveTypeRemark());
+		liveContentsDb = indexService.selectAllLiveContent(null);
+		session.setAttribute("liveContents", this.selectByLiveType(liveContentsDb, 14));
+		for (int i = 0; i < liveTypes.size(); i++) {
+			LiveType liveType = liveTypes.get(i);
+			// System.out.println("类型"+liveType);
+			session.setAttribute("liveType" + i, liveType);
+			liveContents = this.selectByLiveType(liveContentsDb, liveType);
+			session.setAttribute("liveContents" + i, liveContents);
+			if (liveContents != null && liveContents.size() > 0) {
+				liveRooms = liveRoomService.selectByLiveContentID(spwan(liveContents.get(0)), 3);
+			}
+			session.setAttribute("liveRooms" + i, liveRooms);
+		}
+
+	}
+
+	/**
+	 * 封装直播内容
+	 * 
+	 * @param liveType
+	 * @return
+	 */
+	public LiveContent spwan(LiveType liveType) {
+		LiveContent liveContent = new LiveContent();
+		liveContent.setLiveTypeId(liveType.getLiveTypeId());
+		return liveContent;
+	}
+
+	private LiveRoom spwan(LiveContent liveContent) {
+		LiveRoom liveRoom = new LiveRoom();
+		liveRoom.setLiveContentId(liveContent.getLiveContentId());
+		return liveRoom;
+	}
+
+	/**
+	 * 根据直播类型查询相应直播内容
+	 */
+	public List<LiveContent> selectByLiveType(List<LiveContent> liveContentsDb, LiveType liveType) {
+		List<LiveContent> liveContents = new Vector<LiveContent>();
+		for (LiveContent liveContent2 : liveContentsDb) {
+			if (liveContent2.getLiveTypeId().equals(liveType.getLiveTypeId())) {
+				liveContents.add(liveContent2);
+			}
+		}
+		return liveContents;
+	}
+
+	/**
+	 * 查询指定数量的直播内容
+	 */
+	public List<LiveContent> selectByLiveType(List<LiveContent> liveContentsDb, int num) {
+		if (num > liveContentsDb.size()) {
+			return liveContentsDb;
+		} else {
+			return liveContentsDb.subList(0, num);
+		}
+	}
+}

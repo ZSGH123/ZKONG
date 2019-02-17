@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.ILiveTypeDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.LiveType;
+
+/**
+ * 直播类型dao
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public class LiveTypeDao  extends AbstractBaseDao implements ILiveTypeDao,ResultSetHandler<List<LiveType>>{
+
+	@Override
+	public List<LiveType> queryAll(LiveType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LiveType querySingle(LiveType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(LiveType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(LiveType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(LiveType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<LiveType> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

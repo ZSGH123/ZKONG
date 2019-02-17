@@ -1,0 +1,60 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/xcConfirm.css"/>
+		<script src="js/jquery-1.8.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.sgBtn{width: 135px; height: 35px; line-height: 35px; margin-left: 10px; margin-top: 10px; text-align: center; background-color: #0095D9; color: #FFFFFF; float: left; border-radius: 5px;}
+		</style>
+		</head>
+	<body>
+		<div id="" class="xcConfirm">
+			<div class="xc_layer">
+			</div>
+			<div class="popBox">
+				<div class="ttBox">
+					<a class="clsBtn"></a>
+					<span class="tt">
+						新增管理员信息
+					</span>
+				</div>
+				<div class="ttBox">
+					<span>管理员名称：
+					<input type="text" name="muname" id="muname" value="" maxlength="15"/>
+					</span>
+				</div>
+				<div class="ttBox">
+					<span>管理员密码：
+					<input type="password" name="mupsd" id="mupsd" maxlength="10"/>	
+					</span>
+				</div>
+				<div class="ttBox">
+					<span>管理员职位：
+					<input type="text" name="mposition" id="mposition" value="" />
+					</span>
+				</div>
+				<div class="ttBox" id="remark">
+					<span class="manager_remark">管理员备注：
+					<input type="text" name="mremark" id="mremark" value="" />
+					</span>
+				</div>
+				<div class="btnArea">
+					<div class="btnGroup">
+						<button type="submit" class="sgBtn ok">
+							提交
+						</button>
+						<button type="submit" class="sgBtn cancel">
+							取消
+						</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</body>
+</html>

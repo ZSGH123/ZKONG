@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="userWeiboInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	select * from user_weibo_info
+	</sql>
+
+	<sql id="selectById">
+	select * from user_weibo_info where user_weibo_id= ?	
+	</sql>
+
+	<sql id="insert">
+	insert into user_weibo_info values(?,?,?,?,?)	
+	</sql>
+
+	<sql id="update">
+	update user_weibo_info set user_weibo_name = ?, user_weibo_icon = ?, user_id = ?, user_weibo_remark = ? where user_weibo_id = ?	
+	</sql>
+
+	<sql id="delete">
+	delete from user_weibo_info where user_weibo_id= ?	
+	</sql>
+
+</sqlStatements>

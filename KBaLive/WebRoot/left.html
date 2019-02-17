@@ -1,0 +1,186 @@
+<%@page pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/left.css"/>
+		<script type='text/javascript' src='js/left.js'></script>
+		<script type="text/javascript">
+			 $(function(){
+			     //颜色
+				function ChangeColor(){
+					var liquanbu=document.getElementsByClassName("liquanbu");
+					for(var i=0;i<liquanbu.length;i++){
+						liquanbu[i].onmouseover=function(){
+							this.style.color="#fff";
+						}
+						liquanbu[i].onmouseleave=function(){
+							this.style.color="#f60";
+						}
+					}
+				}
+				
+				ChangeColor();
+			 });
+		</script>
+	</head>
+	<body>
+		<div id="left">
+			<div id="left_button">
+				<div id="left_button2" onclick="ChangeLeft()">
+					<
+				</div>
+			</div>
+			<div id="left_context">
+				<a href="#">
+					<div id="left_context_a" class="leftContext">
+						<div class="left_context_head" style="background: url(leftimgs/lt1.png) no-repeat 0;"></div>
+						<span>我的关注</span>
+					</div>
+				</a>
+				<a href="#">
+					<div id="left_context_b" class="leftContext">
+						<div class="left_context_head" style="background: url(leftimgs/lt8.png) no-repeat 0;"></div>
+						<span>排行榜</span>
+					</div>
+				</a>
+				<a href="#">
+					<div id="left_context_c" class="leftContext">
+						<div class="left_context_head" style="background: url(leftimgs/lt3.png) no-repeat 0;"></div>
+						<span>页游中心</span>
+					</div>
+				</a>
+				<a href="#">
+					<div id="left_context_d" class="leftContext">
+						<div class="left_context_head" style="background: url(leftimgs/lt4.png) no-repeat 0;"></div>
+						<span>赛事</span>
+						<div class="left_context_right" style="background: url(leftimgs/lt5.png) no-repeat 0; margin-right: 20px;"></div>
+					    <div class="left_context_right" style="background: url(leftimgs/lt6.png) no-repeat 0; margin-right: 10px;"></div>
+					    <div class="left_context_right" style="background: url(leftimgs/lt7.png) no-repeat 0; margin-right: 10px;"></div>
+					</div>
+				</a>
+				<div id="left_context_left" class="left_context_middle">
+					栏目
+				</div>
+				<div id="left_context_right" class="left_context_middle">
+					发现
+				</div>
+				<div class="biaoti">
+					<div></div>
+					网游竞技
+				</div>
+				<ul class="leftul1">
+					<li><a href="#">英雄联盟</a></li>
+					<li><a href="#">穿越火线</a></li>
+					<li><a href="#">DOTA2</a></li>
+					<li><a href="#">棋牌娱乐</a></li>
+					<li><a href="#">DNF</a></li>
+					<li><a href="#">炉石传说</a></li>
+					<li><a href="#">堡垒之夜</a></li>
+					<li><a href="#">CS:GO</a></li>
+					<li><a href="#">Artifact</a></li>
+					<li><a href="#">DOTA</a></li>
+					<li><a href="#">魔兽世界</a></li>
+					<li><a href="#">逆水寒</a></li>
+					<li><a href="#">魔兽争霸</a></li>
+					<li><a href="#">我的世界</a></li>
+					<li class="liquanbu" style="color: #f60;">全部>></li>
+				</ul>
+				<div class="biaoti">
+					<div></div>
+					单机热游
+				</div>
+				<ul class="leftul1">
+					<li><a href="#">绝地求生</a></li>
+					<li><a href="#">主机游戏</a></li>
+					<li><a href="#">怀旧游戏</a></li>
+					<li><a href="#">决斗游戏</a></li>
+					<li><a href="#">战地风云</a></li>
+					<li><a href="#">黄牌空战</a></li>
+					<li><a href="#">ATLAS</a></li>
+					<li><a href="#">探灵笔记</a></li>
+					<li class="liquanbu" style="color: #f60;">全部>></li>
+				</ul>
+				<div class="biaoti">
+					<div></div>
+					手游休闲
+				</div>
+				<ul class="leftul1">
+					<li><a href="#">王者荣耀</a></li>
+					<li><a href="#">刺激战争</a></li>
+					<li><a href="#">CF手游</a></li>
+					<li><a href="#">QQ飞车</a></li>
+					<li><a href="#">火影忍者</a></li>
+					<li><a href="#">新游中心</a></li>
+					<li><a href="#">欢乐麻将</a></li>
+					<li><a href="#">综合手游</a></li>
+					<li><a href="#">狼人杀专区</a></li>
+					<li><a href="#">闹闹天宫</a></li>
+					<li><a href="#">全军出击</a></li>
+					<li class="liquanbu" style="color: #f60;">全部>></li>
+				</ul>
+				<div class="biaoti">
+					<div></div>
+					娱乐天地
+				</div>
+				<ul class="leftul1">
+					<li><a href="#">颜值</a></li>
+					<li><a href="#">星娱</a></li>
+					<li><a href="#">二次元</a></li>
+					<li><a href="#">户外</a></li>
+					<li><a href="#">美食</a></li>
+					<li><a href="#">音乐</a></li>
+					<li><a href="#">一起看</a></li>
+					<li><a href="#">原创IP</a></li>
+					<li class="liquanbu" style="color: #f60;">全部>></li>
+				</ul>
+				<div class="biaoti">
+					<div></div>
+					科技教育
+				</div>
+				<ul class="leftul1">
+					<li><a href="#">数码科技</a></li>
+					<li><a href="#">鱼教</a></li>
+					<li><a href="#">科普</a></li>
+					<li><a href="#">军事</a></li>
+					<li><a href="#">汽车</a></li>
+					<li><a href="#">纪录片</a></li>
+					<li><a href="#">体育赛场</a></li>
+					<li class="liquanbu" style="color: #f60;">全部>></li>
+				</ul>
+				<div class="biaoti">
+					<div></div>
+					语音直播
+				</div>
+				<ul class="leftul1">
+					<li><a href="#">FM233</a></li>
+					<li><a href="#">音乐电台</a></li>
+					<li><a href="#">连麦互动</a></li>
+					<li><a href="#">情感频道</a></li>
+					<li><a href="#">游戏陪玩</a></li>
+					<li class="liquanbu" style="color: #f60;">全部>></li>
+				</ul>
+				<div class="biaoti">
+					<div></div>
+					正能量
+				</div>
+				<ul class="leftul1" style="margin-bottom: 15px;">
+					<li style="margin-bottom: 15px;">正能量</li>
+				</ul>
+				<div id="left_bottom">
+					<a href="#">直播指导</a>
+					<a href="#">客服支持</a>
+					<a href="#">1318举报</a>
+				</div>
+			</div>
+		</div>
+		<div id="left_model">
+			<div id="left_model_button" >
+				<div id="left_model_button2" onclick="ChangeLeft()">
+					>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

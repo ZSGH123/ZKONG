@@ -1,0 +1,2 @@
+function openManagerInsert() {
+　　window.open ("manager-insert.jsp","新增管理员","height=450, width=700, top=300,left=300,toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no")}

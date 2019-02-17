@@ -1,0 +1,96 @@
+package com.kba.service.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.impl.GiftInfoDao;
+import com.kba.entity.GiftInfo;
+import com.kba.service.IBackStageGiftInfoService;
+import com.kba.util.KBaException;
+
+/**
+ * 后台礼物信息业务
+ * @author 单杰
+ * 创建时间：2019-1-24
+ * 修改时间:
+ */
+public class BackStageGiftInfoService implements IBackStageGiftInfoService{
+	private GiftInfoDao giftInfoDao;
+	
+    public BackStageGiftInfoService() {
+		this.giftInfoDao=GiftInfoDao.getInstance();
+	}
+    /**
+     * 查询所有礼物信息
+     */
+    public List<GiftInfo> selectAllGiftInfo(GiftInfo giftInfo) throws KBaException {
+		List<GiftInfo> giftInfos=null;
+		try {
+			giftInfos=giftInfoDao.queryAll(giftInfo);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return giftInfos;
+	}
+
+    /**
+     * 新增礼物信息
+     */
+    public GiftInfo insertGiftInfo(GiftInfo giftInfo) throws KBaException {
+		try {
+			// 检查
+			GiftInfo giftInfoo=giftInfoDao.querySingle(giftInfo);
+			if (giftInfoo == null) {// 没有，则保存
+				int res = giftInfoDao.insert(giftInfo);
+				if (res > 0) {// 成功
+					return giftInfoDao.querySingle(giftInfo);
+				}
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+	/**
+	 * 修改礼物信息
+	 */
+	public GiftInfo updateGiftInfo(GiftInfo giftInfo) throws KBaException {
+		try {
+			//更新
+			int res=giftInfoDao.update(giftInfo);
+			if(res>0){ //成功
+				return giftInfoDao.querySingle(giftInfo);
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+	
+	/**
+	 * 删除礼物信息
+	 */
+	public GiftInfo deleteGiftInfo(GiftInfo giftInfo) throws KBaException {
+		try {
+			int res=giftInfoDao.delete(giftInfo);
+			if(res>0){
+				return giftInfo;
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+	/**
+	 * 通过礼物id查询礼物
+	 */
+	public GiftInfo selectGiftInfoById(GiftInfo giftInfo) throws KBaException {
+		try {
+			return giftInfoDao.querySingle(giftInfo);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+}

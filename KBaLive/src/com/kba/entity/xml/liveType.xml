@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：zkong
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="liveType">
+		<!-- SQL语句 -->
+	<sql id="selectAll">
+	  SELECT * FROM LIVE_TYPE
+	</sql>
+
+	<sql id="selectById">
+		 SELECT * FROM LIVE_TYPE WHERE LIVE_TYPE_ID= ? 
+	</sql>
+
+	<sql id="insert">
+		 INSERT INTO LIVE_TYPE VALUES(LIVETYPEID.nextval,?,?)
+	</sql>
+
+	<sql id="update">
+		 update LIVE_TYPE set LIVE_TYPE_NAME = ?, LIVE_TYPE_REMARK = ? where LIVE_TYPE_ID = ?
+	</sql>
+
+	<sql id="delete">
+		delete from LIVE_TYPE where LIVE_TYPE_ID= ? 
+	</sql>
+</sqlStatements>

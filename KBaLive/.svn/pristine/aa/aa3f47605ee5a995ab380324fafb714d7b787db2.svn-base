@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：单杰
+创建时间：2019-01-15 
+修改时间：
+ -->
+<sqlStatements namespace="userInfo">
+
+   <sql id="selectAll">
+    SELECT * FROM USER_INFO
+   </sql>
+   
+   <sql id="selectById">
+     SELECT * FROM USER_INFO WHERE USER_ID= ? 
+   </sql>
+   
+   <sql id="selectByName">
+     SELECT * FROM USER_INFO WHERE USER_NAME= ? 
+   </sql>
+   
+   <sql id="selectByPhoneNumber">
+     SELECT * FROM USER_INFO WHERE USER_PHONENUMBER = ? 
+   </sql>
+   
+   <sql id="update">
+    update USER_INFO set USER_PHONENUMBER = ?, USER_NAME = ?,USER_PASSWORD = ?,USER_REALNAME = ?,
+             USER_SEX = ?,USER_IDCARD = ?,USER_WEIBO_ID = ?,USER_QQ_ID = ?,USER_ICON = ?,
+	         USER_ALIPAY = ?,USER_BANK_CARD = ?, USER_REMARK = ? where USER_ID = ?
+   </sql>
+   
+   <sql id="insert">
+    INSERT INTO USER_INFO VALUES(USERID.nextval,?,?,?,?,?,?,?,?,?,?,?,?)
+   </sql> 
+    
+   <sql id="delete">
+    delete from USER_INFO where USER_ID= ? 
+   </sql>   
+</sqlStatements>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validates [
+<!ELEMENT validates (validate+)>
+<!ELEMENT validate (#PCDATA)>
+<!ATTLIST validate method CDATA #REQUIRED>
+]>
+<validates>
+	<validate method="">/shopping.jsp</validate>
+	<validate method="addShopCar">/GoodesAction</validate>
+	<validate method="toModify">/manage/user/userAction</validate>
+</validates>

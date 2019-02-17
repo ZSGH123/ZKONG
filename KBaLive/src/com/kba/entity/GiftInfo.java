@@ -1,0 +1,65 @@
+package com.kba.entity;
+
+/**
+ * 礼物信息表
+ * @author 赵科
+ * 时间：2019-1-13
+ */
+public class GiftInfo {
+
+	private String giftId; //礼物编号
+	private String giftName; //礼物名称 
+	private int giftPrice; //礼物价格
+	private String kTypeId;  //K币类型编号
+	private String giftIconAddress; //礼物图片地址
+	private String giftAcctionAddress; //礼物特效地址
+	private String giftInfoRemark;  //礼物信息备注
+	public String getGiftId() {
+		return giftId;
+	}
+	@Override
+	public String toString() {
+		return "礼物信息 [礼物编号=" + giftId + ", 礼物名称=" + giftName + ", 礼物价格=" + giftPrice + ", K币类型编号="
+				+ kTypeId + ", 礼物图片地址=" + giftIconAddress + ", 礼物特效地址=" + giftAcctionAddress
+				+ ", 礼物信息备注=" + giftInfoRemark + ", toString()=" + super.toString() + "]";
+	}
+	public void setGiftId(String giftId) {
+		this.giftId = giftId;
+	}
+	public String getGiftName() {
+		return giftName;
+	}
+	public void setGiftName(String giftName) {
+		this.giftName = giftName;
+	}
+	public int getGiftPrice() {
+		return giftPrice;
+	}
+	public void setGiftPrice(int giftPrice) {
+		this.giftPrice = giftPrice;
+	}
+	public String getkTypeId() {
+		return kTypeId;
+	}
+	public void setkTypeId(String kTypeId) {
+		this.kTypeId = kTypeId;
+	}
+	public String getGiftIconAddress() {
+		return giftIconAddress;
+	}
+	public void setGiftIconAddress(String giftIconAddress) {
+		this.giftIconAddress = giftIconAddress;
+	}
+	public String getGiftAcctionAddress() {
+		return giftAcctionAddress;
+	}
+	public void setGiftAcctionAddress(String giftAcctionAddress) {
+		this.giftAcctionAddress = giftAcctionAddress;
+	}
+	public String getGiftInfoRemark() {
+		return giftInfoRemark;
+	}
+	public void setGiftInfoRemark(String giftInfoRemark) {
+		this.giftInfoRemark = giftInfoRemark;
+	}
+}

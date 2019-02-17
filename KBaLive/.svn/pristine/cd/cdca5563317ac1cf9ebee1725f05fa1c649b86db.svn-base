@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.ITransformRecordDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.TransformRecord;
+
+/**
+ * 礼物转K币记录dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class TransformRecordDao extends AbstractBaseDao implements ITransformRecordDao,ResultSetHandler<List<TransformRecord>>{
+
+	@Override
+	public List<TransformRecord> queryAll(TransformRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TransformRecord querySingle(TransformRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(TransformRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(TransformRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(TransformRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<TransformRecord> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

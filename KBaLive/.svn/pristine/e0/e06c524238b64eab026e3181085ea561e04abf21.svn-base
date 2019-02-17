@@ -1,0 +1,32 @@
+package com.kba.action;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+/**
+ * 网站首页：响应整个程序的首页请求 
+ * 作者：赵科
+ * 时间：2019-1-15
+ */
+public class IndexServlet extends KBaBaseServlet{
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,96 @@
+package com.kba.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.entity.AnchorInfo;
+import com.kba.entity.LiveContent;
+import com.kba.entity.LiveRoom;
+import com.kba.entity.LiveType;
+import com.kba.entity.PushType;
+import com.kba.entity.UserInfo;
+import com.kba.vo.LiveRoomDetailInfo;
+/**
+ * 直播房间详细细节dao接口
+ * @author 钟强
+ *
+ */
+public interface ILiveRoomDetailDao {
+	/**
+	 * 通过视图查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoomDetailInfo> queryAllLiveRoomDetailInfo() throws SQLException;
+	/**
+	 * 通过推送类型id查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByPushTypeId(PushType entity) throws SQLException;
+	/**
+	 * 查询所有推送直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoomDetailInfo> selectALLPushRoom(PushType entity) throws SQLException;
+	/**
+	 * 通过直播内容名称查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByLiveCotentName(LiveContent entity) throws SQLException;
+	/**
+	 * 通过直播类型名称查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByLiveTypeName(LiveType entity) throws SQLException;
+	/**
+	 * 通过直播类型ID查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByLiveTypeID(LiveType entity) throws SQLException;
+	/**
+	 * 通过直播房间id查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public LiveRoomDetailInfo selectByLiveRoomId(LiveRoom entity) throws SQLException;
+	/**
+	 * 通过主播id查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public LiveRoomDetailInfo selectByAnchorId(AnchorInfo entity) throws SQLException;
+	/**
+	 * 通过主播名字查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public LiveRoomDetailInfo selectByUserName(UserInfo entity) throws SQLException;
+	/**
+	 * 通过直播房间公高查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByAnnouncment(LiveRoom entity) throws SQLException;
+	/**
+	 * 通过直播房间标题查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByTitle(LiveRoom entity) throws SQLException;
+}

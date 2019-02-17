@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：zkong
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="liveRoom">
+		<!-- SQL语句 -->
+	<sql id="selectAll">
+	  SELECT * FROM LIVE_ROOM
+	</sql>
+
+	<sql id="selectById">
+		 SELECT * FROM LIVE_ROOM WHERE LIVE_ROOM_ID= ? 
+	</sql>
+
+	<sql id="insert">
+		 INSERT INTO LIVE_ROOM VALUES(LIVEROOMID.nextval,?,?,?,?,?,?,?，?,?)
+	</sql>
+
+	<sql id="update">
+		 update LIVE_ROOM set ANCHOR_ID = ?, LIVE_PUSH_ADDRESS = ?,LIVE_CONTENT_ID = ?,LIVE_PUSH_CODE = ?,LIVE_ROOM_ANNOUNCEMENT = ?,
+		 LIVE_ROOM_TITLE = ?,LIVE_ROOM_SCORE = ?,SYNC_TO_WEIBO = ?,LIVE_ROOM_REMARK = ? where LIVE_ROOM_ID = ?
+	</sql>
+
+	<sql id="delete">
+		delete from LIVE_ROOM where LIVE_ROOM_ID= ? 
+	</sql>
+
+</sqlStatements>

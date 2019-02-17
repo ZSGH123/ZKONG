@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：孙茂文 
+创建时间：2019-01-21 
+修改时间：
+ -->
+<sqlStatements namespace="purchaseHistory">
+
+   <sql id="selectAll">
+   select user_gift_record.user_id,user_gift_record.gift_number ,user_gift_record.gift_time,
+   gift_info.gift_name,gift_info.gift_price ,gift_info.k_type_id,k_type_info.k_type_name,user_info.user_name
+   from user_gift_record,gift_info,k_type_info,anchor_info,user_info
+   where user_gift_record.gift_type_id=gift_info.gift_id and gift_info.k_type_id=k_type_info.k_type_id 
+   and user_gift_record.anchor_user_id=anchor_info.anchor_id and anchor_info.user_id=user_info.user_id
+   and user_gift_record.user_id=?
+   </sql>
+     
+</sqlStatements>

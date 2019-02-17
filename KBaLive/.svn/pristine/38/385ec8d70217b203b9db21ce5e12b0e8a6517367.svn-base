@@ -1,0 +1,75 @@
+package com.kba.action;
+
+import java.io.IOException;
+
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.kba.entity.UserInfo;
+import com.kba.service.IUserService;
+import com.kba.service.impl.UserService;
+
+/**
+ * 响应用户功能有关的操作请求
+ * 作者：赵科
+ * 时间：2019-1-15
+ */
+public class UserServlet extends KBaBaseServlet{
+
+	private static final long serialVersionUID = 1L;
+    //业务对象
+	private IUserService userService;
+	
+	public UserServlet(){
+		this.userService=new UserService();
+	}
+
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+	
+	}
+	
+
+	
+	private UserInfo wrap(HttpServletRequest req){
+		UserInfo user = new UserInfo();
+		String uidStr = req.getParameter("userId");
+		String upn=req.getParameter("userPhoneNumber");
+		String name = req.getParameter("userName");
+		String pwd = req.getParameter("userPassword");
+		String rname=req.getParameter("userRealName");
+		String sex = req.getParameter("userSex");
+		String idcard=req.getParameter("userIdCard");
+		String weibo=req.getParameter("userWeiboId");
+		String qq=req.getParameter("userQQId");
+		String icon=req.getParameter("userIcon");
+		String alipay=req.getParameter("userAliPay");
+		String bank = req.getParameter("userBankCard");
+		String remark = req.getParameter("userReamrk");
+
+		user.setUserId(uidStr);
+		user.setUserPhoneNumber(upn);
+		user.setUserName(name);
+		user.setUserPassword(pwd);
+		user.setUserRealName(rname);
+		user.setUserSex(sex);
+		user.setUserIdCard(idcard);
+		user.setUserWeiboId(weibo);
+		user.setUserQQId(qq);
+		user.setUserIcon(icon);
+		user.setUserAliPay(alipay);
+		user.setUserBankCard(bank);
+		user.setUserRemark(remark);
+		return user;
+	}
+
+}

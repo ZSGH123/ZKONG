@@ -1,0 +1,142 @@
+package com.kba.service;
+
+import java.util.List;
+
+import com.kba.entity.AnchorInfo;
+import com.kba.entity.LiveContent;
+import com.kba.entity.LiveRoom;
+import com.kba.entity.LiveType;
+import com.kba.entity.PushType;
+import com.kba.entity.UserInfo;
+import com.kba.util.KBaException;
+import com.kba.vo.LiveContentInfo;
+import com.kba.vo.LiveRoomDetailInfo;
+import com.kba.vo.LiveRoomsInfo;
+
+/**
+ * 首页业务层
+ * @author 钟强
+ *
+ */
+public interface IIndexService {
+	/**
+	 * 查询直播内容-根据分类111
+	 * @param user
+	 * @return
+	 * @throws MyException
+	 */
+	public List<LiveContent> selectByLiveType(LiveContent liveContent) throws KBaException;
+	/**
+	 * 查询所有直播类型
+	 * @param user
+	 * @return
+	 * @throws MyException
+	 */
+	public List<LiveType> selectAllLiveType(LiveType liveType)throws KBaException;
+	/**
+	 * 查询所有直播内容
+	 * @param user
+	 * @return
+	 * @throws MyException
+	 */
+	public List<LiveContent> selectAllLiveContent(LiveContent liveContent) throws KBaException ;
+	/**
+	 * 查询所有推送类型
+	 * @param user
+	 * @return
+	 * @throws MyException
+	 */
+	public List<PushType> queryAllPushType(PushType entity)throws KBaException ;
+	/**
+	 * 查询所有直播间的详细细节
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoomDetailInfo> queryAllLiveRoomDetailInfo()throws KBaException ;
+	
+	/**
+	 * 查询所有直播间根据推送类型
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByPushTypeId(PushType entity)throws KBaException ;
+	/**
+	 * 查询所有推送直播间
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */	
+	public List<LiveRoomDetailInfo> selectAllAllPushRoom(PushType entity)throws KBaException ;
+	/**
+	 * 查询所有直播间的详细细节根据直播内容名称
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByLiveCotentName(LiveContent entity)throws KBaException ;
+	/**
+	 * 查询所有直播间的详细细节根据直播类型名称
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByLiveTypeName(LiveType entity)throws KBaException ;
+	/**
+	 * 通过直播类型ID查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByLiveTypeID(LiveType entity)throws KBaException ;
+	/**
+	 * 通过直播房间id查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoomDetailInfo selectByLiveRoomId(LiveRoom entity) throws KBaException ;
+	/**
+	 * 通过主播id查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoomDetailInfo selectByAnchorId(AnchorInfo entity)throws KBaException ;
+	/**
+	 * 通过主播名字查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoomDetailInfo selectByUserName(UserInfo entity)throws KBaException ;
+	/**
+	 * 通过直播房间公高查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByAnnouncment(LiveRoom entity)throws KBaException ;
+	/**
+	 * 通过直播房间标题查询所有直播间的详细信息
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoomDetailInfo> selectAllByTitle(LiveRoom entity)throws KBaException ;
+	/**
+	 * 查询直播类型的所有直播内容
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveContentInfo> selectLiveContentInfoByLiveType(LiveType liveType)throws KBaException ;
+	/**
+	 * 综合查询每个推送版块的所有直播间的详细细节
+	 * @param entity
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoomsInfo selectLiveRoomsInfoByPushType(PushType pushType)throws KBaException ;
+
+}

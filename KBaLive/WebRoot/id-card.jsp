@@ -1,0 +1,122 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
+<!DOCTYPE HTML >
+<html>
+  	<head>
+		<meta charset="UTF-8">
+		<title>实名认证-个人中心-看吧</title>
+		<link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/userpage.css"/>
+	
+	    <script type="text/javascript" src="js/jquery-1.7.2.min.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+	</head>
+	<body style="background-color:#FFFFFF ;">
+		<jsp:include page="top.jsp"></jsp:include>
+		<div class="container">
+			<div class="col-md-12">
+				<h1>个人中心</h1>
+			</div>
+			<div class="col-md-2">
+			<ul class="nav nav-pills nav-stacked" role="tablist">
+  				<li  class="active"><a href="user-page.jsp">	
+  					<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+  						我的资料
+  					</a></li>
+  				<li><a href="my-messages.jsp">
+  					<i class="fa fa-envelope-o" aria-hidden="true"></i>
+  						我的消息
+  						<span class="badge">3</span>
+  					</a></li>
+  				<li><a href="my-book.jsp">
+  					<i class="fa fa-heart-o" aria-hidden="true"></i>
+  						我的订阅
+  					</a></li>
+  				<li><a href="my-level.jsp">
+  					<i class="fa fa-bookmark" aria-hidden="true"></i>
+  						我的等级
+  				</a></li>
+  				<li><a href="my-property.jsp">
+  						<i class="fa fa-credit-card" aria-hidden="true"></i>
+  						我的钱包
+  				</a></li>
+  				<li><a href="my-consume.jsp">
+	  					<i class="fa fa-jpy" aria-hidden="true"></i>
+  						 消费记录
+  				</a></li>
+  				<li><a href="my-exchange.jsp">
+  					<i class="fa fa-exchange" aria-hidden="true"></i>
+  						收益兑换
+  				</a></li>
+  				<li><a href="room-manage.jsp">
+  						<i class="fa fa-university" aria-hidden="true"></i>
+  						房间管理
+  				</a></li>
+				<li class="active"><a class="u_video" href="">
+						<i class="u_nav_icon"></i>
+						我要直播
+				</a></li>
+ 			</ul>
+			</div> 
+			<div class="col-md-10">
+			<div class="row">
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+						<h3 class="panel-title">实名认证</h3>
+					</div>
+					<div class="panel-body">
+						<form role="form" method="post" id="sureform" name="sureform" 
+						action="userAction.do?command=updateRealName">
+							<div class="form-group">
+								<label for="realName">真实姓名</label> <input type="text"
+									class="form-control" id="realName" name="realName"
+									placeholder="请输入您的真实姓名">
+							</div>
+							<div class="form-group">
+								<label for="idCard">身份证</label> <input type="text"
+									class="form-control" id="idCard" name="idCard"
+									placeholder="请输入您的身份证">
+							</div>
+							<button type="submit" class="btn btn-primary btn-lg btn-block btn-warning"
+								name="submit" id="tijiao">提交</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+			
+			</div>
+		<jsp:include page="bottom.jsp"></jsp:include>
+	</body>
+	<script>
+	
+	    $('#realName').blur(function(){    
+        var str = $('#realName').val().trim();  
+	    if(str.length==0){    
+	        alert('姓名不能为空或者为空格!');   
+	        
+	    }    
+	  });
+	  
+	
+	$('#idCard').blur(function(){    
+    var str = $('#idCard').val().trim();
+    var ret=/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+	    if(str.length==0){    
+	        alert('身份证号不能为空或者为空格!');  
+	        
+	    } else if(ret.test(str)){
+	    
+	    }else{
+	     alert('身份证号错误');}   
+	  });
+	
+	
+	
+	
+</script>
+</html>

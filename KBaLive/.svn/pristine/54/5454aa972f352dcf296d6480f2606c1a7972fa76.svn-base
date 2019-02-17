@@ -1,0 +1,10 @@
+function exit(){
+	if 
+(confirm("您确定要退出吗？")){
+window.opener=null;
+window.open('','_self');
+window.close();
+}
+else{}
+}
+

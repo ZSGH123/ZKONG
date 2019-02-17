@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IUserLevelDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.UserLevel;
+
+/**
+ * 用户等级dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class UserLevelDao extends AbstractBaseDao implements IUserLevelDao,ResultSetHandler<List<UserLevel>>{
+
+	@Override
+	public List<UserLevel> queryAll(UserLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserLevel querySingle(UserLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(UserLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(UserLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(UserLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<UserLevel> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

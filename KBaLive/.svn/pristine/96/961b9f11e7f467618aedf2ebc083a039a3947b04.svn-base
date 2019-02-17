@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IUserQQInfoDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.UserQQInfo;
+
+/**
+ * QQ用户dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class UserQQInfoDao extends AbstractBaseDao implements IUserQQInfoDao,ResultSetHandler<List<UserQQInfo>>{
+
+	@Override
+	public List<UserQQInfo> queryAll(UserQQInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserQQInfo querySingle(UserQQInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(UserQQInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(UserQQInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(UserQQInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<UserQQInfo> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

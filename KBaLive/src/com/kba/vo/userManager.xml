@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：孙茂文
+创建时间：2019-01-21
+修改时间：
+订阅直播间查询
+ -->
+<sqlStatements namespace="userManager">
+   
+   <sql id="selectAll">
+   select distinct room_manager_info.user_id,room_manager_info.room_manager_work_time,room_manager_info.live_room_id,user_info.user_name,push_list.push_start_time
+   from room_manager_info,live_room,anchor_info,user_info,push_list
+   where room_manager_info.live_room_id=live_room.live_room_id and live_room.anchor_id=anchor_info.anchor_id
+   and anchor_info.user_id=user_info.user_id and room_manager_info.live_room_id=push_list.live_room_id and room_manager_info.user_id=?
+   </sql>
+     
+</sqlStatements>

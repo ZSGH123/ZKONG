@@ -1,0 +1,71 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.kba.entity.UserLevel;
+import com.kba.service.impl.BackStageUserLevelService;
+import com.kba.util.KBaException;
+
+/**
+ * 后台用户等级设置
+ * @author 赵科
+ * 创建时间：2019-1-22
+ * 修改时间：
+ *
+ */
+public class BackStageUserLevelServlet extends KBaBaseServlet{
+
+	private static final long serialVersionUID = 1L;
+    //用户等级业务对象
+	private BackStageUserLevelService UserLevelService;
+	
+	public BackStageUserLevelServlet() {
+		this.UserLevelService=new BackStageUserLevelService();
+	} 
+	/**
+	 * 用户等级设置首页
+	 */
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<UserLevel> userLevels=null;
+		UserLevel userLevel=this.wrap(req);
+		try {
+			userLevels=UserLevelService.selectAllUserLevel(userLevel);
+			req.setAttribute("userLevels", userLevels);
+			req.getRequestDispatcher("levelset-userlevel-index.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			toError(e, resp);
+		}
+	}
+
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private UserLevel wrap(HttpServletRequest req) {
+		UserLevel userLevel=new UserLevel();
+		String uLId=req.getParameter("userLevelId");
+		String uLName=req.getParameter("userLevelName");
+		String uLInvest=req.getParameter("userLowInvest");
+		Integer uLowInvest=uLInvest!=null?Integer.valueOf(uLInvest):null;
+		String uHInvest=req.getParameter("userHighInvest");
+		Integer uHighInvest=uHInvest!=null?Integer.valueOf(uHInvest):null;
+		String uLRemark=req.getParameter("userLevelRemark");
+		
+		userLevel.setUserLevelId(uLId);
+		userLevel.setUserLevelName(uLName);
+		userLevel.setUserLowInvest(uLowInvest);
+		userLevel.setUserHighInvest(uHighInvest);
+		userLevel.setUserLevelRemark(uLRemark);
+		return userLevel;
+	}
+}

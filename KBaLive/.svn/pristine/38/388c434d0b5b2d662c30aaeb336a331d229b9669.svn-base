@@ -1,0 +1,36 @@
+package com.kba.service;
+
+import java.util.List;
+
+import com.kba.entity.UserInfo;
+import com.kba.util.KBaException;
+
+/**
+ * 功能：用户有关的逻辑
+ * 概要设计--》 需求分析--》详细设计阶段 --》编码阶段
+ * 需求驱动
+ * @author zk
+ * 时间：2019-1-15
+ */
+public interface IUserService {
+	
+	
+	/**
+	 * 登录验证
+	 */
+	public UserInfo loginValidate(UserInfo user) throws KBaException;
+
+	/**
+	 * 保存
+	 * @param user
+	 * @return
+	 * @throws EasyException
+	 */
+	public UserInfo save(UserInfo user) throws KBaException;
+
+	public List<UserInfo> getAllUsers(UserInfo user)throws KBaException;
+
+	public UserInfo getUser(UserInfo user)throws KBaException;
+
+	public boolean checkUser(UserInfo user)throws KBaException;
+}

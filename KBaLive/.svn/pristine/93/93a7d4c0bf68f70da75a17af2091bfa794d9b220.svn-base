@@ -1,0 +1,13 @@
+package com.kba.dao;
+
+import com.kba.entity.LiveRecord;
+
+/**
+ * 直播记录dao接口
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public interface ILiveRecordDao extends IBaseDao<LiveRecord> {
+
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：孙茂文
+创建时间：2019-01-21
+修改时间：
+订阅直播间查询
+ -->
+<sqlStatements namespace="userlike">
+   
+   <sql id="selectAll">
+   select like_room_id,sum(gift_number*gift_price) from user_gift_record,gift_info where user_gift_id=gift_id group by live_room_id
+   </sql>
+     
+</sqlStatements>

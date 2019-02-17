@@ -1,0 +1,15 @@
+package com.kda.dao.util;
+
+import org.junit.Test;
+
+import com.kba.dao.util.DataSourceFactory;
+
+public class TestDataSourceFactory {
+	
+	@Test
+	public void testDataSourceFactory(){
+		//System.out.println(DataSourceFactory.getDataSource());
+		System.out.println(DataSourceFactory.getDsByTomcat());
+	}
+
+}

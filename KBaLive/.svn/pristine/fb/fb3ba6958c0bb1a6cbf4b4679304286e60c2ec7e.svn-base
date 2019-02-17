@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls [
+<!ELEMENT sqls (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqls namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<sqlStatements namespace="userProperty">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	
+	</sql>
+
+	<sql id="selectById">
+		
+	</sql>
+
+	<sql id="insert">
+		
+	</sql>
+
+	<sql id="update">
+		
+	</sql>
+
+	<sql id="delete">
+		
+	</sql>
+
+</sqlStatements>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<sqlStatements namespace="giftInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	     select * from gift_info
+	</sql>
+
+	<sql id="selectById">
+		select * from gift_info where gift_id=?
+	</sql>
+	
+	<sql id="selectByName">
+		select * from gift_info where GIFT_NAME=?
+	</sql>
+	
+
+	<sql id="insert">
+		insert into gift_info values(GIFTID.nextval,?,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		update gift_info set gift_name= ?,gift_price= ?,
+		k_type_id= ?,gift_icon_address= ?,gift_acction_address= ?,
+		gift_info_remark= ? where gift_id=?
+	</sql>
+
+	<sql id="delete">
+		delete from gift_info where gift_id=?
+	</sql>
+
+</sqlStatements>

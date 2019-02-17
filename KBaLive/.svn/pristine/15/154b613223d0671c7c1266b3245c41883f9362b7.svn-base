@@ -1,0 +1,29 @@
+package com.kda.dao.util;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.junit.Test;
+
+import com.kba.dao.impl.UserDao;
+import com.kba.dao.util.DataSourceFactory;
+import com.kba.entity.UserInfo;
+
+public class TestDataSourceFactory {
+	
+	@Test
+	public void testDataSourceFactory(){
+		try {
+			System.out.println(DataSourceFactory.getDataSource().getConnection());
+			List<UserInfo> users=UserDao.getInstance().queryAll(null);
+			for (UserInfo userInfo : users) {
+				System.out.println( userInfo);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println(DataSourceFactory.getDsByTomcat());
+	}
+
+}

@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IAnchorInfoDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.AnchorInfo;
+
+/**
+ * 主播信息dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class AnchorInfoDao extends AbstractBaseDao implements IAnchorInfoDao,ResultSetHandler<List<AnchorInfo>>{
+
+	@Override
+	public List<AnchorInfo> queryAll(AnchorInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AnchorInfo querySingle(AnchorInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(AnchorInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(AnchorInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(AnchorInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<AnchorInfo> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

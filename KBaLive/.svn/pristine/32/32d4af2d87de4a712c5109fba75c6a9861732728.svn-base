@@ -1,0 +1,241 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.alibaba.fastjson.JSONArray;
+import com.kba.entity.BackStageManagerInfo;
+import com.kba.service.IBackStageManagerInfoService;
+import com.kba.service.impl.BackStageManagerInfoService;
+import com.kba.util.ICommand;
+import com.kba.util.KBaException;
+import com.kba.util.MD5Util;
+import com.qq.connect.utils.http.Response;
+
+/**
+ * 响应管理员功能有关的请求
+ * @author 赵科
+ * 创建时间：2019-1-16
+ * 修改时间：
+ */
+public class BackStageManagerInfoServlet extends KBaBaseServlet{
+
+	
+	private static final long serialVersionUID = 1L;
+	//管理员业务对象
+	private BackStageManagerInfoService managerInfoService;
+	
+	public BackStageManagerInfoServlet() {
+		this.managerInfoService=new BackStageManagerInfoService();
+	}
+
+	/**
+	 * 管理员信息首页
+	 */
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//HttpSession session=req.getSession();
+		BackStageManagerInfo manager=null;
+		List<BackStageManagerInfo> managers=null;
+		try {
+			managers=managerInfoService.selectAllManager(manager);
+			System.out.println(managers.toString());
+			req.setAttribute("managers", managers);
+			req.getRequestDispatcher("manager-index.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * 管理员名登录
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void login(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
+		PrintWriter out=resp.getWriter();
+		HttpSession session=this.getSession();
+		try {
+			//获取并封装管理员登录页面数据
+			BackStageManagerInfo managerInfo=this.wrap(req);
+			//请求业务对象
+			managerInfo=managerInfoService.selectManagerByName(managerInfo);
+			if(managerInfo!=null){
+				out.print(true);
+				session.setAttribute("loginManager", managerInfo);
+				req.setAttribute(ICommand.COMMAND, "index");
+			}else{
+				out.print(false);
+				resp.sendRedirect("login.jsp");
+			}
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}finally{
+			out.close();
+		}
+
+	}
+	
+	/**
+	 * 后台管理员的删除
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void delete(HttpServletRequest req,HttpServletResponse resp)throws ServletException, IOException {
+		//设置响应文件格式为json
+		resp.setContentType("application/json");
+		//out对象
+		PrintWriter out=resp.getWriter();
+		List<BackStageManagerInfo> managers=null;
+		BackStageManagerInfo managerInfo=this.wrap(req);
+		try {
+			//删除后台管理员
+		    managerInfoService.deleteManager(managerInfo);
+		    //查询删除后的管理员信息
+		    managers=managerInfoService.selectAllManager(managerInfo);
+		    //以json格式发给ajax
+		   	String managersstr=paresManagersList(managers);
+			out.print(managersstr);
+			
+		} catch (KBaException e) {
+			toError(e, resp);
+		}finally{
+			
+			out.close();
+		}
+	}
+	
+	/**
+	 * 新增管理员
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 */
+	public void insertManager(HttpServletRequest req,HttpServletResponse resp)throws IOException{
+		PrintWriter out=resp.getWriter();
+		try {
+			//封装数据
+			System.out.println(req.getParameter("backStageManagerName")); 
+			BackStageManagerInfo manager=this.wrap(req);
+			System.out.println(manager);
+			//插入数据
+			manager=managerInfoService.insertManager(manager);
+			if(manager!=null){
+				out.print(true);
+			}else{
+				out.print(false);
+			}
+			//req.getRequestDispatcher("managerInfoAction.do").forward(req, resp);
+		} catch (KBaException e) {
+			toError(e, resp);
+		}finally{
+			out.close();
+		}
+	}
+	
+	/**
+	 * 检查管理员密码是否正确
+	 * @param req
+	 * @param resp
+	 * @throws IOException 
+	 */
+	public void checkManagerByPassword(HttpServletRequest req,HttpServletResponse resp) throws IOException{
+		PrintWriter out=resp.getWriter();
+		//封装请求包管理员数据
+		BackStageManagerInfo manager=this.wrap(req);
+	    try {
+			boolean has=managerInfoService.checkManagerByName(manager);
+			if(has){
+				manager=managerInfoService.selectManagerByName(manager);
+				String password=manager.getBackStageManagerPassword();
+				out.print(password);
+			}else{
+				out.print(false);
+			}
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}finally{
+			
+			out.close();
+		}
+	}
+	
+	/**
+	 * 通过管理员名称检查是否已存在
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 */
+	public void checkManagerByName(HttpServletRequest req,HttpServletResponse resp) throws IOException{
+		PrintWriter out=resp.getWriter();
+		//封装请求包管理员数据
+		BackStageManagerInfo manager=this.wrap(req);
+	    try {
+			boolean has=managerInfoService.checkManagerByName(manager);
+			if(has){
+				out.print("管理员已存在");
+			}else{
+				out.print(true);
+			}
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}finally{
+			
+			out.close();
+		}
+	}
+     
+	/**
+	 * 把管理员数据转成json格式
+	 * @param managers
+	 * @return
+	 */
+	private String paresManagersList(List<BackStageManagerInfo> managers) {
+		String managersstr=JSONArray.toJSONString(managers);
+		managersstr="{\"managersstr\":"+managersstr+"}";
+		return managersstr;
+	}
+
+	/**
+	 * 管理员数据封装
+	 * @param req
+	 * @return
+	 */
+	private BackStageManagerInfo wrap(HttpServletRequest req){ 
+		BackStageManagerInfo managerInfo=new BackStageManagerInfo();
+		String managerId=req.getParameter("backStageManagerId");
+		String managerName=req.getParameter("backStageManagerName");
+		String managerPwd=req.getParameter("backStageManagerPassword");
+		//String managerPwdMd5=MD5Util.getMD5(managerPwd);
+		String managerPositionStr=req.getParameter("backStageManagerPosition");
+		Integer managerPosition=managerPositionStr!=null?Integer.valueOf(managerPositionStr):null;
+		String managerRemark=req.getParameter("backStageManagerRemark");
+		
+		managerInfo.setBackStageManagerId(managerId);
+		managerInfo.setBackStageManagerName(managerName);
+		managerInfo.setBackStageManagerPassword(managerPwd);
+		managerInfo.setBackStageManagerPosition(managerPosition);
+		managerInfo.setBackStageManagerRemark(managerRemark);
+		System.out.println(managerInfo);
+		return managerInfo;
+		
+	}
+	
+}

@@ -1,0 +1,82 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kba.service.IIndexService;
+import com.kba.service.impl.IndexService;
+import com.kba.util.KBaException;
+import com.kba.vo.LiveRoomDetailInfo;
+/**
+ * 直播页面servlet
+ * @author 钟强
+ * 时间：2019-1-26
+ */
+public class LiveIndexServlet extends KBaBaseServlet {
+
+	private static final long serialVersionUID = 1L;
+	
+	private IIndexService indexService;
+	
+	public LiveIndexServlet(){
+		indexService=new IndexService();
+	}
+	
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+	}
+	
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			this.initPushRooms(req,resp);
+			this.initLeftAllLiveType(req,resp,indexService);
+			this.initAllRooms(req,resp);
+			req.getRequestDispatcher("liveindex.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}	
+	}
+    
+	/**
+	 * 初始化所有直播房间
+	 * @param req
+	 * @param resp
+	 * @throws KBaException 
+	 */
+	private void initAllRooms(HttpServletRequest req, HttpServletResponse resp) throws KBaException  {
+		HttpSession session=this.getSession();
+		List<LiveRoomDetailInfo> allLiveRoomDetailInfos=null;
+		allLiveRoomDetailInfos=indexService.queryAllLiveRoomDetailInfo();
+		session.setAttribute("allLiveRoomDetailInfos", allLiveRoomDetailInfos);
+		
+	}
+	
+	/**
+	 * 初始化所有推送直播房间
+	 * @param req
+	 * @param resp
+	 * @throws IOException 
+	 * @throws KBaException 
+	 */
+	private void initPushRooms(HttpServletRequest req, HttpServletResponse resp) throws  KBaException {
+		HttpSession session=this.getSession();
+		List<LiveRoomDetailInfo> allPushLiveRoomDetailInfos=null;
+		allPushLiveRoomDetailInfos=indexService.selectAllAllPushRoom(null);
+		session.setAttribute("allPushLiveRoomDetailInfos", allPushLiveRoomDetailInfos);
+		
+	}
+	
+
+	
+	
+	
+}

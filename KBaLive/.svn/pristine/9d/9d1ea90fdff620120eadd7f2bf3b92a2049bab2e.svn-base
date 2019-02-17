@@ -1,0 +1,136 @@
+package com.kba.service.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.ILiveRoomDao;
+import com.kba.dao.impl.LiveRoomDao;
+import com.kba.entity.LiveRoom;
+import com.kba.service.ILiveRoomService;
+import com.kba.util.KBaException;
+
+/**
+ * 直播房间业务层
+ * 
+ * @author 钟强
+ *  创建时间：2019-01-19
+ *   修改时间：
+ */
+public class LiveRoomService implements ILiveRoomService {
+
+	private ILiveRoomDao liveRoomDao;
+
+	public LiveRoomService() {
+		liveRoomDao = LiveRoomDao.getInstance();
+	}
+
+	/**
+	 * 查询所有直播间
+	 */
+	@Override
+	public List<LiveRoom> selectAllLiveRoom(LiveRoom liveRoom) throws KBaException {
+		List<LiveRoom> liveRooms = null;
+		try {
+			liveRooms = liveRoomDao.queryAll(liveRoom);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveRooms;
+	}
+	/**
+	 * 查询直播间通过id
+	 */
+	@Override
+	public LiveRoom selectSingleById(LiveRoom liveRoom) throws KBaException {
+		try {
+			return liveRoomDao.querySingle(liveRoom);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	@Override
+	public LiveRoom selectSingleByAnchorId(LiveRoom liveRoom) throws KBaException {
+		try {
+			return liveRoomDao.querySingleByAnchorId(liveRoom);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+    /**
+     * 通过直播内容查找相应房间
+     */
+	@Override
+	public List<LiveRoom> selectByLiveContentID(LiveRoom liveRoom) throws KBaException {
+		List<LiveRoom> liveRooms = null;
+		try {
+			liveRooms = liveRoomDao.queryByLiveContentID(liveRoom);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveRooms;
+	}
+	 /**
+     * 通过直播房间标题查找相应房间
+     */
+	@Override
+	public List<LiveRoom> selectByLiveRoomTitle(LiveRoom liveRoom) throws KBaException {
+		List<LiveRoom> liveRooms = null;
+		try {
+			liveRooms = liveRoomDao.queryByLiveRoomTitle(liveRoom);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return liveRooms;
+	}
+
+	@Override
+	public LiveRoom addLiveRoom(LiveRoom liveRoom) throws KBaException {
+		if(liveRoom==null)return null;
+		int res;
+		try {
+			res=liveRoomDao.insert(liveRoom);
+			if(res>0){
+				return liveRoomDao.querySingle(liveRoom);
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public LiveRoom updateLiveRoom(LiveRoom liveRoom) throws KBaException {
+		if(liveRoom==null)return null;
+		int res;
+		try {
+			res=liveRoomDao.update(liveRoom);
+			if(res>0){
+				return liveRoomDao.querySingle(liveRoom);
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+    /**
+     * 删除直播房间
+     */
+	@Override
+	public LiveRoom deleteLiveRoom(LiveRoom liveRoom) throws KBaException {
+		if(liveRoom==null)return null;
+		LiveRoom room;
+		int res;
+		try {
+			room=liveRoomDao.querySingle(liveRoom);
+			res=liveRoomDao.delete(liveRoom);
+			if(res>0){
+				return room;
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+}

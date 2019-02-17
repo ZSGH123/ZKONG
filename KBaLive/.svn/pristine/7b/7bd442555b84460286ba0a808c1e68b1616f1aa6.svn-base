@@ -1,0 +1,244 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kba.entity.UserInfo;
+import com.kba.service.IUserService;
+import com.kba.service.impl.UserService;
+import com.kba.util.KBaException;
+
+
+
+
+/**
+ * 响应用户功能有关的操作请求
+ * 作者：赵科
+ * 时间：2019-1-15
+ */
+public class UserServlet extends KBaBaseServlet{
+
+	private static final long serialVersionUID = 1L;
+    //业务对象
+	private IUserService userService;
+	
+	public UserServlet(){
+		this.userService=new UserService();
+	}
+
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+	
+	}
+	
+	/**
+	 * 通过用户名检查用户是否存在
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void checkUserByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		UserInfo user=this.wrap(request);
+		PrintWriter out = response.getWriter();
+		try {
+			user=userService.selectUserByName(user);
+			if(user!=null){
+				out.print(true);
+				System.out.println("用户已存在");
+			}else {
+				out.print(false);
+				System.out.println("用户不存在");
+			}
+		} catch (KBaException e) {
+			this.toError(e, response);
+		}
+	
+	}
+
+	/**
+	 * 通过用户手机号检查用户是否存在
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void checkUserByPhone(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		UserInfo user=this.wrap(request);
+		PrintWriter out = response.getWriter();
+		try {
+			user=userService.selectUserByPhone(user);
+			if(user!=null){
+				out.print(true);
+				System.out.println("用户已存在");
+			}else {
+				out.print(false);
+				System.out.println("用户不存在");
+			}
+		} catch (KBaException e) {
+			this.toError(e, response);
+		}
+	
+	}
+	
+    /**
+     * 普通登陆（手机号/用户名+密码）
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void generalLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = this.getSession();
+		PrintWriter out=response.getWriter();
+		//1.获取并封装表单数据
+		UserInfo user=this.wrap(request);
+		//2.获取登陆方式（0手机，1用户名）
+		  //todo
+		//3.重新设置用户的值
+		  //todo
+        //4.请求业务对象
+		try {
+			user = userService.invalidUser(user);
+			if (user != null) {
+				if (user.getUserPassword() != null) {//成功
+					session.setAttribute("loginUser", user);
+					String previouspage = (String) session.getAttribute("previouspage");
+					if (previouspage != null) {
+						System.out.println(previouspage);
+						// 重定向到上一个页面
+						response.sendRedirect(previouspage);
+						session.removeAttribute("previouspage");
+					} else {
+						// 回到系统首页
+						response.sendRedirect("indexAction.do");
+					}
+					System.out.println("成功");
+				}else {//密码不一致
+					out.print("密码错误");
+					System.out.println("密码错误");
+				}
+			} else {//用户不存在
+				out.print("用户不存在");
+				System.out.println("用户不存在");
+			}
+		} catch (KBaException e) {
+			this.toError(e,response);
+		}
+	}
+	
+    /**
+	 * 去注册
+	 * 转发：保护资源路径
+	 * 可以为页面提供预加载数据
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+    protected void toRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.getRequestDispatcher("register.jsp").forward(request, response);
+	}
+    
+    /**
+	 * 注册
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session=request.getSession();
+		
+		try {
+			//封装注册用户数据
+			UserInfo user=this.wrap(request);
+
+			//请求业务对象
+			UserInfo userd=userService.userRegister(user);
+		    
+			if(userd!=null){
+				session.setAttribute("loginUser", user);
+				request.getRequestDispatcher("index.jsp").forward(request, response);
+			}else {
+				this.toRegister(request, response);
+			}	
+		} catch (KBaException e) {
+			this.toError(e,response);
+		}
+	}
+	
+	/**
+	 * 查询所有用户
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+    protected void selectAllUserOfUserManage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	UserInfo user=null;
+    	try {
+			//请求业务对象
+		    List<UserInfo> users=userService.selectAllUser(user);
+			if(users!=null){
+				request.setAttribute("users", users);
+				request.getRequestDispatcher("user.jsp").forward(request, response);
+			}	
+		} catch (KBaException e) {
+			this.toError(e, response);
+		}
+	}
+
+	/**
+	 * 生成用户对象
+	 * @param req
+	 * @return
+	 */
+	private UserInfo wrap(HttpServletRequest req){
+		UserInfo user = new UserInfo();
+		String uidStr = req.getParameter("userId");
+		String upn=req.getParameter("userPhoneNumber");
+		String name = req.getParameter("userName");
+		String pwd = req.getParameter("userPassword");
+		String rname=req.getParameter("userRealName");
+		String sex = req.getParameter("userSex");
+		String idcard=req.getParameter("userIdCard");
+		String weibo=req.getParameter("userWeiboId");
+		String qq=req.getParameter("userQQId");
+		String icon=req.getParameter("userIcon");
+		String alipay=req.getParameter("userAliPay");
+		String bank = req.getParameter("userBankCard");
+		String remark = req.getParameter("userReamrk");
+
+		user.setUserId(uidStr);
+		user.setUserPhoneNumber(upn);
+		user.setUserName(name);
+		user.setUserPassword(pwd);
+		user.setUserRealName(rname);
+		user.setUserSex(sex);
+		user.setUserIdCard(idcard);
+		user.setUserWeiboId(weibo);
+		user.setUserQQId(qq);
+		user.setUserIcon(icon);
+		user.setUserAliPay(alipay);
+		user.setUserBankCard(bank);
+		user.setUserRemark(remark);
+		return user;
+	}
+
+}

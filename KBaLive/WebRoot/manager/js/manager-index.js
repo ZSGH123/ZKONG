@@ -1,0 +1,78 @@
+
+function openManagerInsert() {
+	var position=$("#hidden").html();
+	if(position==1){
+		window.location.href="manager-insert.jsp";
+		//myWindow=window.open ("manager-insert.jsp","新增管理员","height=800, width=400, top=400,left=100,toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no")
+	}else{
+		alert("权限不足");
+	}
+}
+
+function managerUpdate(id){
+	$.post("managerInfoAction.do?command=selectOfUpdate",{backStageManagerId:id},
+			function(data){
+		if(data){
+			//alert("进来了");
+			window.location.href="manager-update.jsp";
+		}else{			
+			confirm("修改失败");
+		}
+	});
+}
+
+function deleteManagerUser(id,position){
+	var position=$("#hidden").html();
+	var pos=parseInt(position);
+	if(pos==1){
+			$.ajax({
+			url : "managerInfoAction.do?command=delete&backStageManagerId="+id,
+			type : "post",
+			async : true,
+			dataType : "json",
+			processData:false,
+			cache:false,
+			statusCode : {
+				404 : function() {
+					console.log("页面没找到");
+				}
+			},
+			success : function(data,textStatus,xmlhttp){
+				if(data!=null){
+					parseJson(data);
+				}
+				console.log("success : ");
+				
+			},
+			error : function(e) {
+				alert("网络错误！，请重试");
+			}
+		});
+	}else{
+		alert("权限不足");
+	}
+	
+}
+function parseJson(data){
+var showContent=$("#tdata").get(0);
+var managers=data.managersstr;
+var len=managers.length;
+var content="";
+for(var i=0;i<len;i++){
+	var maId=managers[i].backStageManagerId;
+	var maName=managers[i].backStageManagerName;
+	var maPs=managers[i].backStageManagerPosition;
+	var maRm=managers[i].backStageManagerRemark;
+	content+="<tr><td class='center'>"+maId+"</td>";
+	content+="<td class='center'>"+maName+"</td>";
+	content+="<td class='center'>"+maPs+"</td>";
+	content+="<td class='center'><span class='label-success label label-default'>"+maRm+"</span></td>";
+	content+="<td class='center'><a class='btn btn-success' href='javascript:openManagerInsert()'>"
+	+"<i class='glyphicon glyphicon-zoom-in icon-white'></i>新增</a>"
+	+"<a class='btn btn-info' href='javascript:managerUpdate("+maId+")'><i class='glyphicon glyphicon-修改 icon-white'></i>"
+    +"修改"+"</a><a class='btn btn-danger' href='javascript:deleteManagerUser("+maId+")'>"
+    +"<i class='glyphicon glyphicon-trash icon-white'></i>删除</a></td></tr>";
+}
+showContent.innerHTML=content;
+}
+

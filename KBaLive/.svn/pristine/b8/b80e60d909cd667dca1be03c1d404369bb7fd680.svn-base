@@ -1,0 +1,164 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.IBackStageManagerInfoDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.BackStageManagerInfo;
+
+/**
+ * 后台管理员dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class BackStageManagerInfoDao extends AbstractBaseDao implements IBackStageManagerInfoDao,ResultSetHandler<List<BackStageManagerInfo>>{
+
+	private static BackStageManagerInfoDao backStageManagerInfoDao;
+	
+	private BackStageManagerInfoDao(){
+		
+	}
+	
+	public synchronized static BackStageManagerInfoDao getInstance(){
+		if(backStageManagerInfoDao==null){
+			backStageManagerInfoDao=new BackStageManagerInfoDao();
+		}
+		return backStageManagerInfoDao;
+	}
+	/**
+	 * 查询所有的后台管理员
+	 */
+	@Override
+	public List<BackStageManagerInfo> queryAll(BackStageManagerInfo entity) throws SQLException {
+		List<BackStageManagerInfo> backStageManagerInfos=null;
+		String sql=this.parseSqlStatement.getSql(NameSpace.BACKSTAGEMANAGERINFO, ISqlCommand.SELECT_ALL);
+		try {
+			backStageManagerInfos=this.queryRunner.query(sql, this);
+		} catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.info("查询异常");
+		}
+		return backStageManagerInfos;
+	}
+
+	/**
+	 * 查询单个后台管理员
+	 */
+	@Override
+	public BackStageManagerInfo querySingle(BackStageManagerInfo entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.BACKSTAGEMANAGERINFO,ISqlCommand.SELECT_BY_ID);
+		
+		params=new Object[]{entity.getBackStageManagerId()};
+		
+		try {
+			List<BackStageManagerInfo> backStageManagerInfos=this.queryRunner.query(sql, this, params);
+			return backStageManagerInfos != null && backStageManagerInfos.size() > 0 ? backStageManagerInfos.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+	
+	/**
+	 * 通过名称查询后台管理员
+	 */
+	@Override
+	public BackStageManagerInfo querySingleByName(BackStageManagerInfo entity)throws SQLException{
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.BACKSTAGEMANAGERINFO,ISqlCommand.SELECT_BY_NAME);
+		
+		params=new Object[]{entity.getBackStageManagerName()};
+		
+		try {
+			List<BackStageManagerInfo> backStageManagerInfos=this.queryRunner.query(sql, this, params);
+			return backStageManagerInfos != null && backStageManagerInfos.size() > 0 ? backStageManagerInfos.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+		
+	}
+
+	/**
+	 * 新增后台管理员
+	 */
+	@Override
+	public int insert(BackStageManagerInfo entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.BACKSTAGEMANAGERINFO, ISqlCommand.INSERT);
+	    Object[] args={entity.getBackStageManagerName(),entity.getBackStageManagerPassword(),
+	    		entity.getBackStageManagerPosition(),entity.getBackStageManagerRemark()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("插入后台管理员["+entity.getBackStageManagerName()+"]成功");
+	    return res;
+	}
+
+	/**
+	 * 更新后台管理员信息
+	 */
+	@Override
+	public int update(BackStageManagerInfo entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.BACKSTAGEMANAGERINFO, ISqlCommand.UPDATE);
+	    Object[] args={entity.getBackStageManagerName(),entity.getBackStageManagerPassword(),
+	    		entity.getBackStageManagerPosition(),entity.getBackStageManagerRemark(),entity.getBackStageManagerId()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("更新后台管理员["+entity.getBackStageManagerName()+"]成功");
+	    return res;
+	}
+
+	/**
+	 * 删除后台管理员
+	 */
+	@Override
+	public int delete(BackStageManagerInfo entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.BACKSTAGEMANAGERINFO, ISqlCommand.DELETE);
+		Object[]  args={entity.getBackStageManagerId()};
+		System.out.println("managersstr:111");
+		int res=this.queryRunner.update(sql, args);
+		System.out.println("managersstr:11111");
+		this.logger.info("删除后台管理员["+entity.getBackStageManagerName()+"]成功");
+		return res;	
+	}
+
+	/**
+	 * 后台管理员结果集处理
+	 */
+	@Override
+	public List<BackStageManagerInfo> handle(ResultSet rs) throws SQLException {
+		List<BackStageManagerInfo> backStageManagerInfos=new Vector<BackStageManagerInfo>();
+		BackStageManagerInfo backStageManagerInfo=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			backStageManagerInfo=new BackStageManagerInfo();
+			backStageManagerInfo.setBackStageManagerId(rs.getString("BACKSTAGE_MANAGER_ID"));
+			backStageManagerInfo.setBackStageManagerName(rs.getString("BACKSTAGE_MANAGER_NAME"));
+			backStageManagerInfo.setBackStageManagerPassword(rs.getString("BACKSTAGE_MANAGER_PASSWORD"));
+			backStageManagerInfo.setBackStageManagerPosition(rs.getInt("BACKSTAGE_MANAGER_POSITION"));
+			backStageManagerInfo.setBackStageManagerRemark(rs.getString("BACKSTAGE_MANAGER_REMARK"));
+			backStageManagerInfos.add(backStageManagerInfo);
+		}
+		return backStageManagerInfos;
+	}
+
+}

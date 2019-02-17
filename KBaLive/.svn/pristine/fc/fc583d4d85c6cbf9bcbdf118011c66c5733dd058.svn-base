@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="pushType">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	select * from push_type
+	</sql>
+
+	<sql id="selectById">
+	select * from push_type where push_type_id= ?	
+	</sql>
+
+	<sql id="insert">
+	insert into push_type values(PUSHTYPEID.nextval,?,?,?)	
+	</sql>
+
+	<sql id="update">
+	 update push_type set push_name = ?, push_price = ?, push_type_remark = ? where push_type_id = ?	
+	</sql>
+
+	<sql id="delete">
+	delete from push_type where push_type_id= ? 	
+	</sql>
+
+</sqlStatements>

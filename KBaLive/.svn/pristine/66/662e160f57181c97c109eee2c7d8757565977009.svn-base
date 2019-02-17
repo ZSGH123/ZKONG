@@ -1,0 +1,109 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.IBarrageInfoDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.BarrageInfo;
+
+/**
+ * 弹幕信息dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class BarrageInfoDao extends AbstractBaseDao implements IBarrageInfoDao,ResultSetHandler<List<BarrageInfo>>{
+
+	@Override
+	public List<BarrageInfo> queryAll(BarrageInfo entity) throws SQLException {
+		List<BarrageInfo> barrageInfos=null;
+		String sql=this.parseSqlStatement.getSql(NameSpace.BARRAGEINFO, ISqlCommand.SELECT_ALL);
+		try {
+			barrageInfos=this.queryRunner.query(sql, this);
+		} catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.info("查询异常");
+		}
+		return barrageInfos;
+	}
+
+	@Override
+	public BarrageInfo querySingle(BarrageInfo entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.BARRAGEINFO,ISqlCommand.SELECT_BY_ID);
+		
+		params=new Object[]{entity.getBarrageId()};
+		
+		try {
+			List<BarrageInfo> barrageInfos=this.queryRunner.query(sql, this, params);
+			return barrageInfos != null && barrageInfos.size() > 0 ? barrageInfos.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public int insert(BarrageInfo entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.BARRAGEINFO, ISqlCommand.INSERT);
+	    Object[] args={entity.getBarrageContent(),entity.getBarrageSendTime(),
+	    		entity.getVideoId(),entity.getUserId(),
+	    		entity.getNowVideoDuration()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("插入弹幕信息["+entity.getBarrageContent()+"]成功");
+	    return res;
+	}
+
+	@Override
+	public int update(BarrageInfo entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.BARRAGEINFO, ISqlCommand.UPDATE);
+	    Object[] args={entity.getBarrageContent(),entity.getBarrageSendTime(),
+	    		entity.getVideoId(),entity.getUserId(),
+	    		entity.getNowVideoDuration(),entity.getBarrageId()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("更新弹幕信息["+entity.getBarrageContent()+"]成功");
+	    return res;
+	}
+
+	@Override
+	public int delete(BarrageInfo entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.BARRAGEINFO, ISqlCommand.DELETE);
+		Object[]  args={entity.getBarrageId()};
+		int res=this.queryRunner.update(sql, args);
+		this.logger.info("删除弹幕信息["+entity.getBarrageContent()+"]成功");
+		return res;
+	}
+
+	@Override
+	public List<BarrageInfo> handle(ResultSet rs) throws SQLException {
+		List<BarrageInfo> barrageInfos=new Vector<BarrageInfo>();
+		BarrageInfo barrageInfo=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			barrageInfo=new BarrageInfo();
+			barrageInfo.setBarrageId(rs.getString("BARRAGE_ID"));
+			barrageInfo.setBarrageContent(rs.getString("BARRAGE_CONTENT"));
+			barrageInfo.setBarrageSendTime(rs.getTimestamp("BARRAGE_SEND_TIME"));
+			barrageInfo.setVideoId(rs.getString("VIDEO_ID"));
+			barrageInfo.setUserId(rs.getString("USER_ID"));
+			barrageInfo.setNowVideoDuration(rs.getInt("NOW_VIDEO_DURATION"));
+			barrageInfos.add(barrageInfo);
+		}
+		return barrageInfos;
+	}
+
+}

@@ -1,0 +1,56 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IKTypeInfoDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.KType;
+
+
+/**
+ * k币类型dao
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public class KTypeInfoDao extends AbstractBaseDao implements IKTypeInfoDao,ResultSetHandler<List<KType>>{
+
+	@Override
+	public List<KType> queryAll(KType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public KType querySingle(KType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(KType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(KType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(KType entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<KType> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：zkong
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="liveRecord">
+		<!-- SQL语句 -->
+	<sql id="selectAll">
+	  SELECT * FROM LIVE_RECORD
+	</sql>
+
+	<sql id="selectById">
+		 SELECT * FROM LIVE_RECORD WHERE LIVE_RECORD_ID= ? 
+	</sql>
+
+	<sql id="insert">
+		 INSERT INTO LIVE_RECORD VALUES(LIVERECORDID.nextval,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		 update LIVE_RECORD set USER_ID = ?, ON_LIVE_TIME = ?,OFF_LIVE_TIME = ?,LIVE_RECORD_REMARK = ? where LIVE_RECORD_ID = ?
+	</sql>
+
+	<sql id="delete">
+		delete from LIVE_RECORD where LIVE_RECORD_ID= ? 
+	</sql>
+
+</sqlStatements>

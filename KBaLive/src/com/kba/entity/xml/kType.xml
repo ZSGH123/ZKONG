@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：zkong
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="kType">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	     SELECT * FROM K_TYPE_INFO
+	</sql>
+
+	<sql id="selectById">
+		 SELECT * FROM K_TYPE_INFO WHERE K_TYPE_ID= ? 
+	</sql>
+        
+    <sql id="selectByName">
+          SELECT * FROM K_TYPE_INFO WHERE K_TYPE_NAME= ? 
+    </sql> 
+   
+	<sql id="insert">
+		 INSERT INTO K_TYPE_INFO VALUES(KTYPEID.nextval,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		 update K_TYPE_INFO set K_TYPE_NAME = ?, K_EXCHANGE_RATE = ?,K_WITHDRAW_RATE = ?,K_REMARK = ? where K_TYPE_ID = ?
+	</sql>
+
+	<sql id="delete">
+		delete from K_TYPE_INFO where K_TYPE_ID= ? 
+	</sql>
+
+</sqlStatements>

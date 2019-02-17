@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<sqlStatements namespace="barrageInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	     select * from barrage_info
+	</sql>
+
+	<sql id="selectById">
+		select * from barrage_info where barrage_id=?
+	</sql>
+
+	<sql id="insert">
+		insert into barrage_info values(BARRAGEINFO.nextval,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		update barrage_info set barrage_content= ?,barrage_send_time= ?,
+		video_id= ?,user_id= ?,now_video_duration=?  where barrage_id=?
+	</sql>
+
+	<sql id="delete">
+		delete from barrage_info where barrage_id=?
+	</sql>
+
+
+</sqlStatements>

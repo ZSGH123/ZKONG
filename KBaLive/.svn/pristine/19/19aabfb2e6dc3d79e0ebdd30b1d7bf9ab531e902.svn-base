@@ -1,0 +1,55 @@
+package com.kba.service.impl;
+
+import java.util.List;
+
+import com.kba.dao.IUserDao;
+import com.kba.dao.impl.UserDao;
+import com.kba.entity.UserInfo;
+import com.kba.service.IUserService;
+import com.kba.util.KBaException;
+
+/**
+ * 用户业务层
+ * @author 钟强
+ * 创建时间：2019-01-15
+ * 修改时间：
+ */
+public class UserService implements IUserService {
+    private IUserDao userDao;
+	
+    public UserService(){
+    	this.userDao=UserDao.getInstance();
+    }
+    
+	@Override
+	public UserInfo invalidUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserInfo userRegister(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserInfo selectUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserInfo> selectAllUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserInfo updateUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="userLevel">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	select * from user_level
+	</sql>
+
+	<sql id="selectById">
+	select * from user_level where user_level_id= ?		
+	</sql>
+
+    <sql id="selectByName">
+    select * from user_level where user_level_name=?
+    </sql>
+	<sql id="insert">
+	insert into user_level values(USERLEVELID.nextval,?,?,?,?)	
+	</sql>
+
+	<sql id="update">
+	update user_level set user_level_name = ?, user_low_invest = ?, user_high_invest = ?, user_level_remark = ? where user_level_id = ?		
+	</sql>
+
+	<sql id="delete">
+	delete from user_level where user_level_id= ? 	
+	</sql>
+
+</sqlStatements>

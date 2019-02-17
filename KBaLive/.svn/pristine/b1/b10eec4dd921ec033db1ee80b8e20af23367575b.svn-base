@@ -1,0 +1,17 @@
+$(function(){
+	$("#shouyetop").click(
+		function(){
+			location.href="indexAction.do";
+		}	
+	);
+	
+	$("#zhibo").click(
+			function(){
+				location.href="indexAction.do";
+			}	
+	);
+	
+	
+});
+
+

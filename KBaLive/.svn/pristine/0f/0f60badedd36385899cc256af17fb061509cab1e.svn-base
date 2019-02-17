@@ -1,0 +1,80 @@
+package com.kba.service;
+
+import java.util.List;
+
+import com.kba.entity.LiveRoom;
+import com.kba.util.KBaException;
+
+/**
+ * 直播间业务
+ * @author 钟强
+ * 创建时间：2019-01-19
+ * 修改时间：
+ */
+public interface ILiveRoomService {
+
+	/**
+	 * 查询所有直播房间业务
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoom> selectAllLiveRoom(LiveRoom liveRoom)throws KBaException;
+	/**
+	 * 查询所有经排序直播房间业务
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoom> selectAllLiveRoomSorted(LiveRoom liveRoom)throws KBaException;
+	/**
+	 * 查询直播房间通告id
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoom selectSingleById(LiveRoom liveRoom)throws KBaException;
+	/**
+	 * 查询直播房间通过主播id
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoom selectSingleByAnchorId(LiveRoom liveRoom)throws KBaException;
+	
+	/**
+	 * 查询直播房间通过直播内容id
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoom> selectByLiveContentID(LiveRoom liveRoom)throws KBaException;
+	/**
+	 * 查询直播房间通过直播房间标题
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public List<LiveRoom> selectByLiveRoomTitle(LiveRoom liveRoom)throws KBaException;
+	/**
+	 * 添加直播房间
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoom addLiveRoom(LiveRoom liveRoom)throws KBaException;
+	/**
+	 * 更新直播房间
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoom updateLiveRoom(LiveRoom liveRoom)throws KBaException;
+	/**
+	 * 删除直播房间
+	 * @param liveRoom
+	 * @return
+	 * @throws KBaException
+	 */
+	public LiveRoom deleteLiveRoom(LiveRoom liveRoom)throws KBaException;
+}

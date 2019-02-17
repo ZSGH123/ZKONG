@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<sqlStatements namespace="anchorInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	     select * from anchor_info
+	</sql>
+
+	<sql id="selectById">
+		select * from anchor_info where anchor_id=?
+	</sql>
+
+    <sql id="selectByUserId">
+        select * from anchor_info where user_id=?
+    </sql>
+    
+	<sql id="insert">
+		insert into anchor_info values(ANCHORINFOID.nextval,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		update anchor_info set user_id= ?,live_room_id= ?,
+		registered_anchor_time= ?,anchor_info_remark= ? where anchor_id=?
+	</sql>
+
+	<sql id="delete">
+		delete from anchor_info where anchor_id=?
+	</sql>
+
+</sqlStatements>

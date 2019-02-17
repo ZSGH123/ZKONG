@@ -1,0 +1,194 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>看吧直播找回密码-安全验证</title>
+<link rel="shortcut icon" href="img/logo.png " type="image/x-icon" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/verify.css">
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/messages_zh.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+						<h3 class="panel-title" style="font-size: 25px;">找回密码-安全验证</h3>
+					</div>
+					<div class="panel-body">
+						<div class="jumbotron" style="padding: 20px;">
+							<p style="margin: 0px; font-size: 20px;">您的账号存在风险，为了保障账号安全，登陆前需验证身份</p>
+						</div>
+						<form id="findform" method="post" class="form-horizontal"
+							action="">
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="phone">手机号:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="phone" name="phone"
+										placeholder="请输入您的手机号" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="code">验证码:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="code" name="code"
+										placeholder="请输入6位验证码" />
+								</div>
+								<button type="button" id="" class="btn btn-group btn-warning">发送验证码</button>
+							</div>
+
+
+							<div class="form-group">
+
+								<div class="col-sm-5 col-sm-offset-4"
+									style="margin-left: 180px;">
+									<!--
+                                        	作者：2671242147@qq.com
+                                        	时间：2019-01-17
+                                        	描述：滑动验证
+                                        -->
+									<div id="mpanel4"></div>
+								</div>
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-lg btn-block">确定</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="js/verify.min.js"></script>
+	<script type="text/javascript">
+		/**
+		 * 滑动验证
+		 */
+		$('#mpanel4').slideVerify({
+			type : 2, //类型
+			vOffset : 5, //误差量，根据需求自行调整
+			vSpace : 5, //间隔
+			imgName : [ '1.jpg', '2.jpg' ],
+			imgSize : {
+				width : '400px',
+				height : '200px',
+			},
+			blockSize : {
+				width : '40px',
+				height : '40px',
+			},
+			barSize : {
+				width : '400px',
+				height : '40px',
+			},
+			ready : function() {},
+			success : function() {
+				alert('验证成功，添加你自己的代码！');
+			//......后续操作
+			},
+			error : function() {
+				//alert('验证失败！');
+			}
+		});
+	
+		//默认表单提交的回调方法
+		$.validator.setDefaults({
+			submitHandler : function() {
+				alert("submitted!");
+			}
+		});
+		//自定义规则
+		$.validator.addMethod(
+			"phone",
+			function(value, element) {
+				return this.optional(element) || /^\d{11}$/.test(value);
+			},
+			"请输入正确的手机号"
+		);
+		$.validator.addMethod(
+			"code",
+			function(value, element) {
+				return this.optional(element) || /^\d{6}$/.test(value);
+			},
+			"请输入正确的验证码"
+		);
+		$(function() {
+			$("#findform").validate({
+				rules : {
+					phone : {
+						required : true,
+						minlength : 11,
+						maxlength : 11,
+						phone : true,
+						remote : {
+							url : "userAction.do?command=checkUserByPhone", //后台处理程序
+							type : "post", //数据发送方式
+							dataType : "text", //接受数据格式   
+							data : { //要传递的数据
+								userPhoneNumber : function() {
+									return $("#phone").val();
+								},
+							}
+						}
+					},
+					code : {
+						required : true,
+						minlength : 6,
+						maxlength : 6,
+						code : true
+					}
+				},
+				messages : {
+					phone : {
+						required : "请输入您的手机号",
+						minlength : "手机号为11位数字",
+						maxlength : "手机号为11位数字",
+						remote : "该手机号未绑定账号"
+					},
+					code : {
+						required : "请输入您的验证码",
+						minlength : "验证码长度为6位数字",
+						maxlength : "验证码长度为6位数字"
+					}
+				},
+				errorElement : "em",
+				errorPlacement : function(error, element) {
+					error.addClass("help-block");
+					element.parents(".col-sm-5").addClass("has-feedback");
+					if (element.prop("type") === "checkbox") {
+						error.insertAfter(element.parent("label"));
+					} else {
+						error.insertAfter(element);
+					}
+					if (!element.next("span")[0]) {
+						$("<span class='glyphicon glyphicon-remove form-control-feedback'></span>").insertAfter(element);
+					}
+				},
+				success : function(label, element) {
+					if (!$(element).next("span")[0]) {
+						$("<span class='glyphicon glyphicon-ok form-control-feedback'></span>").insertAfter($(element));
+					}
+				},
+				highlight : function(element, errorClass, validClass) {
+					$(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+					$(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
+				},
+				unhighlight : function(element, errorClass, validClass) {
+					$(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+					$(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>

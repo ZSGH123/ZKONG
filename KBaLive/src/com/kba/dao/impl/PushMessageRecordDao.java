@@ -1,0 +1,140 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.IPushMessageRecordDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.PushMessageRecord;
+
+/**
+ * 推送消息记录dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class PushMessageRecordDao extends AbstractBaseDao implements IPushMessageRecordDao,ResultSetHandler<List<PushMessageRecord>>{
+
+	private static PushMessageRecordDao pushMessageRecordDao;
+	
+	private PushMessageRecordDao(){
+		
+	}
+	
+	public synchronized static PushMessageRecordDao getInstance(){
+		if(pushMessageRecordDao==null){
+			pushMessageRecordDao=new PushMessageRecordDao();
+		}
+		return pushMessageRecordDao;
+	}
+	/**
+	 * 查询所有推送消息
+	 */
+	@Override
+	public List<PushMessageRecord> queryAll(PushMessageRecord entity) throws SQLException {
+		List<PushMessageRecord> pushMessageRecords=null;
+		String sql=this.parseSqlStatement.getSql(NameSpace.PUSHMESSAGERECORD, ISqlCommand.SELECT_ALL);
+		try {
+			pushMessageRecords=this.queryRunner.query(sql, this);
+		} catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.info("查询异常");
+		}
+		return pushMessageRecords;
+	}
+
+	/**
+	 * 查询某条推送消息
+	 */
+	@Override
+	public PushMessageRecord querySingle(PushMessageRecord entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.PUSHMESSAGERECORD,ISqlCommand.SELECT_BY_ID);
+		
+		params=new Object[]{entity.getPushMessageRecordId()};
+		
+		try {
+			List<PushMessageRecord> pushMessageRecords=this.queryRunner.query(sql, this, params);
+			return pushMessageRecords != null && pushMessageRecords.size() > 0 ? pushMessageRecords.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	/**
+	 * 新增推送消息
+	 */
+	@Override
+	public int insert(PushMessageRecord entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.PUSHMESSAGERECORD, ISqlCommand.INSERT);
+	    Object[] args={entity.getLiveRoomId(),entity.getPushTypeId(),entity.getPushDuration(),
+	    		entity.getPushMessageResult(),entity.getPushMessageTime(),
+	    		entity.getPushMessageRecordRemark()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("插入推送消息记录["+entity.getPushMessageRecordId()+"]成功");
+	    return res;
+	}
+
+	/**
+	 * 修改推送消息
+	 */
+	@Override
+	public int update(PushMessageRecord entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.PUSHMESSAGERECORD, ISqlCommand.UPDATE);
+	    Object[] args={entity.getLiveRoomId(),entity.getPushTypeId(),entity.getPushDuration(),
+	    		entity.getPushMessageResult(),entity.getPushMessageTime(),
+	    		entity.getPushMessageRecordRemark(),entity.getPushMessageRecordId()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("更新推送消息记录["+entity.getPushMessageRecordId()+"]成功");
+	    return res;
+	}
+
+	/**
+	 * 删除推送消息
+	 */
+	@Override
+	public int delete(PushMessageRecord entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.PUSHMESSAGERECORD, ISqlCommand.DELETE);
+		Object[]  args={entity.getPushMessageRecordId()};
+		int res=this.queryRunner.update(sql, args);
+		this.logger.info("删除推送消息记录["+entity.getPushMessageRecordId()+"]成功");
+		return res;	
+	}
+
+	/**
+	 * 推送消息结果集处理
+	 */
+	@Override
+	public List<PushMessageRecord> handle(ResultSet rs) throws SQLException {
+		List<PushMessageRecord> pushMessageRecords=new Vector<PushMessageRecord>();
+		PushMessageRecord pushMessageRecord=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			pushMessageRecord=new PushMessageRecord();
+			pushMessageRecord.setPushMessageRecordId(rs.getString("PUSHMESSAGE_RECORD_ID"));
+			pushMessageRecord.setLiveRoomId(rs.getString("LIVE_ROOM_ID"));
+			pushMessageRecord.setPushTypeId(rs.getString("PUSH_TYPE_ID"));
+			pushMessageRecord.setPushDuration(Integer.parseInt(rs.getString("PUSH_DURATION")));
+			pushMessageRecord.setPushMessageResult(Integer.parseInt(rs.getString("PUSHMESSAGE_RESULT")));
+			pushMessageRecord.setPushMessageTime(rs.getTimestamp("PUSHMESSAGE_TIME"));
+			pushMessageRecord.setPushMessageRecordRemark(rs.getString("PUSHMESSAGE_RECORD_REMARK"));
+			pushMessageRecords.add(pushMessageRecord);
+		}
+		return pushMessageRecords;
+	}
+
+}

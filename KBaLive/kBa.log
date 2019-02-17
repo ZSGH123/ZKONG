@@ -1,0 +1,60 @@
+2019-01-15 14:26:18 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-15 14:29:28 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-15 14:33:40 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-15 14:38:27 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-15 14:42:26 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-15 14:42:41 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-15 14:43:31 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-16 09:44:34 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 10:54:40 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 10:55:43 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 10:57:48 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 10:58:25 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 10:58:26 com.kba.dao.impl.BackStageManagerInfoDao.delete(BackStageManagerInfoDao.java:136)  删除后台管理员[尚杰]成功
+2019-01-19 16:06:24 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:08:55 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:18:04 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:28:57 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:28:58 com.kba.dao.impl.UserDao.insert(UserDao.java:99)  添加用户[王道]成功
+2019-01-19 16:44:22 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:45:15 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:46:15 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:48:40 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:49:02 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:52:08 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 16:52:22 com.kba.dao.impl.UserDao.insert(UserDao.java:99)  添加用户[王道五]成功
+2019-01-19 16:53:02 com.kba.dao.impl.UserWeiboInfoDao.insert(UserWeiboInfoDao.java:84)  插入微博用户[王道五]成功
+2019-01-19 16:53:52 com.kba.dao.impl.UserDao.update(UserDao.java:114)  更新用户[王道五]成功
+2019-01-19 17:07:54 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-19 17:08:40 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-20 01:35:15 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-21 21:58:38 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-21 21:59:44 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-21 22:00:31 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-22 09:28:54 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 01:06:20 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 01:09:22 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 01:10:28 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 01:14:39 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 01:15:36 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 01:18:32 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 01:21:27 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 02:04:02 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 02:13:03 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-23 10:19:37 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-25 01:35:14 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-26 04:06:40 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-26 04:06:41 com.kba.dao.impl.AbstractBaseDao.<init>(AbstractBaseDao.java:34)  
+java.lang.NullPointerException
+	at org.dom4j.io.SAXReader.read(SAXReader.java:284)
+	at com.kba.dao.util.ParseSqlStatement.getDocument(ParseSqlStatement.java:112)
+	at com.kba.dao.util.ParseSqlStatement.parseSqlStatement(ParseSqlStatement.java:64)
+	at com.kba.dao.util.ParseSqlStatement.<init>(ParseSqlStatement.java:32)
+	at com.kba.dao.util.ParseSqlStatement.getInstance(ParseSqlStatement.java:37)
+	at com.kba.dao.impl.AbstractBaseDao.<init>(AbstractBaseDao.java:30)
+	at com.kba.dao.impl.LiveRoomDetatilDao.<init>(LiveRoomDetatilDao.java:30)
+	at com.kba.dao.impl.LiveRoomDetatilDao.getInstance(LiveRoomDetatilDao.java:36)
+	at com.kba.dao.impl.LiveRoomDetatilDao.main(LiveRoomDetatilDao.java:121)
+2019-01-26 04:07:23 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-26 04:10:20 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！
+2019-01-26 04:26:29 com.kba.dao.util.DbConnector.<clinit>(DbConnector.java:40)  驱动类加载成功！

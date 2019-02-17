@@ -1,0 +1,167 @@
+ a:hover{
+	text-decoration: none;
+	color: orange;
+}
+
+a{
+	color: black;
+	text-decoration: none;
+	
+}
+
+#center{
+	margin: 0px;
+	height: 800px;
+	background-color: gray;
+}
+
+#logins{
+	margin-top: 120px;
+	width: 400px;
+	height:360px;
+	background-color: white;
+	padding: 0px;
+
+	
+}
+
+#card{
+
+	width: 400px;
+	margin-left: 0px;
+}
+#card_left{
+	width: 400px;
+
+
+}
+
+#card_left #ttext{
+	text-align: center;
+}
+
+
+#tab_left{
+	width: 400px;
+	height: 360px;
+}
+
+/*手机验证*/
+#phone_row{
+	width: 400px;
+	padding: 0px;
+     margin-top: 10px;
+	margin-left: 0px;
+}
+
+#phone_row_one{
+	padding: 0px;
+	font-size: 18px;
+	padding-left: 10px;
+	margin-top: 15px;
+	margin-left: 10px;
+}
+
+#phone_row_two{
+	padding: 0px;
+	margin: 0px;
+	width: 255px;
+
+}
+
+#phone_row_two input{
+	width: 250px;
+	margin-top: 10px;
+	margin-bottom: 0px;
+}
+
+#phone{
+	width: 300px;
+	border-right: ;
+}
+
+#phone_row_three{
+	width: 52px;
+	height: 32px;
+padding: 0px;
+	margin: 0px;
+	margin-top: 11px;
+	line-height: 32px;
+}
+
+#phone_row_line{
+	width: 400px;
+	height: 20px;
+	margin: 0px;
+	padding-left: 80px;
+}
+
+/*验证码*/
+#yanzhengma{
+	width: 400px;
+	height: 40px;
+border: 1px red solid;
+	margin: 0px;
+}
+
+/*登录按钮*/
+#login_but{
+	width: 400px;
+	height: 40px;
+	text-align: center;
+
+}
+
+#login_but input{
+	font-size: 18px;
+	width: 300px;
+	height: 35px;
+	border-radius: 10px;
+	background-color: orange;
+	color: white;
+}
+
+#login_but input:hover{
+	
+	background-color: green;
+	color: white;
+}
+
+/*找回密码*/
+#find_password{
+	padding-left: 75px;
+	width: 400px;
+	height: 25px;
+
+}
+
+/*三方登录*/
+#other_login{
+	margin-top: 10px;
+	text-align: center;
+	width: 400px;
+	height: 40px;
+}
+
+#other_login a{
+	color: gray;
+}
+
+#other_login .weibo:hover{
+	color: red;
+}
+
+#other_login .qq:hover{
+	color: #269ABC;
+} 
+
+#other_login .wenxin:hover{
+	color: green;
+}
+
+#other_login_text{
+	width: 400px;
+	text-align: center;
+}
+/*--------------------------------------------------------------------------------------------*/
+

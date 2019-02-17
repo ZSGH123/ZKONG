@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IVideoBrowseRecordDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.VideoBrowseRecord;
+
+/**
+ * 视频浏览记录dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class VideoBrowseRecordDao extends AbstractBaseDao implements IVideoBrowseRecordDao,ResultSetHandler<List<VideoBrowseRecord>>{
+
+	@Override
+	public List<VideoBrowseRecord> queryAll(VideoBrowseRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public VideoBrowseRecord querySingle(VideoBrowseRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(VideoBrowseRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(VideoBrowseRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(VideoBrowseRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<VideoBrowseRecord> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

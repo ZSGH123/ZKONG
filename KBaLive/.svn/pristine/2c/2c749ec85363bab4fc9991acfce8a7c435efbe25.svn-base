@@ -1,0 +1,25 @@
+package com.kba.service;
+
+import java.util.List;
+
+import com.kba.entity.UserGiftRecord;
+import com.kba.util.KBaException;
+
+/**
+ * 用户赠礼记录查询
+ * @author 单杰
+ * 时间：2019-1-23
+ */
+public interface IUserGiftRecordService {
+	
+	/**
+	 * 查询所有赠礼记录
+	 * @param record
+	 * @return
+	 * @throws KBaException
+	 * @author 单杰
+	 */
+	public List<UserGiftRecord> selectAllRecord(UserGiftRecord record)throws KBaException;
+
+	public List<UserGiftRecord> selectById(UserGiftRecord record)throws KBaException;
+}

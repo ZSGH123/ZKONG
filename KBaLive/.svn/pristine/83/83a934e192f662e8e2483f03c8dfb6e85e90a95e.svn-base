@@ -1,0 +1,14 @@
+package com.kba.dao;
+
+import com.kba.entity.UserInfo;
+
+/**
+ * 数据库用户表的方法
+ * 
+ * @author 赵科
+ * 时间：2019-1-11
+ */
+public interface  IUserDao extends IBaseDao<UserInfo> {
+
+	//扩展
+}

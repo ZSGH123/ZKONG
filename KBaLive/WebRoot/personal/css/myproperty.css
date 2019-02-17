@@ -1,0 +1,91 @@
+.earnings_top {
+    height: 24px;
+    border-bottom: none;
+}
+.shark_tit {
+    border-bottom: 1px solid #ececec;
+    background: #f5f5f5;
+    font-size: 16px;
+    padding: 10px 0;
+    line-height: 28px;
+}
+.clearfix {
+    display: block;
+    min-height: 1%;
+}
+.shark_tit span {
+    float: left;
+}
+.consume_tit {
+    padding: 0 14px;
+    color: #555555;
+    font-size: 16px;
+}
+.backpack-title-icon {
+    float: left;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-image: url(../img/钱袋.png);
+    background-position: -30px 0px;
+    line-height: 28px;
+    vertical-align: text-bottom;
+    margin-right: 5px;
+}
+.consume_tit h4{
+	float: left;
+}
+.consume_tab{
+    border-bottom: 1px solid #e4e4e4;
+    height: 48px;
+    padding-top: 24px;
+
+}
+.consume_tab dl {
+    float: left;
+    margin-bottom: 20px;
+}
+.consume_tab dl dd.cur, .consume_tab dl dd:hover {
+
+    color: #ff8f2b;
+    border-bottom: 2px solid #ff8f2b;
+
+}
+.consume_tab dl dd {
+    display: inline-block;
+    padding: 0 10px;
+    height: 18px;
+    line-height: 9px;
+    text-align: center;
+    color: #737373;
+    font-size: 16px;
+    cursor: pointer;
+}
+#property_num{
+	margin-top: 10px;
+}
+
+#big_property_content{
+	padding-left: 0;
+	padding-right: 30px;
+	margin-left: -85px;
+}
+
+.tool-btn{
+	float: right;
+	color: #fff;
+	background-color:  #EC971F;
+	border-color: #EC971F;
+}	
+
+#tool-info{
+	color:  #f60;
+}
+
+
+
+
+
+
+
+

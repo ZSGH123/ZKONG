@@ -1,0 +1,25 @@
+package com.kba.dao;
+
+import java.sql.SQLException;
+
+import org.junit.Test;
+
+import com.kba.dao.impl.UserDao;
+import com.kba.entity.UserInfo;
+
+public class TestUserDao {
+
+	@Test
+	public void testQuerySingle(){
+		IUserDao userDao=UserDao.getInstance();
+		UserInfo user=new UserInfo();
+		user.setUserPhoneNumber("18873269672");
+		try {
+			user=userDao.querySingle(user);
+			System.out.println(userDao.toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

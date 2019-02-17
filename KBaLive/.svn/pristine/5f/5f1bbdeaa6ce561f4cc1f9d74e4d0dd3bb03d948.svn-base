@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="pushMessageRecord">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	 select * from pushmessage_record
+	</sql>
+
+	<sql id="selectById">
+	select * from pushmessage_record where pushmessage_record_id= ?	
+	</sql>
+
+	<sql id="insert">
+	insert into pushmessage_record values(PUSHMESSAGERECORDID.nextval,?,?,?,?,?,?)	
+	</sql>
+
+	<sql id="update">
+	update pushmessage_record set live_room_id = ?, push_type_id = ?, push_duration = ?, pushmessage_result = ?,pushmessage_time = ?, pushmessage_record_remark = ? where pushmessage_record_id = ?	
+	</sql>
+
+	<sql id="delete">
+	delete from pushmessage_record where pushmessage_record_id= ? 	
+	</sql>
+
+</sqlStatements>

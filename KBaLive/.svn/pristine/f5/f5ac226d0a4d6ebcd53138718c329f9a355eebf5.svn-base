@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>KBaLive</display-name>
+	<welcome-file-list>
+		<welcome-file>indexAction.do</welcome-file>
+	</welcome-file-list>
+
+	<!-- 赵科开始 -->
+	<!-- 注册：tomcat -->
+	<servlet>
+		<servlet-name>userServlet</servlet-name>
+		<servlet-class>com.kba.action.UserServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+    
+    <servlet>
+        <servlet-name>backStageAnchorLevel</servlet-name>
+        <servlet-class>com.kba.action.BackStageAnchorLevelServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>backStageUserLevelServlet</servlet-name>
+        <servlet-class>com.kba.action.BackStageUserLevelServlet</servlet-class>
+    </servlet>
+    
+	<servlet>
+		<servlet-name>indexServlet</servlet-name>
+		<servlet-class>com.kba.action.IndexServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>managerInfoServlet</servlet-name>
+		<servlet-class>com.kba.action.BackStageManagerInfoServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>backStageIndexServlet</servlet-name>
+		<servlet-class>com.kba.action.BackStageIndexServlet</servlet-class>
+	</servlet>
+
+	<!-- 映射 -->
+	<servlet-mapping>
+		<servlet-name>userServlet</servlet-name>
+		<url-pattern>/userAction.do</url-pattern>
+		<url-pattern>/live_home/userAction.do</url-pattern>
+		<url-pattern>/personal/userAction.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>backStageUserLevelServlet</servlet-name>
+	    <url-pattern>/manager/backStageUserLevelAction.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>backStageAnchorLevel</servlet-name>
+	    <url-pattern>/manager/backStageAnchorLevelAction.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>indexServlet</servlet-name>
+		<url-pattern>/indexAction.do</url-pattern>
+		
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>managerInfoServlet</servlet-name>
+		<url-pattern>/manager/managerInfoAction.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>backStageIndexServlet</servlet-name>
+		<url-pattern>/manager/backStageIndexAction.do</url-pattern>
+	</servlet-mapping>
+	<!-- 赵科结束 -->
+
+	<!-- 钟强开始 -->
+	<!-- 过滤器开始 -->
+	<filter>
+		<description>字符编码过滤器</description>
+		<filter-name>CharacterEncodeFilter</filter-name>
+		<filter-class>com.kba.action.filter.KBaLiveCharacterEncodeFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodeFilter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<description>验证过滤器</description>
+		<filter-name>ValidateFilter</filter-name>
+		<filter-class>com.kba.action.filter.ValidateFilter</filter-class>
+		<init-param>
+			<param-name>validatexmpath</param-name>
+			<param-value>/WEB-INF/validate.xml</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ValidateFilter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>com.kba.action.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/find-password.jsp</url-pattern>
+	</filter-mapping>
+
+	<!-- 过滤器结束 -->
+	<!-- qq开始 -->
+	<servlet>
+		<servlet-name>QQLoginServlet</servlet-name>
+		<servlet-class>com.kba.action.QQLoginServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>QQLoginServlet</servlet-name>
+		<url-pattern>/afterLoginAction.do</url-pattern>
+	</servlet-mapping>
+	<!-- qq结束 -->
+
+	<!-- session监听 类实现 HttpSessionListener 接口方法 -->
+	<listener>
+		<listener-class>com.kba.action.listener.KBaSessionListener</listener-class>
+	</listener>
+
+
+	<!-- 钟强结束 -->
+
+	<!-- 智能开始 -->
+
+
+
+
+	<!-- 智能结束 -->
+
+	<!-- 单杰开始 -->
+	<!-- 充值记录查询开始 -->
+	<servlet>
+		<servlet-name>BackStageInvestSearchServlet</servlet-name>
+		<servlet-class>com.kba.action.BackStageInvestSearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BackStageInvestSearchServlet</servlet-name>
+		<url-pattern>/manager/afterInvestSearchAction.do</url-pattern>
+	</servlet-mapping>
+	<!-- 充值记录查询结束 -->
+
+	<!-- 送礼记录查询开始 -->
+	<servlet>
+		<servlet-name>BackStageUserGiftRecordServlet</servlet-name>
+		<servlet-class>com.kba.action.BackStageUserGiftRecordServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BackStageUserGiftRecordServlet</servlet-name>
+		<url-pattern>/manager/afterUserGiftRecordAction.do</url-pattern>
+	</servlet-mapping>
+	<!-- 送礼记录查询结束 -->
+
+	<!-- 举报记录查询开始 -->
+	<servlet>
+		<servlet-name>BackStageReportMessageServlet</servlet-name>
+		<servlet-class>com.kba.action.BackStageReportMessageServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BackStageReportMessageServlet</servlet-name>
+		<url-pattern>/manager/afterReportMessageAction.do</url-pattern>
+	</servlet-mapping>
+	<!-- 举报记录查询结束 -->
+	
+	<!-- 订阅记录查询开始 -->
+	<servlet>
+		<servlet-name>BackStageUserBookServlet</servlet-name>
+		<servlet-class>com.kba.action.BackStageUserBookServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BackStageUserBookServlet</servlet-name>
+		<url-pattern>/manager/afterUserBookAction.do</url-pattern>
+	</servlet-mapping>
+	<!-- 订阅记录查询结束 -->
+	
+	<!-- 直播记录查询开始 -->
+	<servlet>
+		<servlet-name>BackStageLiveRecordServlet</servlet-name>
+		<servlet-class>com.kba.action.BackStageLiveRecordServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BackStageLiveRecordServlet</servlet-name>
+		<url-pattern>/manager/afterLiveRecordAction.do</url-pattern>
+	</servlet-mapping>
+	<!-- 直播记录查询结束 -->
+
+	<!-- 禁言记录查询开始 -->
+	<servlet>
+		<servlet-name>BackStageGagInfoServlet</servlet-name>
+		<servlet-class>com.kba.action.BackStageGagInfoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BackStageGagInfoServlet</servlet-name>
+		<url-pattern>/manager/afterGagInfoAction.do</url-pattern>
+	</servlet-mapping>
+	<!-- 禁言记录查询结束 -->
+	
+
+	<!-- 单杰结束 -->
+
+	<!-- <error-page> <error-code>500</error-code> <location>/error.jsp</location> 
+		</error-page> <error-page> <error-code>404</error-code> <location>/error.jsp</location> 
+		</error-page> -->
+
+	<resource-ref>
+		<res-ref-name>jdbc/kba</res-ref-name>
+		<!-- 资源类型 -->
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+</web-app>	

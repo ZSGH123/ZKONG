@@ -1,0 +1,122 @@
+.invest_content .nobase {
+    height: 52px;
+    line-height: 52px;
+    font-size: 14px;
+    background: #f5f5f5;
+    margin-bottom: 0;
+    color: #555555;
+    padding: 0 20px;
+}
+.invest_content .nobase a{
+	text-decoration: none;
+}
+.invest_content .nobase span {
+    color: #b4b4b4;
+}
+.invest_table{
+	margin-left: 100px;
+	margin-top: 50px;
+}
+.invest_list{
+	overflow: hidden;
+	width: 650px;
+	margin-left: 20px;
+}
+.invest_list1{
+	overflow: hidden;
+	width: 650px;
+	margin-left: 20px;
+}
+.invest_list li {
+    float: left;
+    width: 150px;
+    height: 52px;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    color: #666;
+    margin-right: 30px;
+    text-align: center;
+    margin-bottom: 25px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.invest_list1 li {
+    float: left;
+    width: 150px;
+    height: 52px;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    color: #666;
+    margin-right: 30px;
+    text-align: center;
+    margin-bottom: 25px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.invest_list li.on {
+    background: url(../img/勾选.png) no-repeat center;
+    color: #169ed8;
+    border: 1px solid #169ed8;
+}
+.invest_list1 li.on {
+    background: url(../img/勾选.png) no-repeat center;
+    color: #169ed8;
+    border: 1px solid #169ed8;
+}
+.invest_list li p{
+	line-height: 18px;
+font-size: 12px;
+color: #999;
+margin-top: 5px;
+}
+.invest_list p{
+	margin-bottom: 0;
+}
+.nmb_jj {
+    overflow: hidden;
+    margin-left: 20px;
+}
+.nmb_jj li.jian,.nmb_jj li.jia {
+    border-right: none;
+    cursor: pointer;
+    color: #999;
+    width: 30px;
+    padding: 0;
+}
+.nmb_jj li {
+    float: left;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ddd;
+    font-size: 20px;
+}
+.nmb_jj li .srkk {
+    width: 30px;
+    font-size: 16px;
+    border: none;
+    line-height: 24px;
+    text-align: center;
+}
+input {
+    outline: 0;
+    background: #FFF;
+}
+.zwfb_zje {
+    margin-left: 20px;
+    font-size: 20px;
+    color: #169ed8;
+}
+a.ty_but {
+    width: 130px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: block;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 3px;
+    background: #169ed8;
+}
+ul, li {
+    list-style: none;
+}

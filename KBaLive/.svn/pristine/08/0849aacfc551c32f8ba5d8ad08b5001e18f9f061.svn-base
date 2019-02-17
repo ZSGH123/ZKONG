@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：单杰
+创建时间：2019-01-15 
+修改时间：
+ -->
+<sqlStatements namespace="userBook">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+		SELECT * FROM USER_BOOK
+	</sql>
+
+	<sql id="selectById">
+		SELECT * FROM USER_BOOK WHERE USER_BOOK_ID=?
+	</sql>
+	
+	<sql id="selectByUserId">
+		SELECT * FROM USER_BOOK WHERE USER_ID=?
+	</sql>
+	
+	<sql id="insert">
+		INSERT INTO USER_BOOK VALUES(USERBOOKID.nextval,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		UPDATE USER_BOOK SET USER_BOOK_ID=?,ANCHOR_ID=?,USER_ID=?,UESR_BOOK_TIME=?,USER_TAKE_OFF_TIME=?,USER_BOOK_REMARK=? WHERE USER_BOOK_ID=?
+	</sql>
+
+	<sql id="delete">
+		DELETE FROM USER_BOOK WHERE USER_BOOK_ID=?
+	</sql>
+
+</sqlStatements>

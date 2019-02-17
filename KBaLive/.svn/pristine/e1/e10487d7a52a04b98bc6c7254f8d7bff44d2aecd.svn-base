@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IAnchorLevelDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.AnchorLevel;
+
+/**
+ * 主播等级dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class AnchorLevelDao extends AbstractBaseDao implements IAnchorLevelDao,ResultSetHandler<List<AnchorLevel>>{
+
+	@Override
+	public List<AnchorLevel> queryAll(AnchorLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AnchorLevel querySingle(AnchorLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(AnchorLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(AnchorLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(AnchorLevel entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<AnchorLevel> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="userProperty">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	select * from user_property
+	</sql>
+
+	<sql id="selectById">
+	select * from user_property where user_id= ?	
+	</sql>
+
+	<sql id="insert">
+	insert into user_property values(USERPROPERTYID.nextval,?,?,?,?)	
+	</sql>
+
+	<sql id="update">
+	 update user_property set user_id = ?, k_type_id = ?, k_number = ?, user_property_remark = ? where user_property_id = ?		
+	</sql>
+
+	<sql id="delete">
+	delete from user_property where user_property_id= ?		
+	</sql>
+
+</sqlStatements>

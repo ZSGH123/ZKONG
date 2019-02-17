@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="pushList">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	  select * from push_list
+	</sql>
+
+	<sql id="selectById">
+	  select * from push_list where push_list_id= ?	
+	</sql>
+
+	<sql id="insert">
+	  insert into push_list values(PUSHLISTID.nextval,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+	  update push_list set live_room_id = ?, push_type_id = ?, push_start_time = ?,push_end_time = ?, push_list_remark = ? where push_list_id = ?	
+	</sql>
+
+	<sql id="delete">
+		delete from push_list where push_list_id= ?
+	</sql>
+
+</sqlStatements>

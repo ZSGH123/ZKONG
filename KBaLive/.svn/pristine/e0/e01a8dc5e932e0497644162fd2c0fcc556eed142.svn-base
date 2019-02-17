@@ -1,0 +1,198 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.IUserDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.UserInfo;
+/**
+ * 用户数据层
+ * @author 钟强
+ * 修改时间：2019-1-16
+ * 创建时间：2019-1-15
+ *
+ */
+public class UserDao extends AbstractBaseDao implements IUserDao,ResultSetHandler<List<UserInfo>>{
+
+	private static UserDao userDao;
+	
+	private UserDao(){
+		
+	}
+	
+	public synchronized static UserDao getInstance(){
+		if(userDao==null){
+			userDao=new UserDao();
+		}
+		return userDao;
+	}
+	/**
+     * 查询所有用户
+     * @throws SQLException 
+     */
+	@Override
+	public List<UserInfo> queryAll(UserInfo entity) throws SQLException {
+		List<UserInfo> users=null;
+		String sql=this.parseSqlStatement.getSql(NameSpace.USERINFO, ISqlCommand.SELECT_ALL);
+		try {
+			users=this.queryRunner.query(sql, this);
+		} catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.info("查询异常");
+		}
+		return users;
+	}
+    /**
+     * 查询单个
+     * 1.用户ID
+     * 2.用户手机号码
+     * 3.用户名
+     */
+	@Override
+	public UserInfo querySingle(UserInfo entity) throws SQLException {
+		String sql=null;
+		Object[] args=null;
+		String sqlId=null;
+		if(entity==null){
+			throw new SQLException("没有参数");
+		}
+		if(entity.getUserId()!=null ){
+			sqlId=ISqlCommand.SELECT_BY_ID;
+			args=new Object[]{entity.getUserId()};
+		}else if(entity.getUserPhoneNumber()!=null){
+			sqlId=ISqlCommand.SELECT_BY_PHONENUMBER;
+			args=new Object[]{entity.getUserPhoneNumber()};
+		}else if(entity.getUserName()!=null) {
+			sqlId=ISqlCommand.SELECT_BY_NAME;
+			args=new Object[]{entity.getUserName()};
+		}
+	    sql=parseSqlStatement.getSql(NameSpace.USERINFO, sqlId);
+		System.out.println( sql );
+        try{
+		List<UserInfo> users = this.queryRunner.query(sql, this, args);
+		System.out.println(users.get(0));
+		return users != null && users.size() != 0 ? users.get(0) : null;
+        }catch(SQLException e){
+        	throw e;
+        }catch(Exception e){
+        	logger.error("ERROR",e);
+        }		
+        return null;
+	}
+
+	@Override
+	public int insert(UserInfo entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.USERINFO, ISqlCommand.INSERT);
+		 Object[] args={entity.getUserPhoneNumber(),entity.getUserName(),entity.getUserPassword(),
+	    		 entity.getUserRealName(),entity.getUserSex(),entity.getUserIdCard(),entity.getUserWeiboId(),
+	    		 entity.getUserQQId(),entity.getUserIcon(),entity.getUserAliPay(),entity.getUserBankCard(),
+	    		 entity.getUserRemark()};
+		int res=this.queryRunner.update(sql, args);
+		this.logger.info("添加用户["+entity.getUserName()+"]成功");
+		return res;
+	}
+    /**
+     * 更新用户
+     */
+	@Override
+	public int update(UserInfo entity) throws SQLException {
+		 String sql =this.parseSqlStatement.getSql(NameSpace.USERINFO, ISqlCommand.UPDATE);
+	     Object[] args={entity.getUserPhoneNumber(),entity.getUserName(),entity.getUserPassword(),
+	    		 entity.getUserRealName(),entity.getUserSex(),entity.getUserIdCard(),entity.getUserWeiboId(),
+	    		 entity.getUserQQId(),entity.getUserIcon(),entity.getUserAliPay(),entity.getUserBankCard(),
+	    		 entity.getUserRemark(),entity.getUserId()};
+	     int res=this.queryRunner.update(sql, args);
+	     this.logger.info("更新用户["+entity.getUserName()+"]成功");
+	     return res;
+	}
+
+	@Override
+	public int delete(UserInfo entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.USERINFO, ISqlCommand.DELETE);
+		Object[]  args={entity.getUserId()};
+		int res=this.queryRunner.update(sql, args);
+		this.logger.info("删除用户["+entity.getUserName()+"]成功");
+		return res;	
+	}
+
+	@Override
+	public List<UserInfo> handle(ResultSet rs) throws SQLException {
+		List<UserInfo> users=new Vector<UserInfo>();
+		UserInfo user=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			user=new UserInfo();
+			user.setUserId(rs.getString("user_id"));
+			user.setUserPhoneNumber(rs.getString("user_phonenumber"));
+			user.setUserName(rs.getString("user_name"));
+			user.setUserPassword(rs.getString("user_password"));
+			user.setUserRealName(rs.getString("user_realname"));
+			user.setUserSex(rs.getString("user_sex"));
+			user.setUserIdCard(rs.getString("user_idcard"));
+			user.setUserWeiboId(rs.getString("user_weibo_id"));
+			user.setUserQQId(rs.getString("user_qq_id"));
+			user.setUserIcon(rs.getString("user_icon"));
+			user.setUserAliPay(rs.getString("user_alipay"));
+			user.setUserBankCard(rs.getString("user_bank_card"));
+			user.setUserRemark(rs.getString("user_remark"));
+			users.add(user);
+		}
+		return users;
+	}
+
+	@Override
+	public UserInfo querySingleByName(UserInfo entity) throws SQLException {
+		String sql=null;
+		Object[] args=null;
+		String sqlId=null;
+		if(entity==null){
+			throw new SQLException("没有参数");
+		}	
+		sqlId=ISqlCommand.SELECT_BY_NAME;
+		args=new Object[]{entity.getUserName()};
+	    sql=parseSqlStatement.getSql(NameSpace.USERINFO, sqlId);
+        try{
+		     List<UserInfo> users = this.queryRunner.query(sql, this, args);
+		     return users != null && users.size() != 0 ? users.get(0) : null;
+        }catch(SQLException e){
+        	throw e;
+        }catch(Exception e){
+        	logger.error("ERROR",e);
+        }		
+        return null;
+	}
+
+	@Override
+	public UserInfo querySingleByPhone(UserInfo entity) throws SQLException {
+		String sql=null;
+		Object[] args=null;
+		String sqlId=null;
+		if(entity==null){
+			throw new SQLException("没有参数");
+		}	
+		sqlId=ISqlCommand.SELECT_BY_PHONENUMBER;
+		args=new Object[]{entity.getUserPhoneNumber()};
+	    sql=parseSqlStatement.getSql(NameSpace.USERINFO, sqlId);
+        try{
+		     List<UserInfo> users = this.queryRunner.query(sql, this, args);
+		     return users != null && users.size() != 0 ? users.get(0) : null;
+        }catch(SQLException e){
+        	throw e;
+        }catch(Exception e){
+        	logger.error("ERROR",e);
+        }		
+        return null;
+	}
+
+	
+
+	
+}

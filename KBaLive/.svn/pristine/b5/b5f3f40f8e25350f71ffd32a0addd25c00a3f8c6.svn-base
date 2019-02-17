@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<sqlStatements namespace="gagInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	     select * from gag_info
+	</sql>
+
+	<sql id="selectById">
+		select * from gag_info where gag_id=?
+	</sql>
+
+	<sql id="insert">
+		insert into gag_info values(GAGID.nextval,?,?,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		update gag_info set user_id= ?,room_manager_id= ?,
+		live_room_id= ?,anchor_id= ?,gag_time= ?,gag_start_time= ?,
+		gag_info_remark=? where gag_id=?
+	</sql>
+
+	<sql id="delete">
+		delete from gag_info where gag_id=?
+	</sql>
+
+
+</sqlStatements>

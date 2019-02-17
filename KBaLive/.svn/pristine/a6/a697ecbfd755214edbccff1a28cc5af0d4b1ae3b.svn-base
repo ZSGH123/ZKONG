@@ -1,0 +1,13 @@
+package com.kba.dao;
+
+import com.kba.entity.GagInfo;
+
+/**
+ * 禁言信息dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public interface IGagInfoDao extends IBaseDao<GagInfo>{
+
+}

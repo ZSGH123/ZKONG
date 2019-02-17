@@ -1,0 +1,589 @@
+package com.kba.service.impl;
+
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IUserDao;
+import com.kba.dao.IUserQQInfoDao;
+import com.kba.dao.IUserWeiboInfoDao;
+import com.kba.dao.impl.UserDao;
+import com.kba.dao.impl.UserQQInfoDao;
+import com.kba.dao.impl.UserWeiboInfoDao;
+import com.kba.entity.UserInfo;
+import com.kba.entity.UserQQInfo;
+import com.kba.entity.UserWeiboInfo;
+import com.kba.service.IUserService;
+import com.kba.util.KBaException;
+import com.kba.util.MD5Util;
+import com.lu.jsn.JRandomNameTool;
+
+/**
+ * 用户业务层
+ * 
+ * @author 钟强 
+ * 创建时间：2019-01-15 
+ * 修改时间：
+ * @author 钟强 创建时间：2019-01-15 修改时间
+ */
+public class UserService implements IUserService {
+	private IUserDao userDao;
+
+	private IUserWeiboInfoDao weiboInfoDao;
+
+	private IUserQQInfoDao qqInfoDao;
+
+	public UserService() {
+		this.userDao = UserDao.getInstance();
+		this.weiboInfoDao = UserWeiboInfoDao.getInstance();
+		this.qqInfoDao = UserQQInfoDao.getInstance();
+	}
+
+	/**
+	 * 验证用户信息是否有效
+	 */
+	@Override
+	public UserInfo invalidUser(UserInfo user) throws KBaException {
+		try {
+			// 请求数据层对象
+			UserInfo userd = userDao.querySingle(user);
+			if (userd != null) {// 用户存在
+				if (user.getUserPassword().equals(userd.getUserPassword())) {
+					System.out.println(user.getUserPassword() + "  " + userd.getUserPassword());
+					return userd;
+				} else {// 密码不匹配
+						// 置空用户所输密码
+					user.setUserPassword(null);
+					return user;
+				}
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+	/**
+	 * 用户注册
+	 */
+	@Override
+	public UserInfo userRegister(UserInfo user) throws KBaException {
+		try {
+			// 检查
+			UserInfo userd = userDao.querySingle(user);
+			if (userd == null) {// 没有，则保存
+				user.setUserPassword(MD5Util.getMD5(user.getUserPassword()));
+				int res = userDao.insert(user);
+				if (res > 0) {// 成功
+					return userDao.querySingle(user);
+				}
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+	/**
+	 * 查询所有用户
+	 */
+	@Override
+	public List<UserInfo> selectAllUser(UserInfo user) throws KBaException {
+		List<UserInfo> users = null;
+		try {
+			users = userDao.queryAll(user);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return users;
+	}
+
+	/**
+	 * 修改用户信息
+	 */
+	@Override
+	public UserInfo updateUser(UserInfo user) throws KBaException {
+		try {
+			// todo检查
+			// 通过
+			int res = userDao.update(user);
+			if (res > 0) {// 成功
+				return userDao.querySingle(user);
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+	/**
+	 * 根据用户名查询用户信息
+	 */
+	@Override
+	public UserInfo selectUserByName(UserInfo user) throws KBaException {
+		try {
+			return userDao.querySingleByName(user);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 根据手机号查询用户信息
+	 */
+	@Override
+	public UserInfo selectUserByPhone(UserInfo user) throws KBaException {
+		try {
+			return userDao.querySingleByPhone(user);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 根据用户编号查询用户信息
+	 */
+	@Override
+	public UserInfo selectUserByUserID(UserInfo user) throws KBaException {
+		try {
+			return userDao.querySingleByUserID(user);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 处理用户通过微博登陆/注册
+	 */
+	@Override
+	public UserInfo weiBoLogin(UserWeiboInfo weiboInfo, String sex) throws KBaException {
+		if (weiboInfo == null)
+			return null;
+		// 1.查看此微博是否已绑定账号
+		UserWeiboInfo weiboInfodb = null;
+		try {
+			weiboInfodb = weiboInfoDao.querySingle(weiboInfo);
+			if (weiboInfodb == null) {// 初次登陆
+				return weiBoHandler(weiboInfo, sex, 0);
+			}
+			if (weiboInfodb.getUserId() == null) {// 没绑定账号
+				return weiBoHandler(weiboInfodb, sex, 1);
+			}
+			// 绑定账号
+			return userDao.querySingleByUserID(new UserInfo(weiboInfodb.getUserId()));
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 处理用户通过qq登陆/注册
+	 */
+	@Override
+	public UserInfo qqLogin(UserQQInfo userQQInfo, String sex) throws KBaException {
+		if (userQQInfo == null)
+			return null;
+		// 1.查看此微博是否已绑定账号
+		UserQQInfo userQQInfodb = null;
+		try {
+			userQQInfodb = qqInfoDao.querySingle(userQQInfo);
+			if (userQQInfodb == null) {// 初次登陆
+				return qqHandler(userQQInfo, sex, 0);
+			}
+			if (userQQInfodb.getUserId() == null) {// 没绑定账号
+				return qqHandler(userQQInfodb, sex, 1);
+			}
+			// 绑定账号
+			return userDao.querySingleByUserID(new UserInfo(userQQInfodb.getUserId()));
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 微博信息处理:0=添加
+	 * 
+	 * @param weiboInfo
+	 * @param sex
+	 * @return
+	 * @throws KBaException
+	 */
+	private UserInfo weiBoHandler(UserWeiboInfo weiboInfo, String sex, int code) throws KBaException {
+		UserInfo user = spwanAndSave(weiboInfo, sex, null);
+		if (user == null)
+			return null;
+		weiboInfo.setUserId(user.getUserId());// 绑定
+		int res = -1;
+		try {
+			if (code == 1) {// 更新
+				res = weiboInfoDao.update(weiboInfo);
+			} else if (code == 0) {// 插入
+				res = weiboInfoDao.insert(weiboInfo);
+			}
+			if (res <= 0)return null;
+			//更新用户
+			user.setUserWeiboId(weiboInfo.getUserWeiboId());
+			user=this.updateUser(user);
+			if (user == null)return null;// 更新失败
+			return user;
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * qq信息处理:0=添加
+	 * 
+	 * @param weiboInfo
+	 * @param sex
+	 * @return
+	 * @throws KBaException
+	 */
+	private UserInfo qqHandler(UserQQInfo userQQInfo, String sex, int code) throws KBaException {
+		UserInfo user = spwanAndSave(null, sex, userQQInfo);
+		if (user == null)
+			return null;
+		userQQInfo.setUserId(user.getUserId());// 绑定
+		int res = -1;
+		try {
+			if (code == 1) {// 更新
+				res = qqInfoDao.update(userQQInfo);
+			} else if (code == 0) {// 插入
+				res = qqInfoDao.insert(userQQInfo);
+			}
+			if (res <= 0)return null;
+			//更新用户
+			user.setUserQQId(userQQInfo.getUserQQId());;
+			user=this.updateUser(user);
+			if (user == null)return null;// 更新失败
+			return user;
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * .通过微博信息生成用户对象
+	 * 
+	 * @param weiboInfo
+	 * @return
+	 */
+	private UserInfo generateUserInfo(UserWeiboInfo weiboInfo, String sex) throws KBaException{
+		UserInfo user = new UserInfo();
+		UserInfo userdb=null;
+		try {
+			String name=weiboInfo.getUserWeiboName();
+			user.setUserName(name);
+			userdb=userDao.querySingleByName(user);
+			if(userdb!=null){
+				name=this.generateUserName();
+			}
+			user.setUserName(name);
+			user.setUserIcon(weiboInfo.getUserWeiboIcon());
+			user.setUserSex(sex);
+			user.setUserWeiboId(weiboInfo.getUserWeiboId());
+			user.setUserRemark(weiboInfo.getUserWeiboRemark());
+			user.setUserPassword(MD5Util.getMD5("Kb123456"));	
+		} catch (Exception e) {
+			throw new KBaException(e);
+		}
+		return user;
+	}
+
+	/**
+	 * 生成用户信息并保存
+	 * 
+	 * @param weiboInfo
+	 * @param sex
+	 * @return
+	 * @throws KBaException
+	 */
+	private UserInfo spwanAndSave(UserWeiboInfo weiboInfo, String sex, UserQQInfo userQQInfo) throws KBaException {
+		UserInfo user = null;
+		if (weiboInfo != null) {
+			// 1.通过微博信息生成用户对象
+			user = generateUserInfo(weiboInfo, sex);
+			user.setUserWeiboId(null);//解除外键
+		} else {
+			user = generateUserInfo(userQQInfo, sex);
+			user.setUserQQId(null);//解除外键
+		}
+		// 2.注册新用户
+		user = this.userRegister(user);
+		if (user == null)
+			return null;// 注册失败
+		return user;
+	}
+
+	/**
+	 * .通过qq信息生成用户对象
+	 * 
+	 * @param weiboInfo
+	 * @return
+	 */
+	private UserInfo generateUserInfo(UserQQInfo userQQInfo, String sex) throws KBaException{
+		UserInfo user = new UserInfo();
+		UserInfo userdb=null;
+		try {
+			String name=userQQInfo.getUserQQName();
+			user.setUserName(name);
+			userdb=userDao.querySingleByName(user);
+			if(userdb!=null){
+				name=this.generateUserName();
+			}
+			user.setUserName(name);
+			user.setUserIcon(userQQInfo.getUserQQIcon());
+			user.setUserSex(sex);
+			user.setUserQQId(userQQInfo.getUserQQId());
+			user.setUserRemark(userQQInfo.getUserQQRemark());
+			user.setUserPassword(MD5Util.getMD5("Kb123456"));
+		} catch (Exception e) {
+			throw new KBaException(e);
+		}
+		return user;
+	}
+
+	/**
+	 * 解绑该账户的qq
+	 */
+	@Override
+	public UserInfo qqUnbundle(UserInfo user) throws KBaException {
+		UserInfo userdb = null;
+		try {
+			userdb = userDao.querySingle(user);
+			String qqId = userdb.getUserQQId();
+			if (qqId == null) return null;
+			userdb.setUserQQId(null);// qqid置空
+			int res = userDao.update(userdb);// 更新用户表
+			if (res <= 0) throw new KBaException("绑定异常");
+			UserQQInfo qqInfo = new UserQQInfo();
+			qqInfo.setUserQQId(qqId);
+			qqInfo = qqInfoDao.querySingle(qqInfo);
+			if (qqInfo == null) return userdb;
+			qqInfo.setUserId(null);
+			res = qqInfoDao.update(qqInfo);// 更新qq表
+			if (res <= 0) throw new KBaException("绑定异常");
+			return userdb;
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 账户绑定qq
+	 */
+	@Override
+	public UserInfo qqBundle(UserInfo user, UserQQInfo userQQInfo) throws KBaException {
+		UserQQInfo qqInfodb = null;
+		UserInfo userdb = null;
+		int res;
+		try {
+			qqInfodb = qqInfoDao.querySingle(userQQInfo);// 查找该qq信息
+			userdb = userDao.querySingle(user);
+			if (qqInfodb == null) {// 没有，则插入qq表
+				userQQInfo.setUserId(userdb.getUserId());
+				res = qqInfoDao.insert(userQQInfo);
+				if (res <= 0)
+					throw new KBaException("绑定异常");
+			} else if (qqInfodb != null && qqInfodb.getUserId() != null) {
+				return null;// 已被别的账号绑定
+			} else if (qqInfodb.getUserId() == null) {// 没有被绑定,则只需更新qq表
+				userQQInfo.setUserId(userdb.getUserId());
+				res = qqInfoDao.update(userQQInfo);
+				if (res <= 0)
+					throw new KBaException("绑定异常");
+			}
+			if (userdb != null && userdb.getUserQQId() != null) {// 用户已绑定别的qq
+				UserQQInfo qqInfo = new UserQQInfo();
+				qqInfo.setUserQQId(userdb.getUserQQId());
+				qqInfo = qqInfoDao.querySingle(qqInfo);
+				if (qqInfo != null) {
+					qqInfo.setUserId(null);
+					res = qqInfoDao.update(qqInfo);// 更新qq表
+					if (res <= 0)
+						throw new KBaException("更新qq表异常");
+				}
+			}
+			// 绑定新的qq号
+			userdb.setUserQQId(userQQInfo.getUserQQId());
+			int userdbres = userDao.update(userdb);
+			if (userdbres <= 0)
+				throw new KBaException("绑定qq账号异常");
+			return userdb;
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 解绑该账户的微博
+	 */
+	@Override
+	public UserInfo weiBoUnbundle(UserInfo user) throws KBaException {
+		UserInfo userdb = null;
+		try {
+			userdb = userDao.querySingle(user);
+			String weiBoId = userdb.getUserWeiboId();
+			if (weiBoId == null) return null;
+			userdb.setUserWeiboId(null);// weiboid置空
+			int res = userDao.update(userdb);// 更新用户表
+			if (res <= 0) throw new KBaException("绑定weibo账号异常");
+			UserWeiboInfo weiBoInfo = new UserWeiboInfo();
+			weiBoInfo.setUserWeiboId(weiBoId);;
+			weiBoInfo = weiboInfoDao.querySingle(weiBoInfo);
+			if (weiBoInfo == null) return userdb;
+			weiBoInfo.setUserId(null);
+			res = weiboInfoDao.update(weiBoInfo);// 更新weibo表
+			if (res <= 0) throw new KBaException("绑定weibo账号异常");
+			return userdb;
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 账户绑定微博
+	 */
+	@Override
+	public UserInfo weiBoBundle(UserInfo user, UserWeiboInfo weiboInfo) throws KBaException {
+		UserWeiboInfo weiBoInfodb = null;
+		UserInfo userdb = null;
+		int res;
+		try {
+			weiBoInfodb = weiboInfoDao.querySingle(weiboInfo);// 查找该weibo信息
+			userdb = userDao.querySingle(user);
+			if (weiBoInfodb == null) {// 没有，则插入weibo表
+				weiboInfo.setUserId(userdb.getUserId());
+				res = weiboInfoDao.insert(weiboInfo);
+				if (res <= 0)
+					throw new KBaException("绑定异常");
+			} else if (weiBoInfodb != null && weiBoInfodb.getUserId() != null) {
+				return null;// 已被别的账号绑定
+			} else if (weiBoInfodb.getUserId() == null) {// 没有被绑定,则只需更新weibo表
+				weiboInfo.setUserId(userdb.getUserId());
+				res = weiboInfoDao.update(weiboInfo);
+				if (res <= 0)
+					throw new KBaException("绑定异常");
+			}
+			if (userdb != null && userdb.getUserWeiboId() != null) {// 用户已绑定别的weibo
+				UserWeiboInfo wbInfo = new UserWeiboInfo();
+				wbInfo.setUserWeiboId(wbInfo.getUserWeiboId());
+				wbInfo = weiboInfoDao.querySingle(wbInfo);
+				if (wbInfo != null) {
+					wbInfo.setUserId(null);
+					res = weiboInfoDao.update(wbInfo);// 更新weibo表
+					if (res <= 0)
+						throw new KBaException("更新qq表异常");
+				}
+			}
+			// 绑定新的qq号
+			userdb.setUserWeiboId(weiboInfo.getUserWeiboId());
+			int userdbres = userDao.update(userdb);
+			if (userdbres <= 0)
+				throw new KBaException("绑定qq账号异常");
+			return userdb;
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 修改用户密码
+	 */
+	@Override
+	public UserInfo modifyUserPassword(UserInfo user) throws KBaException {
+		if (user == null)
+			return null;
+		UserInfo userdb = null;
+		int res;
+		try {
+			userdb = userDao.querySingle(user);
+			if (userdb == null)
+				return null;
+			userdb.setUserPassword(MD5Util.getMD5(user.getUserPassword()));
+			res = userDao.update(userdb);
+			if (res > 0) {
+				return userdb;
+			}
+
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+	/**
+	 * 绑定用户手
+	 */
+	@Override
+	public UserInfo phoneBundle(UserInfo user,String phone) throws KBaException {
+		if(user==null||phone==null) return null;
+		UserInfo userInfo=new UserInfo();
+		userInfo.setUserPhoneNumber(phone);
+		UserInfo userInfoDb=null;
+		int res;
+		try {
+			userInfoDb=userDao.querySingle(userInfo);
+			if(userInfoDb!=null) return null;//改手机号已绑定账户
+			user=userDao.querySingle(user);
+			if(user==null) return null;
+			user.setUserPhoneNumber(phone);
+			res=userDao.update(user);
+			if(res>0){
+				return user;
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+	/**
+	 * 解绑手机号
+	 */
+	@Override
+	public UserInfo phoneUnBundle(UserInfo user) throws KBaException {
+		if(user==null||user.getUserPhoneNumber()==null) return null;
+		UserInfo userInfo=null;
+		int res;
+		try {
+			userInfo=userDao.querySingle(user);
+			if(userInfo==null) return null;
+			userInfo.setUserPhoneNumber(null);
+			res=userDao.update(userInfo);
+			if(res>0){
+				return userInfo;
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+    /**
+     * 随机生成昵称
+     * @return
+     * @throws KBaException
+     */
+	public String generateUserName() throws KBaException{
+		String name=null;
+		boolean isSpawn=false;
+		boolean isFind;
+		try {
+			List<UserInfo> users=this.selectAllUser(null);
+			while (!isSpawn) {
+			   name=JRandomNameTool.getSimpleName();
+			   isFind=false;
+			   for (UserInfo userInfo : users) {
+				  if(userInfo.getUserName().equals(name)){
+					isFind=true;
+				  }
+			   }
+			   if(!isFind){
+				   isSpawn=true;
+			   }
+			}
+		} catch (KBaException e) {
+			throw new KBaException(e);
+		}
+		return name;
+	}
+
+}

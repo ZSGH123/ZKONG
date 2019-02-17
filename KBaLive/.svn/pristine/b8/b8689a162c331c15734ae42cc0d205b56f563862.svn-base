@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：单杰
+创建时间：2019-01-15 
+修改时间：
+ -->
+<sqlStatements namespace="transformRecord">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+		SELECT * FROM TRANSFORM_RECORD
+	</sql>
+
+	<sql id="selectById">
+		SELECT * FROM TRANSFORM_RECORD WHERE TRANSFORM_RECORD_ID=?	
+	</sql>
+
+	<sql id="insert">
+		INSERT INTO TRANSFORM_RECORD VALUES(TRANSFORMRECORDID.nextval,?,?,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		UPDATE TRANSFORM_RECORD SET TRANSFORM_RECORD_ID=?,ANCHOR_ID=?,GIFT_ID=?,GIFT_NUM=?,K_TYPE_ID=?,K_NUM=?,TRANSFORM_TIME=?,TRANSFORM_RECORD_REMARK=? WHERE TRANSFORM_RECORD_ID=?
+	</sql>
+
+	<sql id="delete">
+		DELETE FROM TRANSFORM_RECORD WHERE TRANSFORM_RECORD_ID=?
+	</sql>
+
+</sqlStatements>

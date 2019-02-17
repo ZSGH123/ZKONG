@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="loginLog">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	   select * from login_log
+	</sql>
+
+	<sql id="selectById">
+		select * from login_log where login_log_id= ?
+	</sql>
+
+	<sql id="insert">
+		insert into login_log values(LOGINLOGID.nextval,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		 update login_log set user_id = ?, login_time = ?, login_address = ?, login_state = ?, login_log_remark = ? where login_log_id = ?
+	</sql>
+
+	<sql id="delete">
+		delete from login_log where login_log_id= ? 
+	</sql>
+
+</sqlStatements>

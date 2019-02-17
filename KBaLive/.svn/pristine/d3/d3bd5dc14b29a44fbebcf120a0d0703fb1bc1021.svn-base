@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<sqlStatements namespace="giftInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	     select * from gag_info
+	</sql>
+
+	<sql id="selectById">
+		select * from gag_info where gag_id=?
+	</sql>
+
+	<sql id="insert">
+		insert into gag_info values(GIFTID.nextval,?,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		update gag_info set gift_name= ?,gift_price= ?,
+		k_type_id= ?,gift_icon_address= ?,gift_acction_address= ?,
+		gift_info_remark= ? where gag_id=?
+	</sql>
+
+	<sql id="delete">
+		delete from gag_info where gag_id=?
+	</sql>
+
+</sqlStatements>

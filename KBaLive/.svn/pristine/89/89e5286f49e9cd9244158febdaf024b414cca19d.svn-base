@@ -1,0 +1,139 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.IUploadVideoInfoDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.UploadVideoInfo;
+
+/**
+ * 上传视频信息dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class UploadVideoInfoDao extends AbstractBaseDao implements IUploadVideoInfoDao,ResultSetHandler<List<UploadVideoInfo>>{
+
+	private static UploadVideoInfoDao uploadVideoInfoDao;
+	
+	private  UploadVideoInfoDao() {
+	
+	}
+	
+	public synchronized static UploadVideoInfoDao getInstance(){
+		if(uploadVideoInfoDao==null){
+			uploadVideoInfoDao=new UploadVideoInfoDao();
+		}
+		return uploadVideoInfoDao;
+	}
+	/**
+	 * 查询所有上传的视频信息
+	 */
+	@Override
+	public List<UploadVideoInfo> queryAll(UploadVideoInfo entity) throws SQLException {
+		List<UploadVideoInfo> uploadVideoInfos=null;
+		String sql=this.parseSqlStatement.getSql(NameSpace.UPLOADVIDEOINFO, ISqlCommand.SELECT_ALL);
+		try {
+			uploadVideoInfos=this.queryRunner.query(sql, this);
+		} catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.info("查询异常");
+		}
+		return uploadVideoInfos;
+	}
+
+	/**
+	 * 查询某个上传的视频信息
+	 */
+	@Override
+	public UploadVideoInfo querySingle(UploadVideoInfo entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.UPLOADVIDEOINFO,ISqlCommand.SELECT_BY_ID);
+		
+		params=new Object[]{entity.getUploadVideoId()};
+		
+		try {
+			List<UploadVideoInfo> uploadVideoInfos=this.queryRunner.query(sql, this, params);
+			return uploadVideoInfos != null && uploadVideoInfos.size() > 0 ? uploadVideoInfos.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	/**
+	 * 新增上传视频
+	 */
+	@Override
+	public int insert(UploadVideoInfo entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.UPLOADVIDEOINFO, ISqlCommand.INSERT);
+	    Object[] args={entity.getUploadVideoName(),entity.getUserId(),entity.getUploadVideoAddress(),
+	    		entity.getUploadVideoIcon(),entity.getUploadVideoTime(),entity.getVideoTypeId()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("插入上传视频信息["+entity.getUploadVideoName()+"]成功");
+	    return res;
+	}
+
+	/**
+	 * 修改上传视频
+	 */
+	@Override
+	public int update(UploadVideoInfo entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.UPLOADVIDEOINFO, ISqlCommand.UPDATE);
+	    Object[] args={entity.getUploadVideoName(),entity.getUserId(),entity.getUploadVideoAddress(),
+	    		entity.getUploadVideoIcon(),entity.getUploadVideoTime(),entity.getVideoTypeId(),
+	    		entity.getUploadVideoId()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("更新上传视频信息["+entity.getUploadVideoName()+"]成功");
+	    return res;
+	}
+
+	/**
+	 * 删除上传视频
+	 */
+	@Override
+	public int delete(UploadVideoInfo entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.UPLOADVIDEOINFO, ISqlCommand.DELETE);
+		Object[]  args={entity.getUploadVideoId()};
+		int res=this.queryRunner.update(sql, args);
+		this.logger.info("删除上传视频信息["+entity.getUploadVideoName()+"]成功");
+		return res;	
+	}
+
+	/**
+	 * 视频结果集封装
+	 */
+	@Override
+	public List<UploadVideoInfo> handle(ResultSet rs) throws SQLException {
+		List<UploadVideoInfo> uploadVideoInfos=new Vector<UploadVideoInfo>();
+		UploadVideoInfo uploadVideoInfo=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			uploadVideoInfo=new UploadVideoInfo();
+			uploadVideoInfo.setUploadVideoId(rs.getString("UPLOAD_VIDEO_ID"));
+			uploadVideoInfo.setUploadVideoName(rs.getString("UPLOAD_VIDEO_NAME"));
+			uploadVideoInfo.setUserId(rs.getString("USER_ID"));
+			uploadVideoInfo.setUploadVideoAddress(rs.getString("UPLOAD_VIDEO_ADDRESS"));
+			uploadVideoInfo.setUploadVideoIcon(rs.getString("UPLOAD_VIDEO_ICON"));
+			uploadVideoInfo.setUploadVideoTime(rs.getTimestamp("UPLOAD_VIDEO_TIME"));
+			uploadVideoInfo.setVideoTypeId(rs.getString("VIDEO_TYPE_ID"));
+			uploadVideoInfos.add(uploadVideoInfo);
+		}
+		return uploadVideoInfos;
+	}
+
+}

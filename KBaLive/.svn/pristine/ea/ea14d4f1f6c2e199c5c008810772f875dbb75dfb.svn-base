@@ -1,0 +1,88 @@
+ .convert_note {
+    color: #ff560c;
+}
+.control_group {
+    margin-bottom: 20px;
+}
+#frm .control-label {
+    width: 104px;
+    margin-right: 10px;
+    text-align: right;
+}
+#frm label {
+    color: #3e3e3e;
+    float: left;
+    margin-bottom: 5px;
+padding-top: 5px;
+font-size: 13px;
+font-weight: normal;
+}
+.user_convert .control-label {
+    font-family: "微软雅黑";
+}
+#frm label span {
+    color: #f00;
+}
+.user_convert .control02 {
+    width: 391px;
+}
+.user_convert .control02 {
+    position: relative;
+}
+.control_group .control {
+    float: left;
+    color: #2d2d2d;
+}
+#frm .convert_text {
+    background-color: #fff;
+}
+.user_convert .convert_text {
+    height: 30px;
+    background: #f5f5f5;
+    border: 1px solid #d8d8d8;
+    font-weight: normal;
+    outline: none;
+}
+.form_control {
+    display: block;
+}
+.form_control{
+    width: 98%;
+    line-height: 28px;
+    padding: 0px 5px;
+    color: #737373;
+    float: left;
+    font-size: 13px;
+}
+.user_convert .control03 {
+    width: 170px;
+}
+.user_convert .control03 {
+    margin-right: 10px;
+    position: relative;
+}
+.user_convert .convert_select {
+    background-color: #f5f5f5;
+}
+.largeBtn .primary_button01 {
+    margin-right: 10px;
+    height: 35px;
+    margin-top: 20px;
+    background: #fea01e;
+    border: 1px #fea01e solid;
+    color: #fff;
+	padding: 4px 18px;
+	display: inline-block;
+}
+.control-label {
+    text-align: right;
+    width: 100px;
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+.user-mymessages-title {
+    width: 100%;
+    margin-bottom: 34px;
+    background: #f5f5f5;
+}
+.user-mymessages-icon {
+   	float: left;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 0 5px 0 20px;
+    vertical-align: middle;
+    background-position: 0 0;
+    background-image: url(../img/消息.png);
+}
+.user-mymessages-title h4{
+	float: left;
+}
+#message_time{
+	float: right;
+}

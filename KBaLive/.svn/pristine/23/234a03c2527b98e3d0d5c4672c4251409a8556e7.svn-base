@@ -1,0 +1,110 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.IUserDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.UserInfo;
+
+public class UserDao extends AbstractBaseDao implements IUserDao,ResultSetHandler<List<UserInfo>>{
+
+	private static UserDao userDao;
+	
+	private UserDao(){
+		
+	}
+	
+	public synchronized static UserDao getInstance(){
+		if(userDao==null){
+			userDao=new UserDao();
+		}
+		return userDao;
+	}
+	@Override
+	public List<UserInfo> queryAll(UserInfo entity) throws SQLException {
+		return null;
+	}
+
+	@Override
+	public UserInfo querySingle(UserInfo entity) throws SQLException {
+		String sql=null;
+		Object[] args=null;
+		String sqlId=null;
+		if(entity==null){
+			throw new SQLException("没有参数");
+		}
+		if(entity.getUserId()!=null ){
+			sqlId=ISqlCommand.SELECT_BY_ID;
+			args=new Object[]{entity.getUserId()};
+		}else if(entity.getUserPhoneNumber()!=null){
+			sqlId=ISqlCommand.SELECT_BY_PHONENUMBER;
+			args=new Object[]{entity.getUserPhoneNumber()};
+		}
+	    sql=parseSqlStatement.getSql(NameSpace.USERINFO, sqlId);
+		System.out.println( sql );
+        try{
+		List<UserInfo> users = this.queryRunner.query(sql, this, args);
+		System.out.println(users.get(0));
+		return users != null && users.size() != 0 ? users.get(0) : null;
+        }catch(SQLException e){
+        	throw e;
+        }catch(Exception e){
+        	logger.error("ERROR",e);
+        }		
+        return null;
+	}
+
+	@Override
+	public int insert(UserInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(UserInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(UserInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<UserInfo> handle(ResultSet rs) throws SQLException {
+		List<UserInfo> users=new Vector<UserInfo>();
+		UserInfo user=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			user=new UserInfo();
+			user.setUserId(rs.getString("user_id"));
+			user.setUserPhoneNumber(rs.getString("user_phonenumber"));
+			user.setUserName(rs.getString("user_name"));
+			user.setUserPassword(rs.getString("user_password"));
+			user.setUserRealName(rs.getString("user_realname"));
+			user.setUserSex(rs.getString("user_sex"));
+			user.setUserIdCard(rs.getString("user_idcard"));
+			user.setUserWeiboId(rs.getString("user_weibo_id"));
+			user.setUserQQId(rs.getString("user_qq_id"));
+			user.setUserIcon(rs.getString("user_icon"));
+			user.setUserAliPay(rs.getString("user_alipay"));
+			user.setUserBankCard(rs.getString("user_bank_card"));
+			user.setUserRemark(rs.getString("user_remark"));
+			users.add(user);
+		}
+		return users;
+	}
+
+	
+
+	
+}

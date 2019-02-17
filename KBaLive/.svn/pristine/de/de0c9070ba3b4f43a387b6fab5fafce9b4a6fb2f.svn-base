@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.ILiveRecordDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.LiveRecord;
+
+/**
+ * 直播记录dao
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public class LiveRecordDao  extends AbstractBaseDao implements ILiveRecordDao,ResultSetHandler<List<LiveRecord>>{
+
+	@Override
+	public List<LiveRecord> queryAll(LiveRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LiveRecord querySingle(LiveRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(LiveRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(LiveRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(LiveRecord entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<LiveRecord> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

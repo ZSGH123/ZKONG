@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.ILiveRoomDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.LiveRoom;
+
+/**
+ * 直播房间dao
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public class LiveRoomDao  extends AbstractBaseDao implements ILiveRoomDao,ResultSetHandler<List<LiveRoom>>{
+
+	@Override
+	public List<LiveRoom> queryAll(LiveRoom entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LiveRoom querySingle(LiveRoom entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(LiveRoom entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(LiveRoom entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(LiveRoom entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<LiveRoom> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,7 @@
+client_ID = 3820979028
+client_SERCRET = 49f11cc3aa26575639bc9fad7c335dc8
+redirect_URI = http://192.10.7.41:70/Shop/WeiboCallBackAction.jsp
+baseURL=https://api.weibo.com/2/
+accessTokenURL=https://api.weibo.com/oauth2/access_token
+authorizeURL=https://api.weibo.com/oauth2/authorize
+rmURL=https\://rm.api.weibo.com/2/

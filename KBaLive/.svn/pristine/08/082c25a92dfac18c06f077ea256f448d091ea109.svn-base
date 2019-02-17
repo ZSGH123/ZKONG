@@ -1,0 +1,262 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" Content="text/html; Charset=UTF-8">
+
+<title>看吧直播修改管理员信息</title>
+<link rel="shortcut icon" href="img/indexlog.png " type="image/x-icon" />
+<link rel="stylesheet" href="../css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/verify.css">
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../js/messages_zh.min.js"></script>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"56404",secure:"56411"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+
+
+<body data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-197" data-genuitec-path="/KBaLive/WebRoot/find-password.jsp">
+	<div class="container" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-197" data-genuitec-path="/KBaLive/WebRoot/find-password.jsp">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+						<h3 class="panel-title" style="font-size: 25px;">修改管理员信息</h3>
+					</div>
+					<div class="panel-body">
+						<div class="jumbotron" style="padding: 20px;">
+							<p style="margin: 0px; font-size: 20px;">为了您输入的数据有效，请严格按照指定规则填写</p>
+						</div>
+						               <div id="loginManagerPosition" style="display:none;">${loginManager.backStageManagerPosition}</div>
+                                       <div id="backStageManagerId" style="display:none;" >${updateOfManager.backStageManagerId}</div>
+						<form id="findform" method="post" class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="backStageManagerName">管理员名称:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="backStageManagerName"
+										name="backStageManagerName"  value="${updateOfManager.backStageManagerName}"/>
+								</div>
+							</div>
+                            <div class="form-group">
+								<label class="col-sm-4 control-label" for="backStageManagerPassword">管理员密码:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="backStageManagerPassword"
+										name="backStageManagerPassword"  value="${updateOfManager.backStageManagerPassword}"/>
+								</div>
+							</div>
+							 <div class="form-group">
+								<label class="col-sm-4 control-label" for="backStageManagerPosition" >管理员职位:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="backStageManagerPosition"
+										name="backStageManagerPosition" value="${updateOfManager.backStageManagerPosition}" />
+								</div>
+							</div>
+							
+                            <div class="form-group">
+								<label class="col-sm-4 control-label" for="backStageManagerRemark">管理员备注:</label>
+								<div class="col-sm-5">
+									<textarea  class="form-control"  id="backStageManagerRemark" name="backStageManagerRemark">${updateOfManager.backStageManagerRemark}</textarea>
+								</div>
+							</div>
+
+                            <div class="form-group">
+							<div class="row">
+                                <div class="col-xs-4">
+							       <button type="button" class="btn btn-primary btn-lg btn-block" id="sureBtn" onclick="refreshParent()" >确定</button>
+								</div>
+                                <div class="col-xs-4"></div>
+								<div class="col-xs-4">
+							       <button type="button" class="btn btn-primary btn-lg btn-block" id="falseBtn" onclick="closeWindow()" >取消</button>
+								</div>
+                            </div>
+                            </div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	
+	//默认表单提交的回调方法
+		$.validator.setDefaults({
+			submitHandler : function(form) {
+			   alert("提交表单");
+			   form.submit();
+			}
+		});
+		//backStageManagerName
+		$.validator.addMethod(
+			"backname",
+			function(value, element) {
+				return this.optional(element) || /^[\u4e00-\u9fffa-zA-Z]{1,30}$/.test(value);
+			},
+			"请输入正确的管理员名称"
+		);
+		//backStageManagerPassword
+		$.validator.addMethod(
+			"backpassword",
+			function(value, element) {
+				return this.optional(element) || /^[\w]{6,10}$/.test(value);
+			},
+			"请输入正确的管理员密码"
+		);
+		//backstageManagerPosition
+		$.validator.addMethod(
+			"backposition",
+			function(value, element) {
+				return this.optional(element) || /^[0-1]$/.test(value);
+			},
+			"请输入正确的管理员职位"
+		);
+		//backstageManagerRemark
+		$.validator.addMethod(
+			"backremark",
+			function(value, element) {
+				return this.optional(element) || /^[\w]{1,200}$/.test(value);
+			},
+			"请输入正确的管理员备注"
+		);
+		$(function() {
+			$("#findform").validate({
+				rules : {
+					backStageManagerName : {
+						required : true,
+						minlength : 1,
+						maxlength : 30,
+						backname : false,
+						remote : {
+							url : "managerInfoAction.do?command=checkManagerByName", //后台处理程序
+							type : "post", //数据发送方式
+							dataType : "text", //接受数据格式   
+							data : { //要传递的数据
+								backStageManagerName : function() {
+									return $("#backStageManagerName").val();
+								}
+							}
+						}
+					},
+					backStageManagerPassword : {
+						required : true,
+						minlength : 6,
+						maxlength : 10,
+						backpassword : true
+					},
+					backStageManagerPosition : {
+						required : true,
+						minlength : 1,
+						maxlength : 1,
+						backposition : true
+					},
+					backStageManagerRemark : {
+						required : true,
+						minlength : 1,
+						maxlength : 200,
+						backremark : true
+					}
+				}, 
+				messages : {
+					backStageManagerName : {
+						required : "请输入您的用户名",
+						minlength : "名称为1位字符",
+						maxlength : "名称为30位字符",
+						remote : "该管理员名称已被绑定"
+					},
+					backStageManagerPassword : {
+						required : "请输入您的密码",
+						minlength : "密码长度为6位字符",
+						maxlength : "密码长度为10位字符"
+					},
+					backStageManagerPosition : {
+						required : "请输入您的密码",
+						minlength : "职位长度为1位数字",
+						maxlength : "职位长度为10数字"
+					},
+					backStageManagerRemark : {
+						required : "请输入您的密码",
+						minlength : "备注长度为1位字符",
+						maxlength : "备注长度为200位字符"
+					}
+				},
+				errorElement : "em",
+				errorPlacement : function(error, element) {
+					error.addClass("help-block");
+					element.parents(".col-sm-5").addClass("has-feedback");
+					if (element.prop("type") === "checkbox") {
+						error.insertAfter(element.parent("label"));
+					} else {
+						error.insertAfter(element);
+					}
+					if (!element.next("span")[0]) {
+						$("<span class='glyphicon glyphicon-remove form-control-feedback'></span>").insertAfter(element);
+					}
+				},
+				success : function(label, element) {
+					if (!$(element).next("span")[0]) {
+						$("<span class='glyphicon glyphicon-ok form-control-feedback'></span>").insertAfter($(element));
+					}
+				},
+				highlight : function(element, errorClass, validClass) {
+					$(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+					$(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
+				},
+				unhighlight : function(element, errorClass, validClass) {
+					$(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+					$(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+				}
+			});	
+			})		
+			
+	      $(function(){
+	      var pos=$("#loginManagerPosition").html();
+	      var position=parseInt(pos);
+	         $("#backStageManagerPosition").focus(function(){
+	           if(position==0){
+	              $("#backStageManagerPosition").attr("readonly","readonly");
+	           }
+	         });    
+	      });
+	      
+	      function refreshParent(){
+	            var id=$("#backStageManagerId").html();
+	            var name=$("#backStageManagerName").val();
+                 var pwd=$("#backStageManagerPassword").val();
+                 var pos=$("#backStageManagerPosition").val();
+                 var remark=$("#backStageManagerRemark").val();
+                
+                 $.ajax({
+                     url:"managerInfoAction.do?command=updateManager",
+                     type:"post",
+                     dataType:"text",
+                     async:false,
+                     data:{
+                          backStageManagerId:id,backStageManagerName:name,backStageManagerPassword:pwd,backStageManagerPosition:pos,backStageManagerRemark:remark
+                     },
+                     success:function(result){
+                          if(result){
+                            window.location.href="managerInfoAction.do";
+                          }else{
+                             confirm("添加失败");
+                          }
+                     },
+                     error:function(XMLHttpRequest,textStatus,errorThrown){
+                         console.log("添加失败");
+                     }
+                 });
+	      }
+	      
+	      function closeWindow(){
+	        $.post("managerInfoAction.do?command=quXiao",function(data){
+	            if(data){
+	               window.location.href="managerInfoAction.do";      
+	            }else{
+	               confirm("关闭失败了");
+	            }
+	        });
+	      }
+	</script>
+</body>
+</html>

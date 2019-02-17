@@ -1,0 +1,162 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.alibaba.fastjson.JSONArray;
+import com.kba.entity.BackStageManagerInfo;
+import com.kba.service.IBackStageManagerInfoService;
+import com.kba.service.impl.BackStageManagerInfoService;
+import com.kba.util.ICommand;
+import com.kba.util.KBaException;
+import com.kba.util.MD5Util;
+
+/**
+ * 响应管理员功能有关的请求
+ * @author 赵科
+ * 创建时间：2019-1-16
+ * 修改时间：
+ */
+public class BackStageManagerInfoServlet extends KBaBaseServlet{
+
+	
+	private static final long serialVersionUID = 1L;
+	//管理员业务对象
+	private IBackStageManagerInfoService managerInfoService;
+	
+	public BackStageManagerInfoServlet() {
+		this.managerInfoService=new BackStageManagerInfoService();
+	}
+
+	/**
+	 * 管理员信息首页
+	 */
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//HttpSession session=req.getSession();
+		BackStageManagerInfo manager=null;
+		List<BackStageManagerInfo> managers=null;
+		try {
+			managers=managerInfoService.selectAllManager(manager);
+			System.out.println(managers.toString());
+			req.setAttribute("managers", managers);
+			req.getRequestDispatcher("manager-index.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * 用户名登录
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void login(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
+		//获得session对象
+		HttpSession session=this.getSession();
+		try {
+			//获取并封装管理员登录页面数据
+			BackStageManagerInfo managerInfo=this.wrap(req);
+			//请求业务对象
+			managerInfo=managerInfoService.selectManagerByName(managerInfo);
+			if(managerInfo!=null){
+				session.setAttribute("loginManager", managerInfo);
+				req.setAttribute(ICommand.COMMAND, "index");
+				if(session.getAttribute("page")==null){
+					req.getRequestDispatcher("backStageIndexAction.do").forward(req, resp);				
+					System.out.println("登录成功");
+				}else{
+					resp.sendRedirect(session.getAttribute("page").toString());
+					session.removeAttribute("page");
+				}
+			}else{
+				resp.sendRedirect("login.jsp");
+			}
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}
+	}
+	/**
+	 * 后台管理员的删除
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void delete(HttpServletRequest req,HttpServletResponse resp)throws ServletException, IOException {
+		//设置响应文件格式为json
+		resp.setContentType("application/json");
+		//out对象
+		PrintWriter out=resp.getWriter();
+		List<BackStageManagerInfo> managers=null;
+		BackStageManagerInfo managerInfo=this.wrap(req);
+		try {
+			//删除后台管理员
+		    managerInfoService.deleteManager(managerInfo);
+		    //查询删除后的管理员信息
+		    managers=managerInfoService.selectAllManager(managerInfo);
+		    //以json格式发给ajax
+		   	String managersstr=paresManagersList(managers);
+			out.print(managersstr);
+			
+		} catch (KBaException e) {
+			toError(e, resp);
+		}
+	}
+
+	private String paresManagersList(List<BackStageManagerInfo> managers) {
+		String managersstr=JSONArray.toJSONString(managers);
+		managersstr="{\"managersstr\":"+managersstr+"}";
+		return managersstr;
+	}
+
+	private BackStageManagerInfo wrap(HttpServletRequest req){ 
+		BackStageManagerInfo managerInfo=new BackStageManagerInfo();
+		String managerId=req.getParameter("backStageManagerId");
+		String managerName=req.getParameter("backStageManagerName");
+		String managerPwd=req.getParameter("backStageManagerPassword");
+		//String managerPwdMd5=MD5Util.getMD5(managerPwd);
+		String managerPositionStr=req.getParameter("backStageManagerPosition");
+		Integer managerPosition=managerPositionStr!=null?Integer.valueOf(managerPositionStr):null;
+		String managerRemark=req.getParameter("backStageManagerRemark");
+		
+		managerInfo.setBackStageManagerId(managerId);
+		managerInfo.setBackStageManagerName(managerName);
+		managerInfo.setBackStageManagerPassword(managerPwd);
+		managerInfo.setBackStageManagerPosition(managerPosition);
+		managerInfo.setBackStageManagerRemark(managerRemark);
+		System.out.println(managerInfo);
+		return managerInfo;
+		
+	}
+	
+	public static void main(String[] args) {
+		List<BackStageManagerInfo> managers=null;
+		BackStageManagerInfo manager=new BackStageManagerInfo();
+	    manager.setBackStageManagerId("1000000008");
+		IBackStageManagerInfoService managerService=new BackStageManagerInfoService();
+		try {
+			//managerService.deleteManager(manager);
+			manager=managerService.selectManagerByManagerID(manager);
+			System.out.println(manager);
+		} catch (KBaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

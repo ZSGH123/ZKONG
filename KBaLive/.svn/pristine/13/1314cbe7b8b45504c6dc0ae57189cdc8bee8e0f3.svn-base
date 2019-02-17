@@ -1,0 +1,85 @@
+.user_myprofile .nobase {
+    height: 52px;
+    line-height: 52px;
+    font-size: 14px;
+    background: #f5f5f5;
+    margin-bottom: 0;
+    color: #555555;
+    padding: 0 20px;
+}
+.user_myprofile .nobase a{
+	text-decoration: none;
+}
+.user_myprofile .nobase span {
+    color: #b4b4b4;
+}
+ .myprofile_main {
+    position: relative;
+    padding-top: 50px;
+    padding-left: 50px;
+}
+.myprofile {
+    padding: 30px 0px 20px 30px;
+}
+.newpwd ,.phone{
+    margin-bottom: 30px;
+}
+.data_cont .control_group {
+    line-height: 36px;
+}
+.data_cont label {
+    padding-top: 0;
+}
+.control-label {
+    text-align: right;
+    width: 100px;
+}
+.data_cont .control_group .control {
+    width: 300px;
+    margin-right: 10px;
+}
+.control_group .control {
+    float: left;
+    color: #2d2d2d;
+}
+.data_cont label{
+	float: left;
+	color: #666666;
+	font-size: 13px;
+font-weight: normal;
+}
+.data_cont label {
+    padding-top: 0;
+}
+.control-label {
+    text-align: right;
+    width: 100px;
+}
+.largeBtn .primary_button01 {
+    margin-right: 10px;
+    height: 35px;
+    margin-top: 20px;
+    background: #fea01e;
+    border: 1px #fea01e solid;
+    color: #fff;
+	padding: 4px 18px;
+	display: inline-block;
+}
+
+#code{
+	width: 150px;
+}
+#phone{
+	width: 250px;
+}
+#sendmessage{
+	margin-left: 23px;
+	height: 35px;
+	display: inline-block;
+	border: 1px #00B4FF solid;
+	background: #66AFE9;
+}
+.xiaoyancode{
+	margin-left: 100px;
+	margin-bottom: 30px;
+}

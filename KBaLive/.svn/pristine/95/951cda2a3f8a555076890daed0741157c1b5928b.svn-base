@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：杨智能
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="payType">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	 select * from pay_type
+	</sql>
+
+	<sql id="selectById">
+		select * from pay_type where pay_type_id= ?
+	</sql>
+   
+    <sql id="selectByName">
+         select * from pay_type where pay_type_name=?
+    </sql>
+	<sql id="insert">
+		insert into pay_type values(PAYTYPEID.nextval,?,?)
+	</sql>
+
+	<sql id="update">
+		 update pay_type set pay_type_name = ?, pay_type_remark = ? where pay_type_id = ?
+	</sql>
+
+	<sql id="delete">
+		delete from pay_type where pay_type_id= ? 
+	</sql>
+
+</sqlStatements>

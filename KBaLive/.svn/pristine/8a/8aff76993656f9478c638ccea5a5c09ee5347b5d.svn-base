@@ -1,0 +1,137 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.IInvestRecordDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.InvestRecord;
+
+/**
+ * 充值记录dao
+ * @author 钟强
+ * 修改时间：
+ * 创建时间：2019-1-15
+ */
+public class InvestRecordDao extends AbstractBaseDao implements IInvestRecordDao, ResultSetHandler<List<InvestRecord>> {
+
+	private static InvestRecordDao investRecordDao;
+	
+	private InvestRecordDao(){
+		
+	}
+	
+	public synchronized static InvestRecordDao getInstance(){
+		if(investRecordDao==null){
+			investRecordDao=new InvestRecordDao();
+		}
+		return investRecordDao;
+	}
+    /**
+     * 查询所有充值记录
+     */
+	@Override
+	public List<InvestRecord> queryAll(InvestRecord entity) throws SQLException {
+		List<InvestRecord> investRecords=null;
+		String sql=this.parseSqlStatement.getSql(NameSpace.INVESTRECORD, ISqlCommand.SELECT_ALL);
+		try {
+			investRecords=this.queryRunner.query(sql, this);
+		} catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.info("查询异常");
+		}
+		return investRecords;
+	}
+    /**
+     * 根据id查找一条充值记录
+     */
+	@Override
+	public InvestRecord querySingle(InvestRecord entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.INVESTRECORD,ISqlCommand.SELECT_BY_ID);
+		
+		params=new Object[]{entity.getInvestRecordId()};
+		
+		try {
+			List<InvestRecord> investRecords=this.queryRunner.query(sql, this, params);
+			return investRecords != null && investRecords.size() > 0 ? investRecords.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	@Override
+	public int insert(InvestRecord entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.USERINFO, ISqlCommand.INSERT);
+		 Object[] args={entity.getUserId(),entity.getkTypeId(),entity.getInvestNumber(),
+	    		 entity.getInvestRecordTime()!=null?new Timestamp(entity.getInvestRecordTime().getTime()):null,
+	    		 entity.getInvestCashNumber(),entity.getPayTypeId(),entity.getInvestRecordRemark()};
+		int res=this.queryRunner.update(sql, args);
+		this.logger.info("添加充值记录["+entity.getUserId()+"]成功");
+		return res;
+	}
+    /**
+     * 根据id更新充值记录
+     */
+	@Override
+	public int update(InvestRecord entity) throws SQLException {
+		 String sql =this.parseSqlStatement.getSql(NameSpace.INVESTRECORD, ISqlCommand.UPDATE);
+	     Object[] args={entity.getUserId(),entity.getkTypeId(),entity.getInvestNumber(),
+	    		 entity.getInvestRecordTime()!=null?new Timestamp(entity.getInvestRecordTime().getTime()):null,
+	    		 entity.getInvestCashNumber(),entity.getPayTypeId(),entity.getInvestRecordRemark(),
+	    		 entity.getInvestRecordId()};
+	     int res=this.queryRunner.update(sql, args);
+	     this.logger.info("更新充值记录["+entity.getInvestRecordId()+"]成功");
+	     return res;
+	}
+
+	/**
+	 * 根据id删除充值记录
+	 */
+	@Override
+	public int delete(InvestRecord entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.INVESTRECORD, ISqlCommand.DELETE);
+		Object[]  args={entity.getInvestRecordId()};
+		int res=this.queryRunner.update(sql, args);
+		this.logger.info("删除充值记录["+entity.getInvestRecordId()+"]成功");
+		return res;	
+	}
+
+	/**
+	 * 充值记录结果集封装
+	 */
+	@Override
+	public List<InvestRecord> handle(ResultSet rs) throws SQLException {
+		List<InvestRecord> investRecords=new Vector<InvestRecord>();
+		InvestRecord investRecord=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			investRecord=new InvestRecord();
+			investRecord.setInvestRecordId(rs.getString("INVEST_RECORD_ID"));
+			investRecord.setUserId(rs.getString("USER_ID"));
+			investRecord.setkTypeId(rs.getString("K_TYPE_ID"));
+			investRecord.setInvestNumber(rs.getInt("INVEST_NUMBER"));
+			investRecord.setInvestRecordTime(rs.getTimestamp("INVEST_RECORD_TIME"));
+			investRecord.setInvestCashNumber(rs.getDouble("INVEST_CASH"));
+			investRecord.setPayTypeId(rs.getString("PAY_TYPE_ID"));
+			investRecord.setInvestRecordRemark(rs.getString("INVEST_RECORD_REMARK"));
+			investRecords.add(investRecord);
+		}
+		return investRecords;
+	}
+}

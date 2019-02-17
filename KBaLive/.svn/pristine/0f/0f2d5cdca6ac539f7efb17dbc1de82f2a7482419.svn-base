@@ -1,0 +1,65 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.kba.entity.ReportMessage;
+import com.kba.service.IBackStageReportMessageService;
+import com.kba.service.impl.BackStageReportMessageService;
+import com.kba.util.KBaException;
+/**
+ * 后台查询举报记录
+ * @author 单杰
+ * 时间：2019-1-23
+ */
+
+public class BackStageReportMessageServlet extends KBaBaseServlet {
+
+	private static final long serialVersionUID = 1L;
+	 
+	 private IBackStageReportMessageService backStageReportMessageService;
+	
+	 public BackStageReportMessageServlet() {
+		 this.backStageReportMessageService=new BackStageReportMessageService();
+	 }
+	
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		ReportMessage record=null;
+		List<ReportMessage> records=null;
+		try {
+			records=backStageReportMessageService.selectAllRecord(record);
+			System.out.println(records.toString());
+			req.setAttribute("reportmessages", records);
+			req.getRequestDispatcher("report-message.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+	protected void selectbyuserid(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		ReportMessage record=null;
+		List<ReportMessage> records=null;
+		try {
+			records=backStageReportMessageService.selectByUserId(record);
+			System.out.println(records.toString());
+			req.setAttribute("reportmessages", records);
+			req.getRequestDispatcher("report-message.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}
+	}
+
+}

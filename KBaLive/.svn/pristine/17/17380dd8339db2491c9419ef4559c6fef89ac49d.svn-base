@@ -1,0 +1,43 @@
+$(function() {
+	init();
+});
+
+function init() {
+	var left_button2 = $("#left_button2");
+	left_button2.click(ChangeLeft);
+	var left_model_button2 = $("#left_model_button2");
+	left_model_button2.click(ChangeLeft);
+	ChangeColor();
+}
+var num = true;
+//收缩导航栏
+function ChangeLeft() {
+	var left = $("#left");
+	var left_model = $("#left_model");
+	var rightcontent = $("#rightcontent");
+	if(num) {
+		left.css("display", "none");
+		left_model.css("display", "block");
+		rightcontent.css("margin-left", '60px');
+		$("#dazhudiv").css("margin-left", '200px');
+		num = false;
+	} else {
+		left.css("display", "block");
+		left_model.css("display", "none");
+		rightcontent.css("margin-left", '250px');
+		$("#dazhudiv").css("margin-left", '300px');
+		num = true;
+	}
+}
+
+function ChangeColor() {
+	var liquanbu = document.getElementsByClassName("liquanbu");
+	for(var i = 0; i < liquanbu.length; i++) {
+		liquanbu[i].onmouseover = function() {
+			this.style.color = "#fff";
+		}
+		liquanbu[i].onmouseleave = function() {
+			this.style.color = "#f60";
+		}
+	}
+}

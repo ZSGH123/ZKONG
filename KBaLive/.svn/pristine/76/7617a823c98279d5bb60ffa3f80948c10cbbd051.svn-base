@@ -1,0 +1,57 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IRoomManagerInfoDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.RoomManagerInfo;
+
+/**
+ * 房间管理员信息dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class RoomManagerInfoDao extends AbstractBaseDao implements IRoomManagerInfoDao,ResultSetHandler<List<RoomManagerInfo>>{
+
+	@Override
+	public List<RoomManagerInfo> queryAll(RoomManagerInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RoomManagerInfo querySingle(RoomManagerInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(RoomManagerInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(RoomManagerInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(RoomManagerInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<RoomManagerInfo> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+}

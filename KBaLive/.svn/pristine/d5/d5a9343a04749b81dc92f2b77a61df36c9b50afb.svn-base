@@ -1,0 +1,16 @@
+package com.kba.util;
+
+public interface ICommand {
+
+	String COMMAND = "command";
+	String LOGIN = "login";
+	String TO_REGISTER = "toRegister";
+	String SAVE = "save";
+	String INDEX="index";
+	String MODIFY="modify";
+	String TOP="top";
+	String LEFT="left";
+	String RIGHT="right";
+	String PRODUCT_VIEW="productView";
+
+}

@@ -1,0 +1,204 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kba.entity.AnchorLevel;
+import com.kba.entity.GiftInfo;
+import com.kba.service.impl.BackStageGiftInfoService;
+import com.kba.util.KBaException;
+
+public class BackStageGiftInfoServlet extends KBaBaseServlet{
+	private static final long serialVersionUID = 1L;
+    //礼物信息业务对象
+	private BackStageGiftInfoService giftInfoService;
+	
+    public BackStageGiftInfoServlet() {
+		this.giftInfoService=new BackStageGiftInfoService();
+	}
+	
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<GiftInfo> giftInfos=null;
+		GiftInfo giftInfo=this.wrap(req);
+		try {
+			giftInfos=giftInfoService.selectAllGiftInfo(giftInfo);
+			System.out.println("111"+giftInfos);
+			req.removeAttribute("giftInfos");
+			req.setAttribute("giftInfos", giftInfos);
+			req.getRequestDispatcher("gift-info-set.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			toError(e, resp);
+		}
+		
+	}
+	/**
+	 * 通过礼物名称检查礼物是否存在
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void checkGiftInfoByName(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
+		PrintWriter out=resp.getWriter();
+		//封装请求包主播等级数据
+		GiftInfo giftInfo=this.wrap(req);
+	    try {
+			boolean has=giftInfoService.checkGiftInfoByName(giftInfo);
+			if(has){
+				out.print("礼物类型已存在");
+			}else{
+				out.print(true);
+			}
+		} catch (KBaException e) {
+			toError(e, resp);
+		}finally{
+			
+			out.close();
+		}
+	}
+	
+	/**
+	 * 新增礼物信息
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void insertGiftInfo(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
+		PrintWriter out=resp.getWriter();
+		//封装数据
+		GiftInfo giftInfo=this.wrap(req);
+		try {
+			//插入数据
+			System.out.println(giftInfo);
+			giftInfo=giftInfoService.insertGiftInfo(giftInfo);
+			if(giftInfo!=null){
+				out.print(true);
+			}else{
+				out.print(false);
+			}
+		} catch (KBaException e) {
+			toError(e, resp);
+		}finally{
+			out.close();
+		}
+	}
+	
+	/**
+	 * 删除礼物信息
+	 */
+	public void delete(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException {
+				//out对象
+				PrintWriter out=resp.getWriter();
+				GiftInfo giftInfo=this.wrap(req);
+				try {
+					//删除礼物信息
+					giftInfo=giftInfoService.deleteGiftInfo(giftInfo);
+					out.print(true);   
+				} catch (KBaException e) {
+					toError(e, resp);
+				}finally{
+					
+					out.close();
+				}
+	}
+	
+	/**
+	 * 更新操作在打开一个新页面前把数据保存到session对象中，并从session中获取数据
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void selectOfUpdate(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
+		PrintWriter out=resp.getWriter();
+		HttpSession session=this.getSession();
+		GiftInfo giftInfo=this.wrap(req);
+		try {
+			giftInfo=giftInfoService.selectGiftInfoByName(giftInfo);
+			System.out.println(giftInfo);
+			if(giftInfo!=null){
+				session.setAttribute("updateOfGiftInfo", giftInfo);
+				out.print(true);
+			}else{
+				out.print(false);
+			}
+		} catch (KBaException e) {
+			toError(e, resp);
+		}finally{
+			out.close();
+		}
+	}
+	
+	/**
+	 * 取消修改session对象中的礼物信息
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void quXiao(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException{
+		PrintWriter out=resp.getWriter();
+		HttpSession session=this.getSession();
+		session.removeAttribute("updateOfGiftInfo");
+		out.print(true);
+	}
+	
+	/**
+	 * 成功修改礼物信息
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void updateGiftInfo(HttpServletRequest req,HttpServletResponse resp)throws ServletException, IOException{
+		PrintWriter out=resp.getWriter();
+		HttpSession session=req.getSession();
+		GiftInfo giftInfo=this.wrap(req);
+		try {
+			giftInfo=giftInfoService.updateGiftInfo(giftInfo);
+			session.removeAttribute("updateOfGiftInfo");
+			if(giftInfo!=null){
+				out.print(true);
+			}else{
+				out.print(false);
+			}
+		} catch (KBaException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private GiftInfo wrap(HttpServletRequest req) {
+		GiftInfo giftInfo=new GiftInfo();
+		String gIId=req.getParameter("giftId");
+		String gIName=req.getParameter("giftName");
+		String gIPrice=req.getParameter("giftPrice");
+		int gInfoPrice=gIPrice!=null?Integer.parseInt(gIPrice):0;
+		String gKTypeId=req.getParameter("kTypeID");
+		String gGiftIconAddress=req.getParameter("giftIconAddress");
+		String gGiftActionAddress=req.getParameter("giftActionAddress");
+		
+		
+		giftInfo.setGiftId(gIId);
+		giftInfo.setGiftName(gIName);
+		giftInfo.setGiftPrice(gInfoPrice);
+		giftInfo.setkTypeId(gKTypeId);
+		giftInfo.setGiftIconAddress(gGiftIconAddress);
+		giftInfo.setGiftAcctionAddress(gGiftActionAddress);
+		return giftInfo;
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+	}
+
+}

@@ -1,0 +1,130 @@
+package com.kba.service.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.impl.AnchorLevelDao;
+import com.kba.entity.AnchorLevel;
+import com.kba.service.IAnchorLevelService;
+import com.kba.util.KBaException;
+
+/**
+ * 后台主播等级业务
+ * @author 赵科
+ * 创建时间：2019-1-22
+ * 修改时间:
+ */
+public class BackStageAnchorLevelService implements IAnchorLevelService{
+
+	private AnchorLevelDao anchorLevelDao;
+	
+    public BackStageAnchorLevelService() {
+		this.anchorLevelDao=AnchorLevelDao.getInstance();
+	}
+	
+	/**
+	 * 查询所有主播等级
+	 */
+	@Override
+	public List<AnchorLevel> selectAllAnchorLevel(AnchorLevel anchorLevel) throws KBaException {
+		List<AnchorLevel> anchorLevels=null;
+		try {
+			anchorLevels=anchorLevelDao.queryAll(anchorLevel);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return anchorLevels;
+	}
+    
+	/**
+	 * 查询主播等级通过等级名称
+	 */
+	@Override
+	public AnchorLevel selectAnchorLevelByName(AnchorLevel anchorLevel) throws KBaException {
+		try {
+			return anchorLevelDao.querySingleByName(anchorLevel);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+	/**
+	 * 通过编号查询主播等级
+	 */
+	@Override
+	public AnchorLevel selectAnchorLevelByID(AnchorLevel anchorLevel) throws KBaException {
+		try {
+			return anchorLevelDao.querySingle(anchorLevel);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+   
+	/**
+	 * 新增主播等级信息
+	 */
+	@Override
+	public AnchorLevel insertAnchorLevel(AnchorLevel anchorLevel) throws KBaException {
+		try {
+			// 检查
+			AnchorLevel anchorLeveld=anchorLevelDao.querySingleByName(anchorLevel);
+			if (anchorLeveld == null) {// 没有，则保存
+				int res = anchorLevelDao.insert(anchorLevel);
+				if (res > 0) {// 成功
+					return anchorLevelDao.querySingleByName(anchorLevel);
+				}
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+	/**
+	 * 修改主播等级信息
+	 */
+	@Override
+	public AnchorLevel updateAnchorLevel(AnchorLevel anchorLevel) throws KBaException {
+		try {
+			//更新
+			int res=anchorLevelDao.update(anchorLevel);
+			if(res>0){ //成功
+				return anchorLevelDao.querySingle(anchorLevel);
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+	/**
+	 * 删除主播等级信息
+	 */
+	@Override
+	public AnchorLevel deleteAnchorLevel(AnchorLevel anchorLevel) throws KBaException {
+		try {
+			int res=anchorLevelDao.delete(anchorLevel);
+			if(res>0){
+				return anchorLevel;
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+    
+	/**
+	 * 通过等级名称查询主播等级是否存在
+	 * @param anchorLevel
+	 * @return
+	 */
+	public boolean checkAnchorLevelByName(AnchorLevel anchorLevel) throws KBaException{
+		try {
+			anchorLevel=this.anchorLevelDao.querySingleByName(anchorLevel);
+			return anchorLevel!=null?true:false;
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+}

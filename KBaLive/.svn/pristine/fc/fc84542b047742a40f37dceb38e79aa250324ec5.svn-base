@@ -1,0 +1,58 @@
+div.titlebotborder{
+	overflow: hidden;
+    width: 100%;
+    margin-top: 7px;
+}
+div.titlebotborder .border1{
+	width: 35px;
+    height: 3px;
+    background-color: #fb8302;
+}
+div.titlebotborder .border2{
+	width: 99.2%;
+    height: 1px;
+    background-color: #ddd;
+}
+
+div.panel-body #liveroom_box{
+		list-style-type: none;
+		margin: 0px;
+		padding: 0px;
+}
+div#rightcontent{
+	margin-left: 250px;
+	padding-right: 15px;
+}
+#liveroom_box #liveroom{
+		display:  inline-block;
+		width: 128px;
+		height: 207px;
+		margin: 0px 21px 15px 0px;
+}
+
+.title{
+	font-size: 14px;
+	margin:0px;
+}
+a{
+	color:  midnightblue;
+}
+a:hover{
+	text-decoration: none;
+	color:   orange;
+}
+div#btn_box{
+	margin: 0px 0px 7px 10px;
+}
+button#btn{
+	margin-right: 10px;
+	border-radius: 5px;
+}
+button#btn:hover{
+	color:   orange;
+	border-color: orange;
+}
+button#btn:active{
+	color:   orange;
+	border-color: orange;
+}

@@ -1,0 +1,13 @@
+function login(){
+	var name=document.getElementById("name");
+	if(name.value.length==0){
+		confirm("用户名不能为空");
+		return false;
+	}
+	var pwd=document.getElementById("password");
+	if(pwd.value.length==0){
+		confirm("密码不能为空");
+		return false;
+	}
+	return true;
+}

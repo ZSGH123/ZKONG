@@ -1,0 +1,136 @@
+package com.kba.service.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IUserDao;
+import com.kba.dao.impl.UserDao;
+import com.kba.entity.UserInfo;
+import com.kba.service.IUserService;
+import com.kba.util.KBaException;
+
+/**
+ * 用户业务层
+ * @author 钟强
+ * 创建时间：2019-01-15
+ * 修改时间：
+ */
+public class UserService implements IUserService {
+    private IUserDao userDao;
+	
+    public UserService(){
+    	this.userDao=UserDao.getInstance();
+    }
+    /**
+     * 验证用户信息是否有效
+     */
+	@Override
+	public UserInfo invalidUser(UserInfo user) throws KBaException {
+		try {
+			//请求数据层对象
+			UserInfo userd = userDao.querySingle(user);
+			if (userd != null) {//用户存在
+				if (user.getUserPassword().equals(userd.getUserPassword())) {
+					System.out.println(user.getUserPassword()+"  "+userd.getUserPassword());
+					return userd;
+				}else {//密码不匹配
+					//置空用户所输密码
+					user.setUserPassword(null);
+					return user;
+				}
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+    /**
+     * 用户注册
+     */
+	@Override
+	public UserInfo userRegister(UserInfo user) throws KBaException {
+		try {
+			// 检查
+			UserInfo userd = userDao.querySingle(user);
+			if (userd == null) {// 没有，则保存
+				int res = userDao.insert(user);
+				if (res > 0) {// 成功
+					return userDao.querySingle(user);
+				}
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+    /**
+     * 查询所有用户
+     */
+	@Override
+	public List<UserInfo> selectAllUser(UserInfo user) throws KBaException {
+		List<UserInfo> users=null;
+		try {
+			users=userDao.queryAll(user);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return users;
+	}
+
+	/**
+	 * 修改用户信息
+	 */
+	@Override
+	public UserInfo updateUser(UserInfo user) throws KBaException {
+		try {
+			// todo检查
+			//通过
+			int res = userDao.update(user);
+			if (res > 0) {// 成功
+				return userDao.querySingle(user);
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据用户名查询用户信息
+	 */
+	@Override
+	public UserInfo selectUserByName(UserInfo user) throws KBaException {
+		try {
+			return userDao.querySingleByName(user);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+	
+	/**
+	 * 根据手机号查询用户信息
+	 */
+	@Override
+	public UserInfo selectUserByPhone(UserInfo user) throws KBaException {
+		try {
+			return userDao.querySingleByPhone(user);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+	
+	/**
+	 * 根据用户编号查询用户信息
+	 */
+	@Override
+	public UserInfo selectUserByUserID(UserInfo user) throws KBaException {
+		try {
+			return userDao.querySingleByUserID(user);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+	}
+
+
+}

@@ -1,0 +1,127 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+
+import com.kba.dao.IPushListDao;
+import com.kba.dao.util.ISqlCommand;
+import com.kba.dao.util.NameSpace;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.PushList;
+
+/**
+ * 推送列表dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class PushListDao extends AbstractBaseDao implements IPushListDao,ResultSetHandler<List<PushList>>{
+
+	/**
+	 * 查询所有推送列表
+	 */
+	@Override
+	public List<PushList> queryAll(PushList entity) throws SQLException {
+		List<PushList> pushLists=null;
+		String sql=this.parseSqlStatement.getSql(NameSpace.PUSHLIST, ISqlCommand.SELECT_ALL);
+		try {
+			pushLists=this.queryRunner.query(sql, this);
+		} catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.info("查询异常");
+		}
+		return pushLists;
+	}
+
+	/**
+	 * 查询某条推送
+	 */
+	@Override
+	public PushList querySingle(PushList entity) throws SQLException {
+		String sql=null;
+		Object[] params=null;
+		
+		if(entity==null)return null;
+		
+		sql=this.parseSqlStatement.getSql(NameSpace.PUSHLIST,ISqlCommand.SELECT_BY_ID);
+		
+		params=new Object[]{entity.getPushListId()};
+		
+		try {
+			List<PushList> pushLists=this.queryRunner.query(sql, this, params);
+			return pushLists != null && pushLists.size() > 0 ? pushLists.get(0) : null;
+		}catch (SQLException e) {
+			throw e;
+		}catch (Exception e) {
+			logger.error("error",e);
+		}
+		return null;
+	}
+
+	/**
+	 * 新增推送
+	 */
+	@Override
+	public int insert(PushList entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.PUSHLIST, ISqlCommand.INSERT);
+	    Object[] args={entity.getLiveRoomId(),entity.getPushTypeId(),
+	    		entity.getPushStartTime(),entity.getPushEndTime(),
+	    		entity.getPushListRemark()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("插入推送列表["+entity.getPushListId()+"]成功");
+	    return res;
+	}
+
+	/**
+	 * 修改推送列表
+	 */
+	@Override
+	public int update(PushList entity) throws SQLException {
+		String sql =this.parseSqlStatement.getSql(NameSpace.PUSHLIST, ISqlCommand.UPDATE);
+	    Object[] args={entity.getLiveRoomId(),entity.getPushTypeId(),
+	    		entity.getPushStartTime(),entity.getPushEndTime(),
+	    		entity.getPushListRemark(),entity.getPushListId()};
+	    int res=this.queryRunner.update(sql, args);
+	    this.logger.info("更新推送列表["+entity.getPushListId()+"]成功");
+	    return res;
+	}
+
+	/**
+	 * 删除推送列表
+	 */
+	@Override
+	public int delete(PushList entity) throws SQLException {
+		String sql=this.parseSqlStatement.getSql(NameSpace.PUSHLIST, ISqlCommand.DELETE);
+		Object[]  args={entity.getPushListId()};
+		int res=this.queryRunner.update(sql, args);
+		this.logger.info("删除推送列表["+entity.getPushListId()+"]成功");
+		return res;	
+	}
+
+	/**
+	 * 推送列表结果集封装
+	 */
+	@Override
+	public List<PushList> handle(ResultSet rs) throws SQLException {
+		List<PushList> pushLists=new Vector<PushList>();
+		PushList pushList=null;
+		if(rs==null){
+			throw new SQLException("结果集中没有数据");
+		}
+		while(rs.next()){
+			pushList=new PushList();
+			pushList.setPushListId(rs.getString("PUSH_LIST_ID"));
+			pushList.setLiveRoomId(rs.getString("LIVE_ROOM_ID"));
+			pushList.setPushTypeId(rs.getString("PUSH_TYPE_ID"));
+			pushList.setPushStartTime(rs.getTimestamp("PUSH_START_TIME"));
+			pushList.setPushEndTime(rs.getTimestamp("PUSH_END_TIME"));
+			pushList.setPushListRemark(rs.getString("PUSH_LIST_REMARK"));
+			pushLists.add(pushList);
+		}
+		return pushLists;
+	}
+
+}

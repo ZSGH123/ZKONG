@@ -1,0 +1,74 @@
+package com.kba.entity;
+
+import java.util.Date;
+
+/**
+ * 禁言信息表
+ * @author Administrator
+ * 时间：2019-1-13
+ */
+public class GagInfo {
+
+	private String gagId; //禁言编号
+	private String userId; //用户编号
+	private String roomManagerId; //房间管理员编号
+	private String liveRoomId;  //直播间编号
+	private String anchorId;  //主播编号
+	private Integer gagTime;  //禁言时长
+	private Date gagStartTime; //禁言时间
+	private String gagInfoRemark; //禁言信息备注
+	@Override
+	public String toString() {
+		return "禁言信息 [禁言编号=" + gagId + ", 用户编号=" + userId + ", 房间管理员编号=" + roomManagerId + ", 直播间编号="
+				+ liveRoomId + ", 主播编号=" + anchorId + ", 禁言时长=" + gagTime + ", 禁言信息时间=" + gagStartTime
+				+ ", 禁言信息备注=" + gagInfoRemark + ", toString()=" + super.toString() + "]";
+	}
+	public String getGagId() {
+		return gagId;
+	}
+	public void setGagId(String gagId) {
+		this.gagId = gagId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getRoomManagerId() {
+		return roomManagerId;
+	}
+	public void setRoomManagerId(String roomManagerId) {
+		this.roomManagerId = roomManagerId;
+	}
+	public String getLiveRoomId() {
+		return liveRoomId;
+	}
+	public void setLiveRoomId(String liveRoomId) {
+		this.liveRoomId = liveRoomId;
+	}
+	public String getAnchorId() {
+		return anchorId;
+	}
+	public void setAnchorId(String anchorId) {
+		this.anchorId = anchorId;
+	}
+	public Integer getGagTime() {
+		return gagTime;
+	}
+	public void setGagTime(Integer gagTime) {
+		this.gagTime = gagTime;
+	}
+	public Date getGagStartTime() {
+		return gagStartTime;
+	}
+	public void setGagStartTime(Date gagStartTime) {
+		this.gagStartTime = gagStartTime;
+	}
+	public String getGagInfoRemark() {
+		return gagInfoRemark;
+	}
+	public void setGagInfoRemark(String gagInfoRemark) {
+		this.gagInfoRemark = gagInfoRemark;
+	}
+}

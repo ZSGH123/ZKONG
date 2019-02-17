@@ -1,0 +1,26 @@
+.iconPlay {
+    background: url(../img/播放.png) no-repeat scroll 0 0;
+    height: 69px;
+    position: absolute;
+    width: 69px;
+}
+.v_pic .iconPlay {
+    top: 30px;
+    left: 90px;
+}
+#book_house span{
+	font-size: 12px;
+	padding-left: 10px;
+}
+#book_house p{
+	color:#7e7e7e;
+}
+
+#book_house h4 a{
+	color: #353535;
+	text-decoration: none;
+}
+#book_house img{
+	width: 174px;
+	height: 98px;
+}

@@ -1,0 +1,55 @@
+package com.kba.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IUserWeiboInfoDao;
+import com.kba.dao.util.ResultSetHandler;
+import com.kba.entity.UserWeiboInfo;
+
+/**
+ * 微博用户dao
+ * @author 赵科
+ * 创建时间：2019-1-15
+ * 修改时间：
+ */
+public class UserWeiboInfoDao extends AbstractBaseDao implements IUserWeiboInfoDao,ResultSetHandler<List<UserWeiboInfo>>{
+
+	@Override
+	public List<UserWeiboInfo> queryAll(UserWeiboInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserWeiboInfo querySingle(UserWeiboInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(UserWeiboInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(UserWeiboInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(UserWeiboInfo entity) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<UserWeiboInfo> handle(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

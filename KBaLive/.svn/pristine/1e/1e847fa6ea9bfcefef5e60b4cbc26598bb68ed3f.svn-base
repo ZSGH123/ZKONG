@@ -1,0 +1,155 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Enumeration;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kba.util.KBaException;
+import com.kba.util.ICommand;
+
+/**
+ * 所有的Servlet公共的特性
+ * 
+ * @author 赵科 时间：2019-1-15
+ */
+
+public abstract class KBaBaseServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	// 会话对象
+	private HttpSession session;
+
+	/**
+	 * 注入 依赖[直接依赖,抽象依赖（接口）] A --> B
+	 */
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+	}
+
+	/**
+	 * 重写service
+	 * 
+	 */
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 会话对象
+		session = req.getSession(true);
+		this.parseCommand(req, resp);
+	}
+
+	private void parseCommand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 用户请求包
+		String command = req.getParameter(ICommand.COMMAND);
+		System.out.println(command);
+		// 服务器端封装װ
+		String command_ = (String) req.getAttribute(ICommand.COMMAND);
+		System.out.println(command_);
+		command = command_ != null ? command_ : command;
+		// 允许子类做个性化的处理
+		this.service_(command_, req, resp);
+		if (command == null) {
+			index(req, resp);
+			return;
+		}
+		// 通用反射找到command对应的方法，command和其响应方法
+		Class<?> clz = this.getClass();
+		try {
+			Method method = clz.getDeclaredMethod(command,
+					new Class[] { HttpServletRequest.class, HttpServletResponse.class });
+			method.invoke(this, new Object[] { req, resp });
+		} catch (Exception e) {
+			this.toError(e, resp);
+		}
+	}
+
+	/**
+	 * 所有页面的首页逻辑，由子类实现
+	 * 
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected abstract void index(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException;
+
+	/**
+	 * 子类实现
+	 * 
+	 * @param command
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected abstract void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException;
+
+	/**
+	 * 子类
+	 * 
+	 * @return
+	 */
+	protected HttpSession getSession() {
+		return session;
+	}
+
+	/**
+	 * 跳转到错误页面
+	 * 
+	 * @param e
+	 * @param resp
+	 * @throws IOException
+	 */
+	protected void toError(Exception e, HttpServletResponse resp) throws IOException {
+		if (e == null)
+			return;
+		String msg = e.getMessage();
+		if (e.getCause() != null)
+			msg = e.getCause().getMessage();
+		this.getSession().setAttribute("error", msg);
+		resp.sendRedirect("error.jsp");
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T wrap(HttpServletRequest request, Class<?> clz) throws KBaException {
+		// 反射创建对象（class对应类型中必须有无参构造方法）
+		T t = null;
+		try {
+			t = (T) clz.newInstance();
+			// 分析请求包中所有key
+			Enumeration<String> keys = request.getParameterNames();
+			String key = null;
+			String[] values = null;
+			while (keys.hasMoreElements()) {
+				key = keys.nextElement();
+				values = request.getParameterValues(key);
+				// key找有没有对应的属性
+				try {
+					Field field = clz.getDeclaredField(key);
+					field.setAccessible(true);
+					Class<?> type = field.getType();
+					if (type.isArray()) {
+						field.set(t, values);
+					} else {
+						field.set(t, values[0]);
+					}
+				} catch (Exception e) {
+
+				}
+			}
+		} catch (InstantiationException | IllegalAccessException el) {
+			throw new KBaException(el);
+		}
+		return t;
+	}
+}

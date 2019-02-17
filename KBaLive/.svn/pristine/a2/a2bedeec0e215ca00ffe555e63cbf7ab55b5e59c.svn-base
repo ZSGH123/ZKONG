@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<sqlStatements namespace="backStageManagerInfo">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	     select * from backstage_manager_info
+	</sql>
+
+	<sql id="selectById">
+		select * from backstage_manager_info where backstage_manager_id=?
+	</sql>
+
+	<sql id="insert">
+		insert into backstage_manager_info values(BACKSTAGEMANAGERINFO.nextval,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		update backstage_manager_info set backstage_manager_name= ?,backstage_manager_password= ?,
+		backstage_manager_position= ?,backstage_manager_remark= ? where backstage_manager_id=?
+	</sql>
+
+	<sql id="delete">
+		delete from backstage_manager_info where backstage_manager_id=?
+	</sql>
+
+</sqlStatements>

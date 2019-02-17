@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kba-web [
+<!ELEMENT kba-web (db-config,datasource,maps)>
+<!ELEMENT db-config (driver-name,url,user-name,user-password)>
+<!ELEMENT driver-name (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ELEMENT user-name (#PCDATA)>
+<!ELEMENT user-passWord (#PCDATA)>
+<!ELEMENT datasource (type)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT maps (path+)>
+<!ELEMENT path (#PCDATA)>
+]>
+<kba-web>
+	<!-- 数据库配置信息 -->
+	<db-config>
+		<driver-name>oracle.jdbc.driver.OracleDriver</driver-name>
+		<url>jdbc:oracle:thin:@127.0.0.1:1521:ORCL</url>
+		<user-name>KBLIVE</user-name>
+		<user-password>123456</user-password>
+	</db-config>
+	<!-- local tomcat -->
+	<datasource>
+		<type>tomcat</type>
+	</datasource>
+	<!-- 路径 -->
+	
+	<maps>
+		<path>/com/kba/entity/xml/anchorInfo.xml</path>
+		<path>/com/kba/entity/xml/anchorLevel.xml</path>
+		<path>/com/kba/entity/xml/backStageManagerInfo.xml</path>
+		<path>/com/kba/entity/xml/barrageInfo.xml</path>
+		<path>/com/kba/entity/xml/gagInfo.xml</path>
+		<path>/com/kba/entity/xml/giftInfo.xml</path>
+		<path>/com/kba/entity/xml/investRecord.xml</path>
+		<path>/com/kba/entity/xml/kType.xml</path>
+		<path>/com/kba/entity/xml/liveContent.xml</path>
+		<path>/com/kba/entity/xml/liveRecord.xml</path>
+		<path>/com/kba/entity/xml/liveRoom.xml</path>
+		<path>/com/kba/entity/xml/liveType.xml</path>
+		<path>/com/kba/entity/xml/loginLog.xml</path>
+		<path>/com/kba/entity/xml/payType.xml</path>
+		<path>/com/kba/entity/xml/pushList.xml</path>
+		<path>/com/kba/entity/xml/pushMessageRecord.xml</path>
+		<path>/com/kba/entity/xml/pushType.xml</path>
+		<path>/com/kba/entity/xml/reportMessage.xml</path>
+		<path>/com/kba/entity/xml/roomManagerInfo.xml</path>
+		<path>/com/kba/entity/xml/transformRecord.xml</path>
+		<path>/com/kba/entity/xml/uploadVideoInfo.xml</path>
+		<path>/com/kba/entity/xml/userBook.xml</path>
+		<path>/com/kba/entity/xml/userGiftRecord.xml</path>
+		<path>/com/kba/entity/xml/userInfo.xml</path>
+		<path>/com/kba/entity/xml/userLevel.xml</path>
+		<path>/com/kba/entity/xml/userProperty.xml</path>
+		<path>/com/kba/entity/xml/userQQInfo.xml</path>
+		<path>/com/kba/entity/xml/userWeiboInfo.xml</path>
+		<path>/com/kba/entity/xml/videoBrowseRecord.xml</path>
+		<path>/com/kba/entity/xml/videoType.xml</path>
+	</maps>
+	
+</kba-web>

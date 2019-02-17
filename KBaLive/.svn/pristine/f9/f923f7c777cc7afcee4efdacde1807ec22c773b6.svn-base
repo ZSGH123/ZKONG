@@ -1,0 +1,27 @@
+package com.kba.util;
+
+/**
+ * 语义转换
+ * @author Administrator
+ *
+ */
+public class KBaException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public KBaException(String msg) {
+		super(msg);
+	}
+
+	public KBaException(Throwable th) {
+		super(th);
+	}
+
+	/**
+	 * 其它方法
+	 */
+}
+

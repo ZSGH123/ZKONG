@@ -1,0 +1,43 @@
+package com.kba.service.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.kba.dao.IUserGiftRecordDao;
+import com.kba.dao.impl.UserGiftRecordDao;
+import com.kba.entity.InvestRecord;
+import com.kba.entity.UserGiftRecord;
+import com.kba.service.IUserGiftRecordService;
+import com.kba.util.KBaException;
+
+/**
+ * 赠礼记录查询
+ * @author 单杰
+ * 时间：2019-1-23
+ */
+public class UserGiftRecordService implements IUserGiftRecordService {
+	private IUserGiftRecordDao userGiftRecordDao;
+	public UserGiftRecordService() {
+		userGiftRecordDao=UserGiftRecordDao.getInstance();
+	}
+
+	/**
+	 * 查询所有赠礼记录
+	 */
+	public List<UserGiftRecord> selectAllRecord(UserGiftRecord record) throws KBaException {
+		List<UserGiftRecord> giftRecord = null;
+		try {
+			giftRecord = userGiftRecordDao.queryAll(record);
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return giftRecord;
+	}
+	@Override
+	public List<UserGiftRecord> selectById(UserGiftRecord record) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+}

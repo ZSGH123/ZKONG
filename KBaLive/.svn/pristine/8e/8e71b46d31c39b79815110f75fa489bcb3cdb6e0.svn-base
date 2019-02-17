@@ -1,0 +1,137 @@
+#registers{
+	margin-left: 360px;  
+	height: 800px;
+	width: 620px;
+	padding: 0px;
+}
+
+#register_phone {
+	padding: 0px;
+	height: 620px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+#register_title{
+	width: 490px;
+	height: 45px;
+	margin: 0px;
+	text-align: center;
+	font-size: 30px;
+}
+
+#phone_row{
+	margin-left: 0px;
+	margin-top: 15px;
+	width: 620px;
+	height: 40px;
+	margin-bottom: 0px;
+}
+
+#phone_row_one{
+	font-size: 21px;
+	margin-left: 10px;
+	padding: 0px;
+	width: 110px;
+	margin-top: 2.5px;
+}
+
+#phone_row_two{
+	width: 380px;
+	padding: 0px;
+	height: 38px;
+	margin-bottom: 0px;
+}
+
+
+
+#phone_row_three{
+	height: 38px;
+	padding: 0px;
+	line-height: 38px;
+	width: 100px;
+}
+
+#phone_row_line{
+	margin-left: 0px;
+	width: 620px;
+	height: 30px;
+	padding:0px;
+	clear:both;
+	padding-left: 120px;
+
+	
+
+}
+/*------------------------------------------------------------------------------*/
+#phone_row_left{
+	margin-top: 1px;
+	padding: 0px;
+	width: 185px;
+}
+
+#phone_row_right{
+	width: 195px;
+	margin-top: 2.5px;
+}
+#phone_row_right input{
+	width: 160px;
+	height: 30px;
+	border-radius: 10px;
+	background-color: orange;
+	color: white;
+	
+}
+#phone_row_right input:hover{
+	
+	background-color: green;
+	
+	
+}
+/*----------------------------------------------------------------*/
+#register_button{
+	width: 490px;
+	height: 30px;
+	margin-top: 15px;
+	text-align: center;
+}
+
+#register_button input{
+	width: 380px;
+	height: 30px;
+	border-radius: 10px;
+	background-color: orange;
+	color: white;
+}
+
+#register_button input:hover{
+	background-color: green;
+}
+
+/*----------------------------------------------*/
+#other_login{
+	margin-top: 20px;
+	text-align: center;
+	width: 490px;
+	height: 40px;
+}
+
+#other_login a{
+	color: gray;
+}
+
+#other_login .weibo:hover{
+	color: red;
+}
+
+#other_login .qq:hover{
+	color: #269ABC;
+} 
+
+#other_login .wenxin:hover{
+	color: green;
+}
+
+#other_login_text{
+	width: 490px;
+	text-align: center;
+}

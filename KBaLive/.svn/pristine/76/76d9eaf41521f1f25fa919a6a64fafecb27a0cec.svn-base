@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!-- 
+   作者：zkong
+   创建时间 ：2019-1-15
+   修改时间：
+ -->
+<sqlStatements namespace="investRecord">
+	<!-- SQL语句 -->
+	<sql id="selectAll">
+	  SELECT * FROM INVEST_RECORD
+	</sql>
+
+	<sql id="selectById">
+		 SELECT * FROM INVEST_RECORD WHERE INVEST_RECORD_ID= ? 
+	</sql>
+
+	<sql id="insert">
+		 INSERT INTO INVEST_RECORD VALUES(INVESTRECORDID.nextval,?,?,?,?,?,?,?)
+	</sql>
+
+	<sql id="update">
+		 update INVEST_RECORD set USER_ID = ?, K_TYPE_ID = ?,INVEST_NUMBER = ?,INVEST_RECORD_TIME = ?,INVEST_CASH = ?,
+		 PAY_TYPE_ID = ?,INVEST_RECORD_REMARK = ? where INVEST_RECORD_ID = ?
+	</sql>
+
+	<sql id="delete">
+		delete from INVEST_RECORD where INVEST_RECORD_ID= ? 
+	</sql>
+
+</sqlStatements>

@@ -1,0 +1,71 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.kba.entity.AnchorLevel;
+import com.kba.service.impl.BackStageAnchorLevelService;
+import com.kba.util.KBaException;
+
+/**
+ * 后台主播等级数据的处理
+ * @author 赵科
+ * 创建时间：2019-1-22
+ * 修改时间：
+ */
+public class BackStageAnchorLevelServlet extends KBaBaseServlet{
+
+	private static final long serialVersionUID = 1L;
+    //主播等级业务对象
+	private BackStageAnchorLevelService anchorLevelService;
+	
+    public BackStageAnchorLevelServlet() {
+		this.anchorLevelService=new BackStageAnchorLevelService();
+	}
+	
+	/**
+	 * 主播等级设置首页
+	 */
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<AnchorLevel> anchorLevels=null;
+		AnchorLevel anchorLevel=this.wrap(req);
+		try {
+			anchorLevels=anchorLevelService.selectAllAnchorLevel(anchorLevel);
+			req.setAttribute("anchorLevels", anchorLevels);
+			req.getRequestDispatcher("levelset-anchorlevel-index.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			toError(e, resp);
+		}
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private AnchorLevel wrap(HttpServletRequest req) {
+		AnchorLevel anchorLevel=new AnchorLevel();
+		String aLId=req.getParameter("anchorLevelId");
+		String aLName=req.getParameter("anchorLevelName");
+		String lMinTime=req.getParameter("liveMinTotalTime");
+		Integer liveMinTime=lMinTime!=null?Integer.valueOf(lMinTime):null;
+		String lMaxTime=req.getParameter("liveMaxTotalTime");
+		Integer liveMaxTime=lMaxTime!=null?Integer.valueOf(lMaxTime):null;
+		String aLRemark=req.getParameter("anchorLevelRemark");
+		
+		anchorLevel.setAnchorLevelId(aLId);
+		anchorLevel.setAnchorLevelName(aLName);
+		anchorLevel.setLiveMinTotalTime(liveMinTime);
+		anchorLevel.setLiveMaxTotalTime(liveMaxTime);
+		anchorLevel.setAnchorLevelRemark(aLRemark);
+		return anchorLevel;
+	}
+
+}

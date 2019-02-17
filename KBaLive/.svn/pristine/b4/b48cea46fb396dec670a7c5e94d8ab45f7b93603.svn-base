@@ -1,0 +1,81 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.kba.entity.LiveContent;
+import com.kba.entity.LiveType;
+import com.kba.service.IIndexService;
+import com.kba.service.impl.IndexService;
+import com.kba.util.KBaException;
+
+/**
+ * 网站首页：响应整个程序的首页请求 
+ * 作者：赵科
+ * 时间：2019-1-15
+ */
+public class IndexServlet extends KBaBaseServlet{
+
+	private static final long serialVersionUID = 1L;
+    
+	private IIndexService indexService;
+	
+	public IndexServlet(){
+		indexService=new IndexService();
+	}
+    
+    /**
+     * 前台首页
+     */
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//1.初始化直播分类
+		this.initLiveContent(req,resp);
+		req.getRequestDispatcher("index.jsp").forward(req, resp);
+	}
+	
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		
+	}
+	
+    /**
+     * 初始化直播内容
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+	public void initLiveContent(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		List<LiveType> liveTypes=null;
+		List<LiveContent> liveContents=null;
+		try {
+			liveTypes=indexService.selectAllLiveType(null);
+			for(int i=0;i<liveTypes.size();i++){
+				liveContents=indexService.selectByLiveType(spwan(liveTypes.get(i)));
+				req.setAttribute("liveContents"+i, liveContents);
+			}
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}
+	}
+	/**
+	 * 封装直播内容
+	 * @param liveType
+	 * @return
+	 */
+	private LiveContent spwan(LiveType liveType){
+		LiveContent liveContent=new LiveContent();
+		liveContent.setLiveTypeId(liveType.getLiveTypeId());
+		return liveContent;
+	}
+}

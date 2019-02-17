@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlStatements [
+<!ELEMENT sqlStatements (sql+)>
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sqlStatements namespace CDATA #REQUIRED>
+<!ATTLIST sql id CDATA #REQUIRED>
+]>
+<!--
+作者：孙茂文
+创建时间：2019-01-21
+修改时间：
+订阅直播间查询
+ -->
+<sqlStatements namespace="userlike">
+   
+   <sql id="selectAll">
+   select distinct  user_book.user_id ,live_room.live_room_id,live_room.live_room_title , live_room.live_room_remark,user_info.user_name
+   from user_book,live_room,anchor_info ,user_info
+   where user_book.anchor_id=live_room.anchor_id and live_room.anchor_id=anchor_info.anchor_id 
+   and anchor_info.user_id=user_info.user_id and user_book.user_id=?
+   </sql>
+     
+</sqlStatements>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Context [
+<!ELEMENT Context (Resource)>
+<!ELEMENT Resource (#PCDATA)>
+<!ATTLIST Resource name CDATA #REQUIRED>
+<!ATTLIST Resource author CDATA #REQUIRED>
+<!ATTLIST Resource type CDATA #REQUIRED>
+<!ATTLIST Resource maxActive CDATA #REQUIRED>
+<!ATTLIST Resource maxIdle CDATA #REQUIRED>
+<!ATTLIST Resource maxWait CDATA #REQUIRED>
+<!ATTLIST Resource username CDATA #REQUIRED>
+<!ATTLIST Resource password CDATA #REQUIRED>
+<!ATTLIST Resource driverClassName CDATA #REQUIRED>
+<!ATTLIST Resource url CDATA #REQUIRED>
+]>
+<Context>
+	<Resource name="jdbc/kba"
+	      author="Container" 
+		  type="javax.sql.DataSource" 
+		  maxActive="100" 
+		  maxIdle="30" 
+		  maxWait="10000"
+		  username="KBLIVE"
+		  password="123456"
+		  driverClassName="oracle.jdbc.OracleDriver" 
+		  url="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" />
+</Context>

@@ -1,0 +1,70 @@
+package com.kba.service.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+
+import com.kba.dao.IUserDao;
+import com.kba.dao.impl.UserDao;
+import com.kba.entity.UserInfo;
+import com.kba.service.IUserService;
+import com.kba.util.KBaException;
+
+public class UserService implements IUserService {
+
+	//依赖数据层对象（JDBC）的功能
+	private IUserDao userDao;
+	
+	public UserService(){
+		this.userDao=UserDao.getInstance();
+	}
+	@Override
+	public UserInfo loginValidate(UserInfo user) throws KBaException {
+		//输入密码
+		String pwd=user.getUserPassword();
+		System.out.println(pwd);
+		if(pwd==null)
+			throw new KBaException("输入密码错误");
+		//请求数据层对象
+		try {
+			user=this.userDao.querySingle(user);
+		
+			if(user!=null){
+				if(user.getUserPassword().equals(pwd)){
+					return user;
+				}
+			}
+		} catch (SQLException e) {
+			throw new KBaException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public UserInfo save(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserInfo> getAllUsers(UserInfo user) throws KBaException {
+	   return null;
+	}
+
+	@Override
+	public UserInfo getUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean checkUser(UserInfo user) throws KBaException {
+		try{
+		user=this.userDao.querySingle(user);
+		return user!=null?true:false;
+		}catch(SQLException e){
+			throw new KBaException(e);
+		}
+	}
+
+}

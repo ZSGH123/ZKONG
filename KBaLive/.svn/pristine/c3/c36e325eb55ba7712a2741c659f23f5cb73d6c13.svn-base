@@ -1,0 +1,42 @@
+package com.kba.service.impl;
+
+import java.util.List;
+
+import com.kba.entity.UserInfo;
+import com.kba.service.IUserService;
+import com.kba.util.KBaException;
+
+public class UserService implements IUserService {
+
+	@Override
+	public UserInfo invalidUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserInfo userRegister(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserInfo selectUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserInfo> selectAllUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserInfo updateUser(UserInfo user) throws KBaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

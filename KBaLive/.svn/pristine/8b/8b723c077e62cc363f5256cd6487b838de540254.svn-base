@@ -1,0 +1,54 @@
+package com.kba.action;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.kba.entity.UserInfo;
+import com.kba.service.IUserService;
+import com.kba.service.impl.UserService;
+import com.kba.util.KBaException;
+
+
+/**
+ * 网站首页：响应整个程序的首页请求 
+ * 作者：赵科
+ * 时间：2019-1-15
+ */
+public class IndexServlet extends KBaBaseServlet{
+
+	private static final long serialVersionUID = 1L;
+	//用户业务对象
+    private IUserService userService;
+    
+    public  IndexServlet() {
+		this.userService=new UserService();
+	}
+    /**
+     * 后台首页数据的获取
+     */
+	@Override
+	protected void index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		UserInfo user=null;
+		//用户总数集合
+		List<UserInfo> users=null;
+		try {
+			users=userService.selectAllUser(user);
+			req.setAttribute("users", users.size());
+			req.getRequestDispatcher("index.jsp").forward(req, resp);
+		} catch (KBaException e) {
+			this.toError(e, resp);
+		}
+	}
+
+	@Override
+	protected void service_(String command, HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
