@@ -5,9 +5,11 @@
 <hibernate-mapping package="entity">
 
 	<class name="UserInfo" table="USER_INFO">
-		<id name="id" column="USER_ID" type="String">
+		<id name="userId" column="USER_ID" >
 		    <!-- native自动 -->
-			<generator class="sequence"/>
+			<generator class="sequence">
+			   <param name="sequence">USERID</param>    
+			</generator>
 		</id>
 		<property name="userName" column="USER_NAME" not-null="true"/>
 		<property name="userPhoneNumber" column="USER_PHONENUMBER"/>

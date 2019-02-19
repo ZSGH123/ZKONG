@@ -4,7 +4,26 @@ package entity;
  * @author 单杰
  * 创建时间：2019-01-13
  * 修改时间：
- */
+ * @Entity 
+@Table(name = "XXGX_RBBTJ")
+public class StatisticalDaily {
+//	/** id */
+//	@Id
+//	@Column(name = "ID", unique = true, nullable = false)
+//	@SequenceGenerator(name = "RBBTJ_SEQ", sequenceName = "RBBTJ_SEQ", allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RBBTJ_SEQ")
+//	private Integer id;
+//	/** 查询日期 */
+//	@Column(name = "QUERY_TIME")
+//	private String queryTime;
+//	/** 申请笔数 */
+//	@Column(name = "APPLY_COUNT")
+//	private Integer applyCount;
+//	/** 成功笔数（总的 O） O=B+C+D */
+//	@Column(name = "SUC_TOTAL_COUNT")
+//	private Integer sucTotalCount;
+
+// */
 public class UserInfo {
 	private String userId;//用户编号
 	private String userPhoneNumber;//用户手机号
