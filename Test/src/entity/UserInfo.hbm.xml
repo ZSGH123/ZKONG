@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="entity">
+
+	<class name="UserInfo" table="USER_INFO">
+		<id name="id" column="USER_ID" type="String">
+		    <!-- native自动 -->
+			<generator class="sequence"/>
+		</id>
+		<property name="userName" column="USER_NAME" not-null="true"/>
+		<property name="userPhoneNumber" column="USER_PHONENUMBER"/>
+		<property name="userPassword" column="USER_PASSWORD" not-null="true"/>
+		<property name="userRealName" column="USER_REALNAME" />
+		<property name="userSex" column="USER_SEX" />
+		<property name="userIdCard" column="USER_IDCARD" />
+		<property name="userWeiboId" column="USER_WEIBO_ID" />
+		<property name="userQQId" column="USER_QQ_ID" />
+		<property name="userIcon" column="USER_ICON" />
+		<property name="userAliPay" column="USER_ALIPAY" />
+		<property name="userBankCard" column="USER_BANK_CARD" />
+		<property name="userRemark" column="USER_REMARK" />
+	</class>
+</hibernate-mapping>
