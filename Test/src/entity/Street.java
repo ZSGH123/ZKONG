@@ -1,9 +1,14 @@
 package entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -13,8 +18,9 @@ public class Street {
     private Integer sId;
     private String sName;
     private City city;
-    
-    @ManyToOne(targetEntity=entity.City.class)
+    //fetch=FetchType.EAGER为立马去拿city
+    //fetch=FetchType.LAZY为延迟加载city，需要才从数据库拿
+    @ManyToOne(targetEntity=City.class,fetch=FetchType.LAZY)
 	public City getCity() {
 		return city;
 	}
@@ -39,6 +45,8 @@ public class Street {
 	}
 	@Id
 	@Column(name = "STREET_ID")
+	@SequenceGenerator(name = "STREETID", sequenceName = "STREETID", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STREETID")
 	public Integer getsId() {
 		return sId;
 	}

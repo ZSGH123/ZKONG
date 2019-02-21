@@ -3,6 +3,7 @@ package Hibernate;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -111,10 +112,15 @@ public class Test {
 		Configuration configuration=new Configuration().configure();
 		SessionFactory sessionFactory=configuration.buildSessionFactory();
 		Session session=sessionFactory.openSession();
-		Transaction transaction=null;		
-		transaction=session.beginTransaction();	
-		session.save(userInfo);
-		transaction.commit();
+		Transaction transaction=null;	
+		try {	
+			transaction=session.beginTransaction();	
+			session.save(userInfo);
+			transaction.commit();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		}
 		session.close();
 	}
 	
@@ -130,3 +136,82 @@ public class Test {
 	}
 	
 }
+//三种状态转换
+//1）临时状态转换持久化状态
+//-Session的save（）方法会将临时状态转换成持久状态。
+//    把要保存的对象放入Session缓存中，使它进入持久化状态。使用映射文件指定的主键生成策略，为持久化对象分配唯一OID。
+//    save方法只是为对象分配UID。我们可以在save方法处打断点。
+//    当我们的主键生成策略为native时，由于我们使用mysql数据库，主键自增，所以执行完save方法后，打印insert语句，mysql数据库为我们对象自增OID 
+//
+//    当我们的主键生成策略为incrementt时，increment是由Hibernate维护，先去表中查最大ID然后+1，我们执行完save方法之后，发现打印select查找最大id的语句，执行commit时才打印插入语句
+//
+//
+//2)临时状态转换成游离状态
+//-将临时状态的对象OID设置为数据库中对应的记录.
+//User user=new User();
+//user.setId(1);
+//
+//3)持久化状态转换成临时状态
+//第一种：
+//    User  user=(User)session.get(User.class,1);//获取持久化对象 持久状态
+//    session.close(); //游离状态
+//    user.setId(null);//临时状态 
+//第二种：
+//    User  user=(User)session.get(User.class,1);//获取持久化对象 持久状态
+//    session.evict(user); //游离状态,此方法会将session缓存中清除持久化对象，使其变为游离状态
+//    user.setId(null);//临时状态  
+//
+//4)持久化状态转换成游离状态
+//第一：调用session的close方法，持久化状态变为游离状态
+//第二: 调用session的evict（）方法方法，将持久状态转变为游离状态
+//
+//
+//5)游离状态转换成临时状态
+//只需要将游离状态的对象OID变为null。
+//
+//6)游离状态转换成持久状态
+//Session的update()方法使游离状态转换成持久状态。
+//    User  user=(User)session.get(User.class,1);//获取持久化对象 持久状态
+//    session.evict(user); //游离状态,此方法会将session缓存中清除持久化对象，使其变为游离状态
+//    session.update(user);
+
+//-Session的save()和persist()方法
+//两个方法都是用来保存对象，能把临时状态转变为持久化状态。 
+//
+//两个方法的区别在于：
+//save方法持久化对象时，会返回持久化对象的OID。所以程序执行save时会立刻执行insert语句，来返回数据库生成的OID。 
+//
+//persist方法持久化对象时，不会保证立即为持久化对象的OID赋值，不会立即生成insert语句，而是有可能在Session清理缓存时才为OID赋值。
+//
+//
+//--Session的clear()方法
+//清空一级缓存 
+//
+//--Session的update方法
+//            update()方法可以将游离对象转变为持久化对象。用来执行修改操作。
+//            update()方法完成以下操作
+//            -把游离对象加入到当前缓存中，变为持久化对象
+//            -然后计划执行update语句
+//
+//            只要通过update使游离对象转变为持久化对象，即使没有修改任何属性，在清理缓存时还是会执行update语句。
+//            如果希望Session仅当修改了属性时才执行update语句，可以在映射文件中的<class>元素中设置select-before-update="true",默认为false
+//            这样当Session清理缓存时，会先发送一条查询语句，然后判断缓存中的对象和记录是否一致，不一致才执行update语句。
+//
+//            当update()方法将游离对象转变为持久化对象时，如果Session缓存中已经存在相同的OID持久化对象，那么会抛出异常。
+//            例如：
+//                Transaction ts=session.beginTransaction();
+//                User user1=session.get(User.class, 5);
+//                session.evict(user1);
+//                User user2=session.get(User.class, 5);
+//                session.update(user1);
+//                ts.commit();
+//
+//                因为Session的缓存是一个Map结构，OID为key，对象为value。
+//                当执行session的update方法时，由于缓存中已经存在了OID为5的持久化对象，因此会抛出异常。 
+//
+//-Session的saveOrUpdate()方法 
+//
+//    Session的saveOrUpdate()方法同时包含了save()和update()方法的功能
+//    如果传入的参数是临时对象(OID为null)，就调用save方法。
+//    如果传入的参数是游离对象(OID不为null)，就执行update方法。
+
