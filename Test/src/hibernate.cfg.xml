@@ -20,12 +20,21 @@
 	<property name="show_sql">true</property>
 	<property name="format_sql">true</property>
 	<!-- ddl策略 -->
-	<!--<property name="hibernate.hbm2ddl.auto">validate</property>-->
-	<property name="hibernate.hbm2ddl.auto">create</property>
+	<!--<property name="hibernate.hbm2ddl.auto">validate</property>
+		update（最常用的取值）：如果当前数据库不存在对应的数据表，那么自动创建数据表
+		如果存在对应的数据表，并且表结构和实体类属性一致，那么不做任何修改
+		如果存在对应的数据表，但是表结构和实体类属性不一致，那么会新创建与实体类属性对应的列，其他列不变 
+		create（很少使用）：无论是否存在对应的数据表，每次启动Hibernate都会重新创建对应的数据表，以前的数据会丢失
+		create-drop(极少使用):无论是否存在对应的数据表，每次启动Hibernate都会重新创建对应的数据表，每次运行结束删除数据表
+		validate（很少使用）：只校验表结构是否和我们的实体类属性相同，不同就抛异常 
+	-->
+	<property name="hibernate.hbm2ddl.auto">update</property>
 	<!--使用线程，防止遇到异常  取出当前线程中的Session，底层使用ThreadLocal进行存取 -->
 	<property name="current_session_context_class">thread</property>
 	<!--<mapping resource="entity/UserInfo.hbm.xml" />-->
 	<mapping class="entity.UserInfo" />
+	<mapping class="entity.City" />
+	<mapping class="entity.Street" />
 
 </session-factory>
 

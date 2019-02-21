@@ -2,6 +2,7 @@ package Hibernate;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 /**
@@ -22,7 +23,7 @@ public class HibernateSessionFactory {
 	private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
     private static org.hibernate.SessionFactory sessionFactory;
 	
-    private static Configuration configuration = new Configuration();
+    private static AnnotationConfiguration configuration = new AnnotationConfiguration();
     private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
     private static String configFile = CONFIG_FILE_LOCATION;
 
