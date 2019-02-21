@@ -39,7 +39,7 @@ private static Session session;
 			transaction=session.beginTransaction();	
 			Street street=new Street();
 			street.setsName("³þâùÂ·");
-			City city=(City) session.load(City.class, new Integer(1));
+			City city=(City) session.load(City.class, new Integer(4));
 			street.setCity(city);
 			session.save(street);
 			transaction.commit();
@@ -50,8 +50,5 @@ private static Session session;
 		session.close();
 	}
 	
-	@AfterClass
-	public static void destory(){
-		session.close();
-	}
+
 }

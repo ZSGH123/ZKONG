@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -21,6 +22,7 @@ public class Street {
     //fetch=FetchType.EAGER为立马去拿city
     //fetch=FetchType.LAZY为延迟加载city，需要才从数据库拿
     @ManyToOne(targetEntity=City.class,fetch=FetchType.LAZY)
+    @JoinColumn(name="CITY_CITYID")
 	public City getCity() {
 		return city;
 	}
@@ -44,7 +46,7 @@ public class Street {
 		this.city = city;
 	}
 	@Id
-	@Column(name = "STREET_ID")
+	@Column(name = "STREETID")
 	@SequenceGenerator(name = "STREETID", sequenceName = "STREETID", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STREETID")
 	public Integer getsId() {
@@ -53,7 +55,7 @@ public class Street {
 	public void setsId(Integer sId) {
 		this.sId = sId;
 	}
-	@Column(name = "STREET_NAME")
+	@Column(name = "STREETNAME")
 	public String getsName() {
 		return sName;
 	}

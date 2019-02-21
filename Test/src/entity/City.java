@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,18 +10,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name="city")
 public class City {
     private Integer cId;
     private String cName;
-    private Set<Street> streets;
+    private Set<Street> streets=new HashSet<Street>();
     
-    @OneToMany(targetEntity=Street.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+    @OneToMany(targetEntity=entity.Street.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="city")
 	public Set<Street> getStreets() {
 		return streets;
 	}
@@ -36,8 +40,14 @@ public class City {
 		this.cName = cName;
 	}
 	
+	public City(Integer cId, String cName, Set<Street> streets) {
+		super();
+		this.cId = cId;
+		this.cName = cName;
+		this.streets = streets;
+	}
 	@Id
-	@Column(name = "CITY_ID",nullable = false)
+	@Column(name = "CITYID",nullable = false)
 	@SequenceGenerator(name = "CITYID", sequenceName = "CITYID", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CITYID")
 	public Integer getcId() {
@@ -46,7 +56,7 @@ public class City {
 	public void setcId(Integer cId) {
 		this.cId = cId;
 	}
-	@Column(name = "CITY_NAME", unique = true)
+	@Column(name = "CITYNAME", unique = true)
 	public String getcName() {
 		return cName;
 	}

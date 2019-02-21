@@ -36,7 +36,7 @@ public class TestCity {
 		Transaction transaction=null;		
 		try {
 			transaction=session.beginTransaction();	
-			City city=(City) session.load(City.class, new Integer(1));
+			City city=(City) session.get(City.class, new Integer(4));
 			System.out.println(city.getcName());
 			Set<Street> streets=city.getStreets();
 			for (Street street : streets) {
@@ -44,6 +44,7 @@ public class TestCity {
 			}
 			transaction.commit();
 		} catch (HibernateException e) {
+			transaction.rollback();
 			e.printStackTrace();
 		}
 		session.close();
@@ -55,7 +56,7 @@ public class TestCity {
 		try {
 			transaction=session.beginTransaction();	
 			City city=new City();
-			city.setcName("Œ‰∫∫");
+			city.setcName("≥§…≥");
 			session.save(city);
 			transaction.commit();
 		} catch (HibernateException e) {
@@ -65,8 +66,5 @@ public class TestCity {
 		session.close();
 	}
 	
-	@AfterClass
-	public static void destory(){
-		session.close();
-	}
+	
 }
