@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 import entity.UserInfo;
@@ -15,17 +16,17 @@ import entity.UserInfo;
 public class Test {
 
 	public static void main(String[] args) {
-          //load("1000000053");
+          load("1000000053");
 		//get("1000000053");
 //		UserInfo userInfo=new UserInfo();
 //		userInfo.setUserName("诗韵新");
 //		userInfo.setUserPassword("Zq123456");
 //		save(userInfo);
-		UserInfo userInfo=new UserInfo();
-		userInfo.setUserName("诗韵新");
-		userInfo.setUserPassword("Zq123456");
-		userInfo.setUserId("1000000055");
-		delete(userInfo);
+//		UserInfo userInfo=new UserInfo();
+//		userInfo.setUserName("诗韵新");
+//		userInfo.setUserPassword("Zq123456");
+//		userInfo.setUserId("1000000055");
+//		delete(userInfo);
 	}
 	/**
 	 * 查询(非延迟加载)
@@ -63,7 +64,12 @@ public class Test {
 		session.close();
 	}
 	
-	
+//	Session对象：   
+//    代表程序和数据库的会话。Session提供了操作数据库的各种方法。是轻量级对象。 
+//
+//       获取Session对象 
+//       factory.openSession(): 获取新的Session实例。
+//       factory.getCurrentSession():采用该方法创建的Session会取出当前线程中的Session，底层使用ThreadLocal进行存取 
 //	load()和get()的区别
 //    我们使用get查询时发现控制台会立马打出查询语句。
 //    使用load查询时控制台不会打印查询语句。
@@ -81,7 +87,10 @@ public class Test {
 //load方法，返回一个代理对象，获取其属性时，会查询数据库，每次访问属性都会查询数据库么？
 //答：不是。代理对象中有一个标识是否被初始化的boolean类型变量，记录是否被初始化。
 	public static void load(String id) {
-		Configuration configuration=new Configuration().configure();
+		//配置文件来映射
+		//Configuration configuration=new Configuration().configure();
+		//注解来映射
+		AnnotationConfiguration configuration=new AnnotationConfiguration().configure();
 		SessionFactory sessionFactory=configuration.buildSessionFactory();
 		Session session=sessionFactory.openSession();
 		Transaction transaction=null;
