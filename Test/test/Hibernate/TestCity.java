@@ -65,6 +65,36 @@ public class TestCity {
 		}
 		session.close();
 	}
+	/**
+	 * 级联更新和保存：如果持久化一个对象，会自动持久化相关联对象
+	 */
+	@Test
+	public void testAddCityAndStreet(){
+		Transaction transaction=null;		
+		try {
+			transaction=session.beginTransaction();	
+			
+			City city=new City();
+			city.setcName("湘潭");
+			Street street1=new Street();
+			street1.setsName("樱花路");
+			Street street2=new Street();
+			street2.setsName("致知路");
+			city.getStreets().add(street1);
+			city.getStreets().add(street2);
+			street1.setCity(city);
+			street2.setCity(city);
+			
+			session.save(city);
+//			session.save(street1);
+//			session.save(street2);
+			transaction.commit();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		session.close();
+	}
 	
 	
 }
