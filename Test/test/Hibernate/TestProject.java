@@ -403,6 +403,42 @@ public class TestProject {
 			transaction = session.beginTransaction();
 			String hql = "from UserInfo";
 			Query query = session.createQuery(hql);
+			List<UserInfo> userInfos = query.list();
+			for (UserInfo userInfo2 : userInfos) {
+				System.out.println(userInfo2);
+			}
+			session.close();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		Transaction transaction1 = null;
+		session = HibernateSessionFactory.getSession();
+		try {
+			transaction1 = session.beginTransaction();
+			String hql = "from UserInfo";
+			Query query = session.createQuery(hql);
+			Iterator<UserInfo> userInfos = query.iterate();
+			while (userInfos.hasNext()) {
+				UserInfo userInfo=userInfos.next();
+				System.out.println(userInfo);
+			}
+			session.close();
+		} catch (HibernateException e) {
+			transaction1.rollback();
+			e.printStackTrace();
+		}	
+	}
+	/**
+	 * 在应用启动时和修改时使用list,平时则使用iterator
+	 */
+	@Test
+	public void testIterateProject1() {
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			String hql = "from UserInfo";
+			Query query = session.createQuery(hql);
 			Iterator<UserInfo> userInfos = query.iterate();
 			while (userInfos.hasNext()) {
 				UserInfo userInfo=userInfos.next();
@@ -430,5 +466,4 @@ public class TestProject {
 			e.printStackTrace();
 		}	
 	}
-	
 }
