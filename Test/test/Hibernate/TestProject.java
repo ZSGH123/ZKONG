@@ -10,8 +10,10 @@ import org.hibernate.Transaction;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import entity.City;
 import entity.Employee;
 import entity.Project;
+import entity.Street;
 import entity.UserInfo;
 
 public class TestProject {
@@ -260,13 +262,62 @@ public class TestProject {
 	@Test
 	public void testSearchProject5() {
 		HibernateHandler hibernateHandler = new HibernateHandler();
-		String hql="from UserInfo us order by us.userPhoneNumber";
-		List<UserInfo> userInfos=hibernateHandler.handlerPage(session,3,5,hql);
+		String hql = "from UserInfo us order by us.userPhoneNumber";
+		List<UserInfo> userInfos = hibernateHandler.handlerPage(session, 3, 5, hql);
 		Iterator<UserInfo> iterator = userInfos.iterator();
 		while (iterator.hasNext()) {
 			UserInfo userInfo = iterator.next();
 			System.out.println(userInfo.getUserName() + ":" + userInfo.getUserPassword());
 		}
+	}
 
+	// 左外连接fetch
+	@Test
+	public void testSearchProject6() {
+		HibernateHandler hibernateHandler = new HibernateHandler();
+		hibernateHandler.handler(session, new IHandle() {
+			@Override
+			public void handler(Session session) {
+				String hql = " from City c left join fetch c.streets";
+				Query query = session.createQuery(hql);
+				List<City> userInfos = query.list();
+				Iterator<City> iterator = userInfos.iterator();
+				while (iterator.hasNext()) {
+					City city = iterator.next();
+					System.out.print(city.getcName());
+					Iterator<Street> iterator1 = city.getStreets().iterator();
+					while (iterator1.hasNext()) {
+						Street street = iterator1.next();
+						System.out.print(":" + street.getsName());
+					}
+					System.out.println("");
+				}
+			}
+		});
+	}
+
+	// 外连接
+	@Test
+	public void testSearchProject7() {
+		HibernateHandler hibernateHandler = new HibernateHandler();
+		hibernateHandler.handler(session, new IHandle() {
+			@Override
+			public void handler(Session session) {
+				String hql = "select new City(c.cId,c.cName) from City c left join c.streets";
+				Query query = session.createQuery(hql);
+				List<City> userInfos = query.list();
+				Iterator<City> iterator = userInfos.iterator();
+				while (iterator.hasNext()) {
+					City city = iterator.next();
+					System.out.print(city.getcName());
+					Iterator<Street> iterator1 = city.getStreets().iterator();
+					while (iterator1.hasNext()) {
+						Street street = iterator1.next();
+						System.out.print(":" + street.getsName());
+					}
+					System.out.println("");
+				}
+			}
+		});
 	}
 }

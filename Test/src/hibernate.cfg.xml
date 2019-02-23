@@ -32,6 +32,10 @@
 	<!--使用线程，防止遇到异常  取出当前线程中的Session，底层使用ThreadLocal进行存取 -->
 	<property name="current_session_context_class">thread</property>
 	<!--<mapping resource="entity/UserInfo.hbm.xml" />-->
+	<property name="cache.use_second_level_cache">true</property>
+	<property name="cache.provider_class">
+		org.hibernate.cache.EhCacheProvider
+	</property>
 	<mapping class="entity.UserInfo" />
 	<mapping class="entity.City" />
 	<mapping class="entity.Street" />
