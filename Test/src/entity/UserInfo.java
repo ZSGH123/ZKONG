@@ -73,6 +73,30 @@ public class UserInfo {
 				+ ",QQ用户编号=" + userQQId + ",用户头像地址=" + userIcon + ",支付宝账号=" + userAliPay + ",银行卡账号=" + userBankCard + ",用户信息备注=" + userRemark + "]";
 	}
 	
+	public UserInfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserInfo(String userId, String userPhoneNumber, String userName, String userPassword, String userRealName,
+			String userSex, String userIdCard, String userWeiboId, String userQQId, String userIcon, String userAliPay,
+			String userBankCard, String userRemark) {
+		super();
+		this.userId = userId;
+		this.userPhoneNumber = userPhoneNumber;
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.userRealName = userRealName;
+		this.userSex = userSex;
+		this.userIdCard = userIdCard;
+		this.userWeiboId = userWeiboId;
+		this.userQQId = userQQId;
+		this.userIcon = userIcon;
+		this.userAliPay = userAliPay;
+		this.userBankCard = userBankCard;
+		this.userRemark = userRemark;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -150,6 +174,12 @@ public class UserInfo {
 	}
 	public void setUserRemark(String userRemark) {
 		this.userRemark = userRemark;
+	}
+
+	public UserInfo(String userName, String userPassword) {
+		super();
+		this.userName = userName;
+		this.userPassword = userPassword;
 	}
 	
 }
