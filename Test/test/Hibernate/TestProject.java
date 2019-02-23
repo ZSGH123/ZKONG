@@ -322,14 +322,16 @@ public class TestProject {
 	}
 	
 	/**
-	 * 测试，get和load的二级缓存
+	 * 测试，get和load的使用二级缓存
 	 */
 	@Test
 	public void testDeleteProject8() {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			Project project = (Project) session.get(Project.class, 1);
+			//get若没有记录，则返回null，load没有记录，则抛ObjectNotFountdException异常
+			//Project project = (Project) session.get(Project.class, 1);
+			Project project = (Project) session.load(Project.class, 1);
 			System.out.print(project.getpName());
 			transaction.commit();
 			session.close();
@@ -350,4 +352,83 @@ public class TestProject {
 			e.printStackTrace();
 		}	
 	}
+
+	/**
+	 * 测试，list使用二级缓存
+	 * list默认会往二级缓存中存放数据，即通过list查出的结果会放入二级缓存。
+	 * 但是list本身查询时不会使用二级缓存。 List仅仅会填充二级缓存，却不能使用二级缓存
+	 */
+	@Test
+	public void testListProject() {
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			String hql = "from UserInfo";
+			Query query = session.createQuery(hql);
+			List<UserInfo> userInfos = query.list();
+			for (UserInfo userInfo2 : userInfos) {
+				System.out.println(userInfo2);
+			}
+			session.close();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		Transaction transaction1 = null;
+		session = HibernateSessionFactory.getSession();
+		try {
+			transaction1 = session.beginTransaction();
+			String hql = "from UserInfo";
+			Query query = session.createQuery(hql);
+			List<UserInfo> userInfos = query.list();
+			for (UserInfo userInfo2 : userInfos) {
+				System.out.println(userInfo2);
+			}
+			session.close();
+		} catch (HibernateException e) {
+			transaction1.rollback();
+			e.printStackTrace();
+		}	
+	}
+	
+	/**
+	 * 测试，Iterator可以读二级缓存，对于一条查询语句，
+	 * 它会先从数据库中找到所有符合条件的记录的ID，再通过ID去缓存找，
+	 * 对于缓存中没有的记录，再构造语句从数据中查出，在缓存中没有命中的话，效率很低
+	 */
+	@Test
+	public void testIterateProject() {
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			String hql = "from UserInfo";
+			Query query = session.createQuery(hql);
+			Iterator<UserInfo> userInfos = query.iterate();
+			while (userInfos.hasNext()) {
+				UserInfo userInfo=userInfos.next();
+				System.out.println(userInfo);
+			}
+			session.close();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		Transaction transaction1 = null;
+		session = HibernateSessionFactory.getSession();
+		try {
+			transaction1 = session.beginTransaction();
+			String hql = "from UserInfo";
+			Query query = session.createQuery(hql);
+			Iterator<UserInfo> userInfos = query.iterate();
+			while (userInfos.hasNext()) {
+				UserInfo userInfo=userInfos.next();
+				System.out.println(userInfo);
+			}
+			session.close();
+		} catch (HibernateException e) {
+			transaction1.rollback();
+			e.printStackTrace();
+		}	
+	}
+	
 }
