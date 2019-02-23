@@ -36,6 +36,7 @@
 	<property name="cache.provider_class">
 		org.hibernate.cache.EhCacheProvider
 	</property>
+	<property name="cache.use_query_cache">true</property>
 	<mapping class="entity.UserInfo" />
 	<mapping class="entity.City" />
 	<mapping class="entity.Street" />

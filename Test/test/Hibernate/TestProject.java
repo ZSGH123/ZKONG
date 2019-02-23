@@ -320,4 +320,34 @@ public class TestProject {
 			}
 		});
 	}
+	
+	/**
+	 * 测试，get和load的二级缓存
+	 */
+	@Test
+	public void testDeleteProject8() {
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			Project project = (Project) session.get(Project.class, 1);
+			System.out.print(project.getpName());
+			transaction.commit();
+			session.close();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		Transaction transaction1 = null;
+		session = HibernateSessionFactory.getSession();
+		try {
+			transaction1 = session.beginTransaction();
+			Project project = (Project) session.get(Project.class, 1);
+			System.out.print(project.getpName());
+			transaction1.commit();
+			session.close();
+		} catch (HibernateException e) {
+			transaction1.rollback();
+			e.printStackTrace();
+		}	
+	}
 }

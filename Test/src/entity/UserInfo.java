@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 
 /**
  * 用户信息
@@ -36,6 +39,7 @@ public class StatisticalDaily {
 // */
 @Entity
 @Table(name="USER_INFO")
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class UserInfo {
 	@Id
 	@Column(name = "USER_ID", unique = true, nullable = false)

@@ -16,5 +16,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="E:/培训/java资料/高级部分/struts-2.2.1.1-all/struts-2.2.1.1/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="E:/培训/java资料/高级部分/struts-2.2.1.1-all/struts-2.2.1.1/lib/commons-logging-api-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
