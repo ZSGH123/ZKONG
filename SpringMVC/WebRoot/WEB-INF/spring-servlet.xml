@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	
+	<!--  
+	运行步骤：
+         1、 首先用户发送请求 http://localhost:9080/springmvc-chapter2/hello——>web 容器，
+            web容器根据“/hello”路径映射到DispatcherServlet（url-pattern 为/）进行处理；
+         2、 DispatcherServlet——>BeanNameUrlHandlerMapping 进行请求到处理的映射，
+            BeanNameUrlHandlerMapping 将“/hello”路径直接映射到名字为“/hello”的 Bean 进行处理，
+                               即 HelloWorldController，BeanNameUrlHandlerMapping
+                              将其包装为 HandlerExecutionChain（只包括 HelloWorldController 处理器，没有拦截器）；
+         3、 DispatcherServlet——> SimpleControllerHandlerAdapter，SimpleControllerHandlerAdapter 
+                               将 HandlerExecutionChain中的处理器（HelloWorldController）适配为 
+            SimpleControllerHandlerAdapter；
+         4、 SimpleControllerHandlerAdapter — — > HelloWorldController 处理器 功 能 处 理 方 法 的 调 用 ，
+            SimpleControllerHandlerAdapter 将会调用处理器的 handleRequest 方法进行功能处理，该处理方法返回一
+                               个 ModelAndView 给 DispatcherServlet；
+         5、 hello（ModelAndView 的逻辑视图名）——>InternalResourceViewResolver， 
+            InternalResourceViewResolver 使用JstlView，具体视图页面在/WEB-INF/jsp/hello.jsp；
+         6、 JstlView（/WEB-INF/jsp/hello.jsp）——>渲染，将在处理器传入的模型数据(message=HelloWorld！)
+                               在视图中展示出来； 
+         7、 返回控制权给 DispatcherServlet，由 DispatcherServlet 返回响应给用户，到此一个流程结束。
+         
+         DispatcherServlet 默认使用 WebApplicationContext 作为上下文，因此我们来看一下该上下文中有哪些特殊的 Bean：
+         1、Controller：处理器/页面控制器，做的是 MVC 中的 C 的事情，但控制逻辑转移到前端控制器了，用于对请求进行处理；
+         2、HandlerMapping：请求到处理器的映射，如果映射成功返回一个 HandlerExecutionChain 对象（包含一个 Handler
+                              处理器（页面控制器）对象、多个 HandlerInterceptor 拦截器）对象；如 BeanNameUrlHandlerMapping 将 URL 与 Bean
+                              名字映射，映射成功的 Bean 就是此处的处理器；
+         3、HandlerAdapter：HandlerAdapter 将会把处理器包装为适配器，从而支持多种类型的处理器，即适配器设计模式的
+                             应用，从而很容易支持很多类型的处理器；如 SimpleControllerHandlerAdapter 将对实现了 Controller 接口的
+           Bean 进行适配，并且掉处理器的 handleRequest 方法进行功能处理；
+         4、ViewResolver：ViewResolver将把逻辑视图名解析为具体的View，通过这种策略模式，很容易更换其他视图技术；
+                               如InternalResourceViewResolver将逻辑视图名映射为jsp视图；
+         5、LocalResover：本地化解析，因为 Spring 支持国际化，因此 LocalResover 解析客户端的 Locale 信息从而方便进行国际化；
+         6、ThemeResovler：主题解析，通过它来实现一个页面多套风格，即常见的类似于软件皮肤效果；
+         7、MultipartResolver：文件上传解析，用于支持文件上传；
+         8、HandlerExceptionResolver：处理器异常解析，可以将异常映射到相应的统一错误界面，从而显示用户友好的
+                             界面（而不是给用户看到具体的错误信息）；
+         9、RequestToViewNameTranslator：当处理器没有返回逻辑视图名等相关信息时，自动将请求 URL映射为逻辑视图名；
+        10、FlashMapManager：用于管理 FlashMap 的策略接口，FlashMap 用于存储一个请求的输出，当进入另一个请求时
+                              作为该请求的输入，通常用于重定向场景，后边会细述。
+	-->
+    <!-- HandlerMapping -->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+    <!-- HandlerAdapter -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+    <!-- ViewResolver视图解析 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+          <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+          <!-- 视图前缀 -->
+          <property name="prefix" value="/"/>
+          <!-- 视图后缀  -->
+          <property name="suffix" value=".jsp"/>
+    </bean>
+    <!-- 处理器 -->
+    <bean name="/login/index" class="action.UserAction"/>
+</beans>

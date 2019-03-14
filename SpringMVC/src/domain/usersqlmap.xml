@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"  "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMap namespace="UserInfo">
+	<!-- Alias Map Defined 实体的别名 -->
+	<typeAlias alias="User" type="domain.UserInfo" />
+
+	<resultMap id="user" class="User">
+		<result property="id" column="id" />
+		<result property="userId" column="userid" />
+		<result property="userName" column="username" />
+		<result property="userPassword" column="userpassword" />
+		<result property="userRealName" column="userrealname" />
+		<result property="userBirthday" column="userbirthday" />
+		<result property="note" column="note" />
+	</resultMap>
+
+	<!-- 查询所有 -->
+	<select id="getAllUserInfo" resultMap="user">
+		SELECT id,userid,username,userpassword,userrealname,userbirthday,note FROM
+		userinfo
+	</select>
+
+	<!-- 根据用户id查询 -->
+	<select id="getUserInfoByUserId" resultMap="user"
+		parameterClass="java.lang.String">
+		SELECT id,userid,username,userpassword,userrealname,userbirthday,note FROM
+		userinfo WHERE userid=#userid#
+	</select>
+
+	<insert id="addUsers" parameterClass="user">
+		INSERT INTO userinfo(
+		userid,
+		username,
+		userpassword,
+		userrealname,
+		userbirthday,
+		note
+		) VALUES(
+		#userid#,
+		#username#,
+		#userpassword#,
+		#userrealname#,
+		#userbirthday#,
+		#note#
+		)
+	</insert>
+	<!-- 通过map方式，添加用户信息 -->
+	<insert id="addUsersByMap" parameterClass="java.util.HashMap">
+		INSERT INTO userinfo(
+		userid,
+		username,
+		userpassword,
+		userrealname,
+		userbirthday,
+		note
+		) VALUES(
+		#userid#,
+		#username#,
+		#userpassword#,
+		#userrealname#,
+		#userbirthday#,
+		#note#
+		)
+	</insert>
+	
+	<update id="updateUserInfoByID" parameterClass="user">
+		UPDATE userinfo SET
+		    userid=#userid#,
+		    username=#username#,
+			userpassword=#userpassword#,
+			userrealname=#userrealname#,
+			userbirthday=#userbirthday#,
+			note=#note#
+			WHERE 
+			id=#id#
+	</update>
+
+     <!--删除用户（多个）字符串拼接方式 -->
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+	    DELETE FROM userinfo WHERE id=#id#
+	</delete>
+	
+	
+	<!-- 删除用户（多个）传参，标签说明使用,分割 ；以(开始，以)结束，解析的内容是id -->
+	<delete id="deleteByIds" parameterClass="java.util.List">
+		DELETE FROM userinfo WHERE id IN
+		<iterate conjunction="," open="(" close=")">
+			#id[]#
+		</iterate>
+	</delete>
+
+</sqlMap>

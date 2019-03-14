@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>SpringMVC</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<!-- 
+                整个 DispatcherServlet 初始化的过程和做了些什么事情，具体主要做了如下两件事情：
+      1、初始化 Spring Web MVC 使用的 Web 上下文，并且可能指定父容器为（ContextLoaderListener 加载了根上下文）；
+      2、初始化 DispatcherServlet 使用的策略，如 HandlerMapping、HandlerAdapter 等
+    -->
+	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 
+		如果使用如下配置，Spring Web MVC 框架将加载“classpath:spring-servlet-config.xml”来进行初始化上下
+                     文而不是“/WEB-INF/[servlet 名字]-servlet.xml”。
+		<init-param>
+		     <param-name>contextConfigLocation</param-name>
+             <param-value>classpath:spring-servlet-config.xml</param-value>
+		</init-param>
+		 -->
+		<load-on-startup>1</load-on-startup>	
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 以下配置是 Spring 集成 Web 环境的通用配置；一般用于加载除 Web层的 Bean（如 DAO、Service 等），
+	             以便于与其他 任何 Web 框架集成。
+         contextConfigLocation：表示用于加载 Bean 的配置文件；
+         contextClass：表示用于加载 Bean 的 ApplicationContext 实现类，默认 WebApplicationContext 
+         ContextLoaderListener 初始化的上下文加载的 Bean 是对于整个应用程序共享的
+    -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+               classpath:spring-common-config.xml
+        </param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+</web-app>
